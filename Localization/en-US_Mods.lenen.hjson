@@ -1,0 +1,36 @@
+# This file will automatically update with entries for new content after a build and reload.
+
+Items: {
+	DimensionalFragment: {
+		DisplayName: Dimensional Fragment
+		Tooltip: Fragments from a different dimension you can throw.
+	}
+
+	UnstableRock: {
+		DisplayName: Unstable Rock
+		Tooltip: A strange rock that seems to affect the space around it.
+	}
+
+	DimensionalFracture: {
+		DisplayName: Dimensional Fracture
+		Tooltip:
+			'''
+			This is going to explode at any moment.
+			Might want to throw it away before it does.
+			'''
+	}
+
+	DimensionalOrbs: {
+		DisplayName: Dimensional Orbs
+		Tooltip:
+			'''
+			Orbs that follow their user and shoot fragments of other dimensions
+			when commanded.
+			Uses {0} mana for each two fragments shot.
+			'''
+	}
+}
+
+Projectiles.DimensionalFragmentProjectile.DisplayName: Dimensional Fragment
+NPCs.CurtainOfAwakening.DisplayName: Curtain Of Awakening
+Emotes.NPCEmotes.Command: npcemotes
