@@ -1,0 +1,68 @@
+# This file will automatically update with entries for new content after a build and reload.
+
+Emotes.NPCEmotes.Command: doortosomewhere
+
+Items: {
+	DimensionalFragment: {
+		DisplayName: Fragmento Dimensional
+		Tooltip: Fragmentos de una dimensión diferente que se pueden lanzar.
+	}
+
+	UnstableRock: {
+		DisplayName: Roca Inestable
+		Tooltip:
+			'''
+			Una extraña roca que parece afectar el espacio a su 
+			alrededor.
+			'''
+	}
+
+	DimensionalFracture: {
+		DisplayName: Fractura Dimensional
+		Tooltip:
+			'''
+			Esto va a explotar en cualquier momento.
+			Quizás deberías tirarlo antes de que lo haga.
+			'''
+	}
+
+	DimensionalOrbs: {
+		DisplayName: Orbes Dimensionales
+		Tooltip:
+			'''
+			Orbes que siguen su usuario y disparan fragmentos de otras dimensiones
+			cuando se les ordena.
+			Usa {0} mana por cada dos fragmentos disparados.
+			Click derecho para usar Carta de Luz "Red Laser", gastando {1} mana.
+			Añade {2} de enfriamiento al jugador.
+			'''
+	}
+
+	DesperateBarrier: {
+		Tooltip:
+			'''
+			Una poderosa barrera que aumenta la defensa en {0}.
+			Cuando la salud es menor que la mitad, aumenta la reducción de daño en 
+			{1}% y aumenta el poder y enfriamiento de todas las Spell Cards.
+			'''
+		DisplayName: Barrera Desesperada
+	}
+}
+
+NPCs.CurtainOfAwakening.DisplayName: Cortina del Despertar
+
+Projectiles: {
+	DimensionalFragmentProjectile.DisplayName: Fragmento Dimensional
+	LaserStarter.DisplayName: Laser
+	LaserGrid.DisplayName: Laser
+}
+
+Dialogue: {
+	CurtainOfAwakening: {
+		Chat: Hay una grieta en el espacio que te hace querer meter la mano.
+		Awaken: Despertar
+		Failed: Entras, pero no pasa nada.
+	}
+}
+
+Bestiary.CurtainOfAwakening: Un portal misterioso a algún lado.

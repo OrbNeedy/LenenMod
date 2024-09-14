@@ -16,15 +16,4 @@ namespace lenen.Content.Common.GlobalItems
             }
         }
     }
-
-    public class DropInExpert : IItemDropRuleCondition, IProvideItemConditionDescription
-    {
-        public bool CanDrop(DropAttemptInfo info) => Main.expertMode;
-        public bool CanShowItemDropInUI() => true;
-
-        public string GetConditionDescription()
-        {
-            return "";
-        }
-    }
 }

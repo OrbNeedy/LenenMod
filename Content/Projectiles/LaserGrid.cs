@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -10,9 +11,9 @@ namespace lenen.Content.Projectiles
         public override void SetDefaults()
         {
             Projectile.width = 20;
-            Projectile.height = 30;
+            Projectile.height = 20;
 
-            Projectile.damage = 30;
+            Projectile.damage = 65;
             Projectile.knockBack = 2;
             Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
@@ -24,6 +25,13 @@ namespace lenen.Content.Projectiles
             Projectile.light = 0.6f;
             Projectile.ownerHitCheck = false;
             Projectile.tileCollide = false;
+
+            DrawOffsetX = -20;
+        }
+
+        public override void AI()
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation();
         }
     }
 }

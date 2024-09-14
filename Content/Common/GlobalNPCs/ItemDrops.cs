@@ -16,15 +16,4 @@ namespace lenen.Content.Common.GlobalNPCs
             }
         }
     }
-
-    public class DropInNormal : IItemDropRuleCondition, IProvideItemConditionDescription
-    {
-        public bool CanDrop(DropAttemptInfo info) => !Main.expertMode;
-        public bool CanShowItemDropInUI() => true;
-
-        public string GetConditionDescription()
-        {
-            return "";
-        }
-    }
 }

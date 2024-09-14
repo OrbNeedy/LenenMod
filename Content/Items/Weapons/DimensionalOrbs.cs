@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using System;
-using lenen.Content.Common.GlobalPlayers;
+using lenen.Content.Common.Players;
 
 namespace lenen.Content.Items.Weapons
 {
@@ -61,8 +61,9 @@ namespace lenen.Content.Items.Weapons
             SoundEngine.PlaySound(SoundID.Item143 with { Volume = 0.5f, PitchVariance = 0.1f }); 
             
             Vector2 orbit = new Vector2(35f, 0).RotatedBy(((Main.GameUpdateCount * MathHelper.Pi) / 20));
-            Vector2 offset = orbit * new Vector2(1f, 0.4f);
+            Vector2 offset = orbit * new Vector2(1.2f, 0.4f);
 
+            offset = offset.RotatedBy(Math.Cos(Main.GameUpdateCount * MathHelper.Pi / 45) * 0.6);
             Vector2 alternatePosition = position + offset.RotatedBy(Math.PI);
             position += offset;
             Projectile.NewProjectile(source, position, 
@@ -84,8 +85,16 @@ namespace lenen.Content.Items.Weapons
                 //SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
                 player.CheckMana(spellCardCost, true, false);
                 player.manaRegenDelay = player.manaRegenCount;
-                int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(30));
                 manager.spellCardTimer = spellCardTimer;
+
+                int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(30));
+                float desperation = 0f;
+                if (manager.desperateBomb)
+                {
+                    dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(45));
+                    desperation = 1f;
+                    manager.spellCardTimer = spellCardTimer+300;
+                }
 
                 for (int i = 0; i <= 30; i++)
                 {
@@ -95,7 +104,7 @@ namespace lenen.Content.Items.Weapons
                     Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center,
                         vel * Main.rand.NextFloat(0.75f, 1.25f),
                         ModContent.ProjectileType<LaserStarter>(), dmg,
-                        Item.knockBack);
+                        Item.knockBack, player.whoAmI, desperation);
                 }
                 return true;
             }

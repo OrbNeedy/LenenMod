@@ -1,11 +1,12 @@
 ﻿using Terraria.ModLoader;
 
-namespace lenen.Content.Common.GlobalPlayers
+namespace lenen.Content.Common.Players
 {
     public class SpellCardManagement : ModPlayer
     {
         public int spellCardTimer = 0;
         public int maxSinceZero = 0;
+        public bool desperateBomb = false;
 
         public override void PreUpdate()
         {
@@ -13,10 +14,16 @@ namespace lenen.Content.Common.GlobalPlayers
             if (spellCardTimer <= 0)
             {
                 maxSinceZero = 0;
-            } else if (spellCardTimer > maxSinceZero)
+            }
+            else if (spellCardTimer > maxSinceZero)
             {
                 maxSinceZero = spellCardTimer;
             }
+        }
+
+        public override void ResetEffects()
+        {
+            desperateBomb = false;
         }
     }
 }

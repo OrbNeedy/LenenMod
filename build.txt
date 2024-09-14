@@ -1,3 +1,6 @@
 displayName = Len'en Mod
 author = Reboot
-version = 0.1
+version = 0.1.2
+hidecode = false
+hideresources = false
+includesource = true

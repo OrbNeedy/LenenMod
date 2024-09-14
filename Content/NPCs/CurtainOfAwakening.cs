@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 
@@ -83,9 +84,7 @@ namespace lenen.Content.NPCs
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
-				new FlavorTextBestiaryInfoElement("A mysterious portal to somewhere."),
-				
-                //new FlavorTextBestiaryInfoElement("Mods.ExampleMod.Bestiary.ExampleBoneMerchant")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.lenen.Bestiary.CurtainOfAwakening"))
             });
         }
 
@@ -118,13 +117,13 @@ namespace lenen.Content.NPCs
         {
             WeightedRandom<string> chat = new WeightedRandom<string>();
 
-            chat.Add("There is a crack in space that makes you want to put your hand in it.");
+            chat.Add(Language.GetTextValue("Mods.lenen.Dialogue.CurtainOfAwakening.Chat"));
             return chat; 
         }
 
         public override void SetChatButtons(ref string button, ref string button2)
         { 
-            button = "Awaken";
+            button = Language.GetTextValue("Mods.lenen.Dialogue.CurtainOfAwakening.Awaken");
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref string shop)
@@ -155,7 +154,7 @@ namespace lenen.Content.NPCs
                         }
                     }
                 }
-                Main.npcChatText = "You get in, but nothing happens.";
+                Main.npcChatText = Language.GetTextValue("Mods.lenen.Dialogue.CurtainOfAwakening.Failed");
             }
         }
 

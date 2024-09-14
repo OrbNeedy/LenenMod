@@ -1,5 +1,7 @@
 # This file will automatically update with entries for new content after a build and reload.
 
+Emotes.NPCEmotes.Command: doortosomewhere
+
 Items: {
 	DimensionalFragment: {
 		DisplayName: Dimensional Fragment
@@ -31,13 +33,32 @@ Items: {
 			Adds {2} Spell Card cooldown to the player.
 			'''
 	}
+
+	DesperateBarrier: {
+		Tooltip:
+			'''
+			A powerful barrier that increases defense by {0}.
+			When health is lower than 50%, increase damage reduction by {1}% and 
+			increase the power and cooldown of all Spell Cards.
+			'''
+		DisplayName: Desperate Barrier
+	}
 }
+
+NPCs.CurtainOfAwakening.DisplayName: Curtain of Awakening
 
 Projectiles: {
 	DimensionalFragmentProjectile.DisplayName: Dimensional Fragment
-	LaserStarter.DisplayName: Laser Starter
-	LaserGrid.DisplayName: Laser Grid
+	LaserStarter.DisplayName: Laser
+	LaserGrid.DisplayName: Laser
 }
 
-NPCs.CurtainOfAwakening.DisplayName: Curtain Of Awakening
-Emotes.NPCEmotes.Command: doortosomewhere
+Dialogue: {
+	CurtainOfAwakening: {
+		Chat: There is a crack in space that makes you want to put your hand in it.
+		Awaken: Awaken
+		Failed: You get in, but nothing happens.
+	}
+}
+
+Bestiary.CurtainOfAwakening: A mysterious portal to somewhere.

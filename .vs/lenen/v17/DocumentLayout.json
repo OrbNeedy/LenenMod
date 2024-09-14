@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\content\\common\\globalnpcs\\itemdrops.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:content\\common\\globalnpcs\\itemdrops.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\content\\common\\globalitems\\bossbagloot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:content\\common\\globalitems\\bossbagloot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\content\\items\\accessories\\desperatebarrier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:content\\items\\accessories\\desperatebarrier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\content\\items\\weapons\\dimensionalorbs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:content\\items\\weapons\\dimensionalorbs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\content\\common\\globalplayers\\spellcardmanagement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:content\\common\\globalplayers\\spellcardmanagement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\content\\projectiles\\lasergrid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:content\\projectiles\\lasergrid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\content\\projectiles\\laserstarter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:content\\projectiles\\laserstarter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,58 +26,57 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ItemDrops.cs",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Common\\GlobalNPCs\\ItemDrops.cs",
-              "RelativeDocumentMoniker": "Content\\Common\\GlobalNPCs\\ItemDrops.cs",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Common\\GlobalNPCs\\ItemDrops.cs",
-              "RelativeToolTip": "Content\\Common\\GlobalNPCs\\ItemDrops.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-14T04:21:31.037Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "BossBagLoot.cs",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Common\\GlobalItems\\BossBagLoot.cs",
-              "RelativeDocumentMoniker": "Content\\Common\\GlobalItems\\BossBagLoot.cs",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Common\\GlobalItems\\BossBagLoot.cs",
-              "RelativeToolTip": "Content\\Common\\GlobalItems\\BossBagLoot.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABUAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-14T04:20:40.641Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "SpellCardManagement.cs",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Common\\GlobalPlayers\\SpellCardManagement.cs",
-              "RelativeDocumentMoniker": "Content\\Common\\GlobalPlayers\\SpellCardManagement.cs",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Common\\GlobalPlayers\\SpellCardManagement.cs",
-              "RelativeToolTip": "Content\\Common\\GlobalPlayers\\SpellCardManagement.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-14T00:57:53.633Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "DimensionalOrbs.cs",
               "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Items\\Weapons\\DimensionalOrbs.cs",
               "RelativeDocumentMoniker": "Content\\Items\\Weapons\\DimensionalOrbs.cs",
               "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Items\\Weapons\\DimensionalOrbs.cs",
               "RelativeToolTip": "Content\\Items\\Weapons\\DimensionalOrbs.cs",
-              "ViewState": "AgIAAEUAAAAAAAAAAAAIwFYAAABUAAAAAAAAAA==",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAgwCoAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-11T06:38:40.335Z",
+              "WhenOpened": "2024-09-14T09:24:18.684Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "LaserGrid.cs",
+              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Projectiles\\LaserGrid.cs",
+              "RelativeDocumentMoniker": "Content\\Projectiles\\LaserGrid.cs",
+              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Projectiles\\LaserGrid.cs",
+              "RelativeToolTip": "Content\\Projectiles\\LaserGrid.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAABoAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-14T08:37:26.519Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LaserStarter.cs",
+              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Projectiles\\LaserStarter.cs",
+              "RelativeDocumentMoniker": "Content\\Projectiles\\LaserStarter.cs",
+              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Projectiles\\LaserStarter.cs",
+              "RelativeToolTip": "Content\\Projectiles\\LaserStarter.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAgwBUAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-14T08:29:45.561Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DesperateBarrier.cs",
+              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Items\\Accessories\\DesperateBarrier.cs",
+              "RelativeDocumentMoniker": "Content\\Items\\Accessories\\DesperateBarrier.cs",
+              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Items\\Accessories\\DesperateBarrier.cs",
+              "RelativeToolTip": "Content\\Items\\Accessories\\DesperateBarrier.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAgwCMAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-14T07:08:58.431Z",
               "EditorCaption": ""
             }
           ]

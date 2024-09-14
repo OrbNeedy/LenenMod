@@ -30,7 +30,7 @@ namespace lenen.Content.Common.GlobalPlayers
                 if (item == ModContent.ItemType<DimensionalOrbs>())
                 {
                     Vector2 orbit = new Vector2(35f, 0).RotatedBy((Main.GameUpdateCount*MathHelper.Pi) / 20);
-                    Vector2 offset = orbit * new Vector2(1f, 0.4f);
+                    Vector2 offset = orbit * new Vector2(1.2f, 0.4f);
 
                     if (offset.Y <= 0)
                     {
@@ -38,6 +38,9 @@ namespace lenen.Content.Common.GlobalPlayers
                     }
                     orbit.Normalize();
                     float darkening = 0.4f + (Math.Abs(orbit.Y) * 0.3f);
+
+                    offset = offset.RotatedBy(Math.Cos(Main.GameUpdateCount * MathHelper.Pi / 45)*0.6);
+
                     offset.Y += 5 + drawInfo.mountOffSet;
                     offset.X -= 2;
 

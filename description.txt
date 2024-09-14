@@ -1,1 +1,21 @@
-Modify this file with a description of your mod.
+The Len'en mod is a mod that currently adds three objects based on Yabusame Houlen and Tenkai Zuifeng.
+In the future, there will be more items added, with more characters in mind.
+
+Ver 0.1.2
++ Added the Desperate Barrier accessory
+* Changed Dimensional Option's orbiting pattern
+
+Ver 0.1.1
++ Added Spanish localization
+* Changed English localization file
+
+El mod de Len'en es un mod que actualmente añade tres objetos basados en Yabusame Houlen y Tenkai Zuifeng.
+En el futuro, se añadirán más, con más personajes en mente.
+
+Ver 0.1.2
++ Añadido el accesorio Barrera Desesperada
+* Cambiado el patrón de orbita de las Opciones Dimensionales
+
+Ver 0.1.1
++ Añadida localización a español
+* Cambiado el archivo de localización en inglés
