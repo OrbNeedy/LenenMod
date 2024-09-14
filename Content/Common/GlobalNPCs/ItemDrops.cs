@@ -10,14 +10,21 @@ namespace lenen.Content.Common.GlobalNPCs
     {
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
-            // Broken, always happens
-            if (!Main.expertMode)
+            if (npc.type == NPCID.WallofFlesh)
             {
-                if (npc.type == NPCID.WallofFlesh)
-                {
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DimensionalFragment>(), 6));
-                }
+                npcLoot.Add(ItemDropRule.ByCondition(new DropInNormal(), ModContent.ItemType<DimensionalFragment>(), 6));
             }
+        }
+    }
+
+    public class DropInNormal : IItemDropRuleCondition, IProvideItemConditionDescription
+    {
+        public bool CanDrop(DropAttemptInfo info) => !Main.expertMode;
+        public bool CanShowItemDropInUI() => true;
+
+        public string GetConditionDescription()
+        {
+            return "";
         }
     }
 }

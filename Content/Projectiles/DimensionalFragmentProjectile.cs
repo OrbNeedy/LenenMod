@@ -13,15 +13,15 @@ namespace lenen.Content.Projectiles
         private static Asset<Texture2D> Extra = null;
         public override void SetDefaults()
         {
-            Projectile.width = 14;
-            Projectile.height = 14;
+            Projectile.width = 16;
+            Projectile.height = 16;
 
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.timeLeft = 1200;
             Projectile.light = 0.25f;
 
-            DrawOffsetX = 0;
+            DrawOffsetX = 2;
         }
 
         public override void AI()
@@ -41,7 +41,7 @@ namespace lenen.Content.Projectiles
             base.OnHitPlayer(target, info);
         }
 
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        /*public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             float widthMultiplier = 14f;
             float collisionPoint = 1f;
@@ -60,6 +60,6 @@ namespace lenen.Content.Projectiles
                 return true;
             }
             return false;
-        }
+        }*/
     }
 }

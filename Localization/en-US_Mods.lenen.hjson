@@ -27,10 +27,17 @@ Items: {
 			Orbs that follow their user and shoot fragments of other dimensions
 			when commanded.
 			Uses {0} mana for each two fragments shot.
+			Right click to use Light Card "Laser Grid", spending {1} mana.
+			Adds {2} Spell Card cooldown to the player.
 			'''
 	}
 }
 
-Projectiles.DimensionalFragmentProjectile.DisplayName: Dimensional Fragment
+Projectiles: {
+	DimensionalFragmentProjectile.DisplayName: Dimensional Fragment
+	LaserStarter.DisplayName: Laser Starter
+	LaserGrid.DisplayName: Laser Grid
+}
+
 NPCs.CurtainOfAwakening.DisplayName: Curtain Of Awakening
-Emotes.NPCEmotes.Command: npcemotes
+Emotes.NPCEmotes.Command: doortosomewhere

@@ -3,15 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\content\\common\\globalplayers\\optionsdrawingfront.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:content\\common\\globalplayers\\optionsdrawingfront.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\content\\common\\globalplayers\\optionsdrawingback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:content\\common\\globalplayers\\optionsdrawingback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\gvmod\\Common\\GlobalPlayers\\AnthemAuraDraw.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\content\\emotebubbles\\npcemotes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:content\\emotebubbles\\npcemotes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\content\\items\\weapons\\dimensionalorbs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,69 +22,43 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AnthemAuraDraw.cs",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\gvmod\\Common\\GlobalPlayers\\AnthemAuraDraw.cs",
-              "RelativeDocumentMoniker": "..\\gvmod\\Common\\GlobalPlayers\\AnthemAuraDraw.cs",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\gvmod\\Common\\GlobalPlayers\\AnthemAuraDraw.cs",
-              "RelativeToolTip": "..\\gvmod\\Common\\GlobalPlayers\\AnthemAuraDraw.cs",
-              "ViewState": "AgIAABoAAAAANDMzMzMbwDMAAABEAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "NPCEmotes.cs",
+              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\EmoteBubbles\\NPCEmotes.cs",
+              "RelativeDocumentMoniker": "Content\\EmoteBubbles\\NPCEmotes.cs",
+              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\EmoteBubbles\\NPCEmotes.cs",
+              "RelativeToolTip": "Content\\EmoteBubbles\\NPCEmotes.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABYAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-12T13:08:31.878Z",
+              "WhenOpened": "2024-09-13T01:50:42.125Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "OptionsDrawingBack.cs",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Common\\GlobalPlayers\\OptionsDrawingBack.cs",
-              "RelativeDocumentMoniker": "Content\\Common\\GlobalPlayers\\OptionsDrawingBack.cs",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Common\\GlobalPlayers\\OptionsDrawingBack.cs",
-              "RelativeToolTip": "Content\\Common\\GlobalPlayers\\OptionsDrawingBack.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAAACEAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-12T12:51:23.529Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "OptionsDrawingFront.cs",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Common\\GlobalPlayers\\OptionsDrawingFront.cs",
-              "RelativeDocumentMoniker": "Content\\Common\\GlobalPlayers\\OptionsDrawingFront.cs",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Common\\GlobalPlayers\\OptionsDrawingFront.cs",
-              "RelativeToolTip": "Content\\Common\\GlobalPlayers\\OptionsDrawingFront.cs",
-              "ViewState": "AgIAADIAAAAAODMzMzPjv0MAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-12T04:39:39.748Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "DimensionalOrbs.cs",
               "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Items\\Weapons\\DimensionalOrbs.cs",
               "RelativeDocumentMoniker": "Content\\Items\\Weapons\\DimensionalOrbs.cs",
               "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Items\\Weapons\\DimensionalOrbs.cs",
               "RelativeToolTip": "Content\\Items\\Weapons\\DimensionalOrbs.cs",
-              "ViewState": "AgIAADQAAAAAmpmZmZkjwEIAAABgAAAAAAAAAA==",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAgwAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-11T06:38:40.335Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "CurtainOfAwakening.cs",
               "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\NPCs\\CurtainOfAwakening.cs",
               "RelativeDocumentMoniker": "Content\\NPCs\\CurtainOfAwakening.cs",
               "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\NPCs\\CurtainOfAwakening.cs",
               "RelativeToolTip": "Content\\NPCs\\CurtainOfAwakening.cs",
-              "ViewState": "AgIAABQAAAAA9/////8PwB4AAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAAIMAAAAAAAAAAAAUwIgAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-12T03:50:57.224Z",
               "EditorCaption": ""

@@ -10,14 +10,21 @@ namespace lenen.Content.Common.GlobalItems
     {
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
-            // Broken, doesn't do anything
-            if (Main.expertMode)
+            if (item.type == ItemID.WallOfFleshBossBag)
             {
-                if (item.type == ItemID.WallOfFleshBossBag)
-                {
-                    itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<DimensionalFragment>(), 1));
-                }
+                itemLoot.Add(ItemDropRule.ByCondition(new DropInExpert(), ModContent.ItemType<DimensionalFragment>(), 6));
             }
+        }
+    }
+
+    public class DropInExpert : IItemDropRuleCondition, IProvideItemConditionDescription
+    {
+        public bool CanDrop(DropAttemptInfo info) => Main.expertMode;
+        public bool CanShowItemDropInUI() => true;
+
+        public string GetConditionDescription()
+        {
+            return "";
         }
     }
 }
