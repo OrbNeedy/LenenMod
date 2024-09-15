@@ -1,4 +1,4 @@
-﻿using lenen.Content.Common.Players;
+﻿using lenen.Common.Players;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

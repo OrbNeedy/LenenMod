@@ -11,10 +11,15 @@
 	<!-- References -->
 	<ItemGroup>
 	  <None Remove="Content\Items\Accessories\DesperateBarrier.png" />
+	  <None Remove="Content\Items\BottleOpener.png" />
 	  <None Remove="Content\Items\DimensionalFragment.png" />
 	  <None Remove="Content\Items\UnstableRock.png" />
+	  <None Remove="Content\Items\Weapons\Swing.png" />
+	  <None Remove="Content\Items\Weapons\SwordShapedBottleOpener.png" />
 	  <None Remove="Content\NPCs\CurtainOfAwakening.png" />
+	  <None Remove="Content\Projectiles\Cut.png" />
 	  <None Remove="Content\Projectiles\DimensionalFragmentProjectile.png" />
+	  <None Remove="Content\Projectiles\InfiniteLaser.png" />
 	  <None Remove="Content\Projectiles\LaserGrid.png" />
 	  <None Remove="Content\Projectiles\LaserStarter.png" />
 	  <None Remove="localization\es-ES_Mods.lenen.hjson" />

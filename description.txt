@@ -1,19 +1,27 @@
-The Len'en mod is a mod that currently adds three objects based on Yabusame Houlen and Tenkai Zuifeng.
+The Len'en mod is a mod that currently adds some objects from the Len'en project series.
 In the future, there will be more items added, with more characters in mind.
 
 Ver 0.1.2
 + Added the Desperate Barrier accessory
++ Added Bottle Opener
++ Added Sword-Shaped Bottle Opener
++ Added Tasouken
++ Decreased additional Spell Card cooldown time from upgraded Laser Grid
 * Changed Dimensional Option's orbiting pattern
 
 Ver 0.1.1
 + Added Spanish localization
 * Changed English localization file
 
-El mod de Len'en es un mod que actualmente añade tres objetos basados en Yabusame Houlen y Tenkai Zuifeng.
+El mod de Len'en es un mod que actualmente añade algunos objetos de la serie de Len'en project.
 En el futuro, se añadirán más, con más personajes en mente.
 
 Ver 0.1.2
 + Añadido el accesorio Barrera Desesperada
++ Añadido el Destapador
++ Añadido el Destapador con forma de espada
++ Añadido Tasouken
++ Reducido el tiempo adicional de enfriamento de Spell card de Red Laser mejorada
 * Cambiado el patrón de orbita de las Opciones Dimensionales
 
 Ver 0.1.1

@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using System;
-using lenen.Content.Common.Players;
+using lenen.Common.Players;
 
 namespace lenen.Content.Items.Weapons
 {
@@ -93,7 +93,7 @@ namespace lenen.Content.Items.Weapons
                 {
                     dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(45));
                     desperation = 1f;
-                    manager.spellCardTimer = spellCardTimer+300;
+                    manager.spellCardTimer = spellCardTimer+180;
                 }
 
                 for (int i = 0; i <= 30; i++)

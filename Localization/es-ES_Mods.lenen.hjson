@@ -34,7 +34,7 @@ Items: {
 			cuando se les ordena.
 			Usa {0} mana por cada dos fragmentos disparados.
 			Click derecho para usar Carta de Luz "Red Laser", gastando {1} mana.
-			Añade {2} de enfriamiento al jugador.
+			Añade {2} de enfriamiento de Spell Card al jugador.
 			'''
 	}
 
@@ -47,6 +47,32 @@ Items: {
 			'''
 		DisplayName: Barrera Desesperada
 	}
+
+	BottleOpener: {
+		DisplayName: Destapador
+		Tooltip: Un simple destapador de botellas sin cualidades notables.
+	}
+
+	SwordShapedBottleOpener: {
+		DisplayName: Destapador con forma de espada
+		Tooltip:
+			'''
+			Un destapador en la forma de una espada.
+			Podría ser usado como una espada también, si quieres.
+			La artesanía es asombrosa.
+			'''
+	}
+
+	Tasouken: {
+		DisplayName: Tasouken
+		Tooltip:
+			'''
+			La legendaria espada segadora de nubes, Tasouken, una de las regalias imperiales.
+			Hace un corte en la posición del mouse.
+			Click derecho para usar "Espada Segadora de Nubes".
+			Añade {0} enfriamiento de Spell Card al jugador.
+			'''
+	}
 }
 
 NPCs.CurtainOfAwakening.DisplayName: Cortina del Despertar
@@ -55,6 +81,9 @@ Projectiles: {
 	DimensionalFragmentProjectile.DisplayName: Fragmento Dimensional
 	LaserStarter.DisplayName: Laser
 	LaserGrid.DisplayName: Laser
+	Swing.DisplayName: Swing
+	Cut.DisplayName: Corte
+	InfiniteLaser.DisplayName: Nubes partientes
 }
 
 Dialogue: {

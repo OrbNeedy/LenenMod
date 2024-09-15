@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("lenen")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+acfc1b3d7a7a439c0abfd8b2a8eae49279e5a572")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b67c4c2b3225372f455c2ba2a080e35da3b31ac8")]
 [assembly: System.Reflection.AssemblyProductAttribute("lenen")]
 [assembly: System.Reflection.AssemblyTitleAttribute("lenen")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

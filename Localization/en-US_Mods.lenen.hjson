@@ -43,6 +43,32 @@ Items: {
 			'''
 		DisplayName: Desperate Barrier
 	}
+
+	BottleOpener: {
+		DisplayName: Bottle Opener
+		Tooltip: A simple bottle opener with no notable qualities to it.
+	}
+
+	SwordShapedBottleOpener: {
+		DisplayName: Sword-shaped Bottle Opener
+		Tooltip:
+			'''
+			A bottle opener in the shape of a sword.
+			It could be used as a sword as well, if you want.
+			The craftsmanship is amazing.
+			'''
+	}
+
+	Tasouken: {
+		DisplayName: Tasouken
+		Tooltip:
+			'''
+			The legendary cloud-mowing sword, Tasouken, one of the imperial regalias.
+			Makes a cut in the mouse position.
+			Right click to use "Cloud Mowing Sword".
+			Adds {0} Spell Card cooldown to the player.
+			'''
+	}
 }
 
 NPCs.CurtainOfAwakening.DisplayName: Curtain of Awakening
@@ -51,6 +77,9 @@ Projectiles: {
 	DimensionalFragmentProjectile.DisplayName: Dimensional Fragment
 	LaserStarter.DisplayName: Laser
 	LaserGrid.DisplayName: Laser
+	Swing.DisplayName: Swing
+	Cut.DisplayName: Cut
+	InfiniteLaser.DisplayName: Parting Clouds
 }
 
 Dialogue: {
