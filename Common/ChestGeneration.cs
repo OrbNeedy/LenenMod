@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using lenen.Content.Items;
+using lenen.Content.Items.Weapons;
 
 namespace lenen.Common
 {
@@ -9,11 +10,11 @@ namespace lenen.Common
     {
         public override void PostWorldGen()
         {
-            int[] woodChests = { ModContent.ItemType<BottleOpener>() };
+            int[] woodChests = { ModContent.ItemType<BottleOpener>(), ModContent.ItemType<RustedKnife>() };
             //int[] goldChestItems;
             int[] lockedGoldChestItems = { ModContent.ItemType<BottleOpener>() };
             int[] shadowChestItems = { ModContent.ItemType<BottleOpener>() };
-            //int[] specialLolaLoot;
+            int[] spiderChestItems = { ModContent.ItemType<RustedKnife>() };
             for (int chestIndex = 0; chestIndex < Main.maxChests; chestIndex++)
             {
                 int chestItemsChoice = 0;
@@ -24,7 +25,7 @@ namespace lenen.Common
                     {
                         // Wood chest
                         case 0:
-                            PutInChest(chest, ref chestItemsChoice, woodChests, !Main.rand.NextBool(10));
+                            PutInChest(chest, ref chestItemsChoice, woodChests, !Main.rand.NextBool(12));
                             break;
                         // Gold chest
                         case 1 * 36:
@@ -34,8 +35,23 @@ namespace lenen.Common
                             PutInChest(chest, ref chestItemsChoice, lockedGoldChestItems, !Main.rand.NextBool(6));
                             break;
                         // Shadow chest
+                        case 3 * 36:
+                            break;
+                        // Locked Shadow chest
                         case 4 * 36:
                             PutInChest(chest, ref chestItemsChoice, shadowChestItems, !Main.rand.NextBool(2));
+                            break;
+                        // Vine chest
+                        case 12 * 36:
+                            PutInChest(chest, ref chestItemsChoice, spiderChestItems, !Main.rand.NextBool(12));
+                            break;
+                        // Spider chest
+                        case 16 * 36:
+                            PutInChest(chest, ref chestItemsChoice, spiderChestItems, !Main.rand.NextBool(12));
+                            break;
+                        // Ocean chest
+                        case 18 * 36:
+                            PutInChest(chest, ref chestItemsChoice, spiderChestItems, !Main.rand.NextBool(6));
                             break;
                     }
                 }

@@ -73,6 +73,32 @@ Items: {
 			Añade {0} enfriamiento de Spell Card al jugador.
 			'''
 	}
+
+	AssassinKnife: {
+		DisplayName: Cuchillo para lanzar
+		Tooltip:
+			'''
+			Un cuchillo para lanzar hecho con cualidad asombrosa.
+			A throwing knife made with amazing quality.
+			Right click to throw additional knives every few seconds.
+			Click derecho para lanzar cuchillos adicionales cada cierto tiempo.
+			'''
+	}
+
+	RustedKnife: {
+		DisplayName: Cuchillo oxidado
+		Tooltip: Solo es un cuchillo oxidado, probablemente está lleno de infecciones.
+	}
+
+	ImprovedKnife: {
+		DisplayName: Colt Snake
+		Tooltip:
+			'''
+			Un set de cuchillos hechos para un asesino.
+			Click derecho para usar Carta Cortada "Serpiente Cortada".
+			Añade {0} enfriamiento de Spell Card al jugador.
+			'''
+	}
 }
 
 NPCs.CurtainOfAwakening.DisplayName: Cortina del Despertar
@@ -84,6 +110,11 @@ Projectiles: {
 	Swing.DisplayName: Swing
 	Cut.DisplayName: Corte
 	InfiniteLaser.DisplayName: Nubes partientes
+	ConcealedKnife.DisplayName: Cuchillo
+	RustyKnife.DisplayName: Cuchillo oxidado
+	BoneKnife.DisplayName: Cuchillo de hueso
+	DarkKnife.DisplayName: Cuchillo oscuro
+	Pellet.DisplayName: Pellet
 }
 
 Dialogue: {

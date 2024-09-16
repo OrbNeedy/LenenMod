@@ -1,6 +1,14 @@
 The Len'en mod is a mod that currently adds some objects from the Len'en project series.
 In the future, there will be more items added, with more characters in mind.
 
+Ver 0.1.3
++ Added Rusty knife
++ Added Throwing knives
++ Added Colt Snake
+* Changed the color and position of the Spell Card cooldown meter
+* Fixed Dimensional Orbs consuming potions when they shouldn't
+* Fixed Sword of Parting Clouds not cutting grass that colides with it's hitbox
+
 Ver 0.1.2
 + Added the Desperate Barrier accessory
 + Added Bottle Opener
@@ -15,6 +23,14 @@ Ver 0.1.1
 
 El mod de Len'en es un mod que actualmente añade algunos objetos de la serie de Len'en project.
 En el futuro, se añadirán más, con más personajes en mente.
+
+Ver 0.1.3
++ Añadido Cuchillo oxidado
++ Añadido cuchillos para lanzar
++ Añadido Colt Snake
+* Cambiado el color y posición del medidor de enfriamiento de Spell Cards
+* Arreglado los Orbes Dimensionales consumiendo pociones cuando no deberían
+* Arreglado la Espada de nubes partientes no cortando pasto que colisiona con su hitbox
 
 Ver 0.1.2
 + Añadido el accesorio Barrera Desesperada

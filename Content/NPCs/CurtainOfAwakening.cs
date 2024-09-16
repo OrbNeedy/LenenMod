@@ -133,13 +133,17 @@ namespace lenen.Content.NPCs
                 // It needs to be during runtime because on spawn, lists haven't been loaded
                 // Probably
                 Dictionary<int, int> items = GetItems();
+                Main.NewText("List: " + items.ToString());
+                Main.NewText("Awaken condition: " + CanItemSpawn(items[ModContent.ItemType<AssassinKnife>()]));
                 for (int i = 0; i < Main.LocalPlayer.inventory.Length; i++)
                 {
                     if (items.Keys.Contains(Main.LocalPlayer.inventory[i].type))
                     {
+                        Main.NewText("Hit");
                         int itemType = Main.LocalPlayer.inventory[i].type;
                         if (CanItemSpawn(itemType))
                         {
+                            Main.NewText("Hit 2");
                             Main.LocalPlayer.inventory[i].TurnToAir();
                             Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_GiftOrReward(), items[itemType]);
 
@@ -154,6 +158,7 @@ namespace lenen.Content.NPCs
                         }
                     }
                 }
+                Main.NewText("Miss");
                 Main.npcChatText = Language.GetTextValue("Mods.lenen.Dialogue.CurtainOfAwakening.Failed");
             }
         }
@@ -167,13 +172,6 @@ namespace lenen.Content.NPCs
                     Dust.NewDust(NPC.position, 30, 52, DustID.Smoke);
                 }
             }
-        }
-
-        public override void AddShops()
-        {
-            new NPCShop(Type)
-                .Add<DimensionalFragment>(Condition.Hardmode)
-                .Register();
         }
 
         public override void AI()
@@ -196,7 +194,9 @@ namespace lenen.Content.NPCs
         {
             Dictionary<int, int> items = new Dictionary<int, int>
             {
-                [ModContent.ItemType<DimensionalFragment>()] = ModContent.ItemType<DimensionalOrbs>()
+                [ModContent.ItemType<DimensionalFragment>()] = ModContent.ItemType<DimensionalOrbs>(),
+                [ModContent.ItemType<AssassinKnife>()] = ModContent.ItemType<ImprovedKnife>()
+
             };
             return items;
         }
@@ -206,6 +206,10 @@ namespace lenen.Content.NPCs
             if (item == ModContent.ItemType<DimensionalFragment>())
             {
                 return NPC.downedGolemBoss;
+            }
+            if (item == ModContent.ItemType<AssassinKnife>())
+            {
+                return NPC.downedBoss3;
             }
             return false;
         }

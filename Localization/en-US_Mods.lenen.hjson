@@ -69,6 +69,30 @@ Items: {
 			Adds {0} Spell Card cooldown to the player.
 			'''
 	}
+
+	AssassinKnife: {
+		DisplayName: Throwing Knife
+		Tooltip:
+			'''
+			A throwing knife made with amazing quality.
+			Right click to throw additional knives every few seconds.
+			'''
+	}
+
+	RustedKnife: {
+		DisplayName: Rusty Knife
+		Tooltip: Just a rusty knife, it's probably full of infections.
+	}
+
+	ImprovedKnife: {
+		DisplayName: Colt Snake
+		Tooltip:
+			'''
+			A set of knives made for an assassin.
+			Right click to use Cut card "Slit Snake".
+			Adds {0} Spell Card cooldown to the player.
+			'''
+	}
 }
 
 NPCs.CurtainOfAwakening.DisplayName: Curtain of Awakening
@@ -80,6 +104,11 @@ Projectiles: {
 	Swing.DisplayName: Swing
 	Cut.DisplayName: Cut
 	InfiniteLaser.DisplayName: Parting Clouds
+	ConcealedKnife.DisplayName: Knife
+	RustyKnife.DisplayName: Rusty Knife
+	BoneKnife.DisplayName: Bone Knife
+	DarkKnife.DisplayName: Dark Knife
+	Pellet.DisplayName: Pellet
 }
 
 Dialogue: {

@@ -10,9 +10,16 @@ namespace lenen.Common.GlobalItems
     {
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
-            if (item.type == ItemID.WallOfFleshBossBag)
+            switch (item.type)
             {
-                itemLoot.Add(ItemDropRule.ByCondition(new DropInExpert(), ModContent.ItemType<DimensionalFragment>(), 6));
+                case ItemID.WallOfFleshBossBag:
+                    itemLoot.Add(ItemDropRule.ByCondition(new DropInExpert(),
+                        ModContent.ItemType<DimensionalFragment>(), 6));
+                    break;
+                case ItemID.SkeletronBossBag:
+                    itemLoot.Add(ItemDropRule.ByCondition(new DropInExpert(),
+                        ModContent.ItemType<AssassinKnife>(), 3));
+                    break;
             }
         }
     }

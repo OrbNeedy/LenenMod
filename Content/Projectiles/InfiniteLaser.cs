@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.Enums;
 
 namespace lenen.Content.Projectiles
 {
@@ -52,6 +53,11 @@ namespace lenen.Content.Projectiles
             Projectile.velocity = Vector2.Zero;
         }
 
+        public override bool ShouldUpdatePosition()
+        {
+            return false;
+        }
+
         public override void AI()
         {
             Projectile.Center = origin + offset;
@@ -65,17 +71,23 @@ namespace lenen.Content.Projectiles
             }
             if (Projectile.timeLeft > 20 && Projectile.timeLeft <= 90)
             {
-                /*Projectile.velocity = new Vector2(0, Projectile.ai[1] * Projectile.scale)
-                    .RotatedBy(Projectile.Center.DirectionFrom(origin).ToRotation());
-                if (Projectile.Center.Distance(origin) > 100 * Projectile.scale)
-                {
-                    Main.NewText("Too far");
-                }*/
                 offset = offset.RotatedBy(Projectile.ai[1]);
             } else
             {
                 Projectile.velocity = Vector2.Zero;
             }
+        }
+
+        public override void CutTiles()
+        {
+            Vector2 starting = (Projectile.Center + new Vector2(0, 117 * Projectile.scale)).RotatedBy(Projectile.rotation, Projectile.Center);
+            Vector2 ending = (Projectile.Center + new Vector2(0, -117 * Projectile.scale)).RotatedBy(Projectile.rotation, Projectile.Center);
+            float width = 10f * Projectile.scale;
+
+            DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
+            Utils.TileActionAttempt cut = new Utils.TileActionAttempt(DelegateMethods.CutTiles);
+
+            Utils.PlotTileLine(starting, ending, width * Projectile.scale, cut);
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

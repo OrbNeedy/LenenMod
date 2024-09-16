@@ -62,30 +62,34 @@ namespace lenen.Content.Items.Weapons
             SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
             if (manager.spellCardTimer <= 0)
             {
-                player.altFunctionUse = 1;
-                player.manaRegenDelay = player.manaRegenCount;
-                manager.spellCardTimer = spellCardTimer;
-
-                int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(15));
-                float desperation = MathHelper.TwoPi / 210;
-                if (manager.desperateBomb)
-                {
-                    dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(27));
-                    desperation = MathHelper.TwoPi / 70;
-                    manager.spellCardTimer = spellCardTimer + 300;
-                }
-
-                float scale = 7;
-                int direction = player.Center.X <= Main.MouseWorld.X ? 1 : -1;
-                Vector2 vel = new Vector2(-1, 0);
-                Vector2 offset = new Vector2(0, -100 * scale);//new Vector2(-117 * 5 * direction, 70 * 5);
-
-                Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center + offset, vel, 
-                    ModContent.ProjectileType<InfiniteLaser>(), dmg, Item.knockBack, player.whoAmI, 4, 
-                    desperation * direction, scale);
+                SpellCard(player);
                 return true;
             }
             return false;
+        }
+
+        private void SpellCard(Player player)
+        {
+            SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
+            manager.spellCardTimer = spellCardTimer;
+
+            int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(15));
+            float desperation = MathHelper.TwoPi / 210;
+            if (manager.desperateBomb)
+            {
+                dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(27));
+                desperation = MathHelper.TwoPi / 70;
+                manager.spellCardTimer = spellCardTimer + 300;
+            }
+
+            float scale = 7;
+            int direction = player.Center.X <= Main.MouseWorld.X ? 1 : -1;
+            Vector2 vel = new Vector2(-1, 0);
+            Vector2 offset = new Vector2(0, -100 * scale);//new Vector2(-117 * 5 * direction, 70 * 5);
+
+            Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center + offset, vel,
+                ModContent.ProjectileType<InfiniteLaser>(), dmg, Item.knockBack, player.whoAmI, 4,
+                desperation * direction, scale);
         }
 
         public override void AddRecipes()

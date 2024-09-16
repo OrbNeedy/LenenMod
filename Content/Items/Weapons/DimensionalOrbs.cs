@@ -79,34 +79,39 @@ namespace lenen.Content.Items.Weapons
         public override bool AltFunctionUse(Player player)
         {
             SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
-            if (player.CheckMana(spellCardCost, false, false) && manager.spellCardTimer <= 0)
+            if (player.CheckMana(spellCardCost, false, true) && manager.spellCardTimer <= 0)
             {
-                player.altFunctionUse = 1;
-                //SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
-                player.CheckMana(spellCardCost, true, false);
-                player.manaRegenDelay = player.manaRegenCount;
-                manager.spellCardTimer = spellCardTimer;
-
-                int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(30));
-                float desperation = 0f;
-                if (manager.desperateBomb)
-                {
-                    dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(45));
-                    desperation = 1f;
-                    manager.spellCardTimer = spellCardTimer+180;
-                }
-
-                for (int i = 0; i <= 30; i++)
-                {
-                    Vector2 vel = new Vector2(10, 0).RotatedBy(
-                        -Main.rand.NextFloat((int)Math.PI));
-                    int c = player.GetWeaponCrit(Item);
-                    Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center,
-                        vel * Main.rand.NextFloat(0.75f, 1.25f),
-                        ModContent.ProjectileType<LaserStarter>(), dmg,
-                        Item.knockBack, player.whoAmI, desperation);
-                }
+                SpellCard(player);
                 return true;
+            }
+            return false;
+        }
+
+        private bool SpellCard(Player player)
+        {
+            SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
+            player.CheckMana(spellCardCost, true, true);
+            player.manaRegenDelay = player.manaRegenCount;
+            manager.spellCardTimer = spellCardTimer;
+
+            int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(30));
+            float desperation = 0f;
+            if (manager.desperateBomb)
+            {
+                dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(45));
+                desperation = 1f;
+                manager.spellCardTimer = spellCardTimer + 180;
+            }
+
+            for (int i = 0; i <= 30; i++)
+            {
+                Vector2 vel = new Vector2(10, 0).RotatedBy(
+                    -Main.rand.NextFloat((int)Math.PI));
+                int c = player.GetWeaponCrit(Item);
+                Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center,
+                    vel * Main.rand.NextFloat(0.75f, 1.25f),
+                    ModContent.ProjectileType<LaserStarter>(), dmg,
+                    Item.knockBack, player.whoAmI, desperation);
             }
             return false;
         }
