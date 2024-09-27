@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace lenen.Content.Projectiles
@@ -20,6 +22,12 @@ namespace lenen.Content.Projectiles
             Projectile.timeLeft = 600;
             Projectile.light = 0.5f;
             Projectile.ownerHitCheck = false;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/e_shot_00"), Projectile.Center);
+            base.OnSpawn(source);
         }
 
         public override void AI()
@@ -46,15 +54,6 @@ namespace lenen.Content.Projectiles
                             Projectile.Center, velocity.RotatedBy(MathHelper.PiOver2 * i),
                             ModContent.ProjectileType<LaserGrid>(), 75, 2, Projectile.owner);
                 }
-                /*Projectile.NewProjectile(Projectile.GetSource_FromThis(),
-                        Projectile.Center, new Vector2(0, 6),
-                        ModContent.ProjectileType<LaserGrid>(), 75, 2, Projectile.owner);
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(),
-                        Projectile.Center, new Vector2(0, -6),
-                        ModContent.ProjectileType<LaserGrid>(), 75, 2, Projectile.owner);
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(),
-                        Projectile.Center, new Vector2(-6, 0),
-                        ModContent.ProjectileType<LaserGrid>(), 75, 2, Projectile.owner);*/
             } else
             {
                 if (Main.rand.NextBool()) velocity *= -1;

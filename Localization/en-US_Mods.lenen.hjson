@@ -93,6 +93,62 @@ Items: {
 			Adds {0} Spell Card cooldown to the player.
 			'''
 	}
+
+	AkaWing: {
+		DisplayName: Fiery Wing
+		Tooltip:
+			'''
+			A wing that protects the user against some Ice related debuffs.
+			May be part of a greater whole.
+			'''
+	}
+
+	HooakaWings: {
+		DisplayName: Dual Wings
+		Tooltip:
+			'''
+			Wings that protect the user against ice and fire related debuffs.
+			Is the greater whole.
+			'''
+	}
+
+	HooWing: {
+		DisplayName: Icy Wing
+		Tooltip:
+			'''
+			A wing that protects the user against some Fire related debuffs.
+			May be part of a greater whole.
+			'''
+	}
+
+	BrokenBirdDrone: {
+		DisplayName: Broken Drone
+		Tooltip:
+			'''
+			A broken drone in the shape of a bird.
+			It's not a bird you can recognize.
+			'''
+	}
+
+	FunctionalBirdDrone: {
+		DisplayName: Repaired Drone
+		Tooltip:
+			'''
+			A functional version of the drone that can now shoot.
+			The mechanism is beyond your ability to fully repair.
+			'''
+	}
+
+	TrueBirdDrone: {
+		DisplayName: Upgraded Drone
+		Tooltip:
+			'''
+			The drone you fixed is now completed, came with other 3 drones.
+			Each drone shoots lasers in various directions.
+			Right click to use RNA "Retrovirus".
+			Adds {0} Spell Card cooldown to the player.
+			'''
+	}
 }
 
 NPCs.CurtainOfAwakening.DisplayName: Curtain of Awakening
@@ -109,6 +165,12 @@ Projectiles: {
 	BoneKnife.DisplayName: Bone Knife
 	DarkKnife.DisplayName: Dark Knife
 	Pellet.DisplayName: Pellet
+	WeakBirdProjectile.DisplayName: Weak Bird Projectile
+	KuroLaser.DisplayName: Laser
+	KuroLaserHoldout.DisplayName: Laser
+	BirdOption.DisplayName: Kuroji Option
+	Retrovirus.DisplayName: Retrovirus
+	SmallBullet.DisplayName: Bullet
 }
 
 Dialogue: {
@@ -120,3 +182,10 @@ Dialogue: {
 }
 
 Bestiary.CurtainOfAwakening: A mysterious portal to somewhere.
+
+Buffs: {
+	Kurovirus: {
+		DisplayName: Retrovirus
+		Description: Something is messing with your DNA.
+	}
+}

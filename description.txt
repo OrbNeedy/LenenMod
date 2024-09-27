@@ -1,45 +1,77 @@
 The Len'en mod is a mod that currently adds some objects from the Len'en project series.
 In the future, there will be more items added, with more characters in mind.
 
+Ver 0.1.4.8
++ Added/Finished the Upgraded drone weapon
++ Increased the number of projectiles for the Sword of Parting Clouds from 4 to 8
+- Decreased the damage made by each projectile of the Sword of Parting Clouds from 35 to 30
+- Decreased the damage made by the Repaired drone from 50 to 40
+* Changed the sprite for the Repaired drone
+* Slightly modified the sprite for the Tasouken
+* Added more light to the Sword of Parting Clouds
+* Changed the wording of previous descriptions of older versions
+
+Ver 0.1.3.8
++ Added the Fiery wing, Icy wing, and dual wings
++ Added the Broken Drone and the Repaired drone
+* Fixed many recipes only accepting a specific ore and not it's counterparts
+* Many balance changes regarding the damage of existing weapons
+
 Ver 0.1.3
-+ Added Rusty knife
-+ Added Throwing knives
-+ Added Colt Snake
++ Added the Rusty knife
++ Added the Throwing knives
++ Added the Colt Snake
 * Changed the color and position of the Spell Card cooldown meter
-* Fixed Dimensional Orbs consuming potions when they shouldn't
-* Fixed Sword of Parting Clouds not cutting grass that colides with it's hitbox
+* Fixed the Dimensional Orbs consuming potions when they shouldn't
+* Fixed the Sword of Parting Clouds not cutting grass that colides with it's hitbox
 
 Ver 0.1.2
 + Added the Desperate Barrier accessory
-+ Added Bottle Opener
-+ Added Sword-Shaped Bottle Opener
-+ Added Tasouken
-+ Decreased additional Spell Card cooldown time from upgraded Laser Grid
-* Changed Dimensional Option's orbiting pattern
++ Added the Bottle Opener
++ Added the Sword-Shaped Bottle Opener
++ Added the Tasouken
++ Decreased the additional Spell Card cooldown time from desperate Laser Grid
+* Changed the Dimensional Option's orbiting pattern
 
 Ver 0.1.1
-+ Added Spanish localization
-* Changed English localization file
++ Added a Spanish localization
+* Changed the English localization file
 
 El mod de Len'en es un mod que actualmente añade algunos objetos de la serie de Len'en project.
 En el futuro, se añadirán más, con más personajes en mente.
 
+Ver 0.1.4.8
++ Añadido/terminado el arma Dron mejorado
++ Aumentado el numero de proyectiles de la Espada de nubes partientes de 4 a 8
+- Reducido el daño hecho por cada proyectil de la Espada de nubes partientes de 35 a 30
+- Reducido el daño hecho por el Dron reparado de 50 a 40
+* Cambiado el sprite del Dron reparado
+* Modificado el sprite de Tasouken levemente
+* Añadidas más luces a la Espada de nubes partientes
+* Cambio de redacción de descripciones previas de versiones antiguas
+
+Ver 0.1.3.8
++ Añadidas las Ala en llamas, Ala fría, y Alas duales
++ Añadido el Dron roto y el Dron reparado
+* Arreglo de muchas recetas solo pudiendo aceptar un mineral especifico y no su contraparte
+* Muchos cambios de balance con respecto al daño de armas existentes
+
 Ver 0.1.3
-+ Añadido Cuchillo oxidado
-+ Añadido cuchillos para lanzar
++ Añadido el Cuchillo oxidado
++ Añadidos los Cuchillos para lanzar
 + Añadido Colt Snake
-* Cambiado el color y posición del medidor de enfriamiento de Spell Cards
-* Arreglado los Orbes Dimensionales consumiendo pociones cuando no deberían
-* Arreglado la Espada de nubes partientes no cortando pasto que colisiona con su hitbox
+* Cambio del color y posición del medidor de enfriamiento de Spell Cards
+* Arreglo de el consumo de pociones de los Orbes Dimensionales cuando no deberían
+* Arreglo de la Espada de nubes partientes no cortando pasto que colisiona con su hitbox
 
 Ver 0.1.2
 + Añadido el accesorio Barrera Desesperada
 + Añadido el Destapador
 + Añadido el Destapador con forma de espada
-+ Añadido Tasouken
-+ Reducido el tiempo adicional de enfriamento de Spell card de Red Laser mejorada
-* Cambiado el patrón de orbita de las Opciones Dimensionales
++ Añadido el Tasouken
++ Reducción del tiempo adicional de enfriamento de Spell card de Red Laser desesperada
+* Cambio en el patrón de orbita de las Opciones Dimensionales
 
 Ver 0.1.1
-+ Añadida localización a español
-* Cambiado el archivo de localización en inglés
++ Añadida la localización a español
+* Cambio en el archivo de localización en inglés

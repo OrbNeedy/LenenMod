@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
+using Terraria.Audio;
 
 namespace lenen.Content.Projectiles
 {
@@ -27,6 +29,12 @@ namespace lenen.Content.Projectiles
             Projectile.ownerHitCheck = false;
             Projectile.tileCollide = false;
             Projectile.light = 0.5f;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/e_shot_00"), Projectile.Center);
+            base.OnSpawn(source);
         }
 
         public override void AI()

@@ -1,9 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.DataStructures;
 using Terraria;
 using Terraria.ModLoader;
@@ -63,7 +58,7 @@ namespace lenen.Content.Projectiles
             Projectile.Center = origin + offset;
             Projectile.rotation = origin.DirectionTo(Projectile.Center).ToRotation() - MathHelper.PiOver2;
             // Projectile.rotation = origin.DirectionTo(Projectile.Center).ToRotation() - MathHelper.PiOver2;
-            if (Projectile.timeLeft == 105 && Projectile.ai[0] > 0)
+            if (Projectile.timeLeft == 108 && Projectile.ai[0] > 0)
             {
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(-1, 0),
                     ModContent.ProjectileType<InfiniteLaser>(), Projectile.damage, Projectile.knockBack, 
@@ -76,6 +71,13 @@ namespace lenen.Content.Projectiles
             {
                 Projectile.velocity = Vector2.Zero;
             }
+
+            Vector2 starting = (Projectile.Center + new Vector2(0, 117 * Projectile.scale)).RotatedBy(Projectile.rotation, Projectile.Center);
+            Vector2 ending = (Projectile.Center + new Vector2(0, -117 * Projectile.scale)).RotatedBy(Projectile.rotation, Projectile.Center);
+
+            DelegateMethods.v3_1 = Color.White.ToVector3() * 1;
+            Utils.PlotTileLine(starting, ending, 20f*Projectile.scale, 
+                new Utils.TileActionAttempt(DelegateMethods.CastLight));
         }
 
         public override void CutTiles()
@@ -85,9 +87,9 @@ namespace lenen.Content.Projectiles
             float width = 10f * Projectile.scale;
 
             DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
-            Utils.TileActionAttempt cut = new Utils.TileActionAttempt(DelegateMethods.CutTiles);
 
-            Utils.PlotTileLine(starting, ending, width * Projectile.scale, cut);
+            Utils.PlotTileLine(starting, ending, width * Projectile.scale, 
+                new Utils.TileActionAttempt(DelegateMethods.CutTiles));
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

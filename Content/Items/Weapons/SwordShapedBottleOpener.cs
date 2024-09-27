@@ -11,8 +11,7 @@ namespace lenen.Content.Items.Weapons
     {
         public override void SetDefaults()
         {
-            // Item.CloneDefaults(ItemID.Excalibur);
-            Item.damage = 10;
+            Item.damage = 20;
             Item.shoot = ModContent.ProjectileType<Swing>();
             Item.DamageType = DamageClass.Melee;
             Item.knockBack = 6;
@@ -45,7 +44,8 @@ namespace lenen.Content.Items.Weapons
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.IronBar, 20)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 20)
+                .AddRecipeGroup("CrimtaneBar", 10)
                 .AddIngredient(ItemID.ClayBlock, 5)
                 .AddIngredient<BottleOpener>(1)
                 .AddTile(TileID.Hellforge)

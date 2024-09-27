@@ -1,8 +1,6 @@
 ﻿using lenen.Common.Players;
 using lenen.Content.Projectiles;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -16,7 +14,7 @@ namespace lenen.Content.Items.Weapons
         private int spellCardTimer = 600;
         public override void SetDefaults()
         {
-            Item.damage = 45;
+            Item.damage = 60;
             Item.shoot = ModContent.ProjectileType<Swing>();
             Item.DamageType = DamageClass.Melee;
             Item.knockBack = 10;
@@ -24,7 +22,7 @@ namespace lenen.Content.Items.Weapons
 
             Item.width = 64;
             Item.height = 66;
-            Item.value = Item.sellPrice(0, 0, 15, 0);
+            Item.value = Item.sellPrice(0, 1, 10, 50);
             Item.rare = ItemRarityID.Blue;
 
             Item.useTime = 20;
@@ -73,11 +71,11 @@ namespace lenen.Content.Items.Weapons
             SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
             manager.spellCardTimer = spellCardTimer;
 
-            int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(15));
+            int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(20));
             float desperation = MathHelper.TwoPi / 210;
             if (manager.desperateBomb)
             {
-                dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(27));
+                dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(35));
                 desperation = MathHelper.TwoPi / 70;
                 manager.spellCardTimer = spellCardTimer + 300;
             }
@@ -88,7 +86,7 @@ namespace lenen.Content.Items.Weapons
             Vector2 offset = new Vector2(0, -100 * scale);//new Vector2(-117 * 5 * direction, 70 * 5);
 
             Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center + offset, vel,
-                ModContent.ProjectileType<InfiniteLaser>(), dmg, Item.knockBack, player.whoAmI, 4,
+                ModContent.ProjectileType<InfiniteLaser>(), dmg, Item.knockBack, player.whoAmI, 8,
                 desperation * direction, scale);
         }
 

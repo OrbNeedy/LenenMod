@@ -12,7 +12,7 @@ namespace lenen.Content.Items.Weapons
         private int knifeCooldown = 0;
         public override void SetDefaults()
         {
-            Item.damage = 15;
+            Item.damage = 20;
             Item.shoot = ModContent.ProjectileType<ConcealedKnife>();
             Item.shootSpeed = 8f;
             Item.knockBack = 4f;
@@ -79,7 +79,7 @@ namespace lenen.Content.Items.Weapons
                 .Register();
 
             CreateRecipe()
-                .AddRecipeGroup(RecipeGroupID.IronBar, 15)
+                .AddRecipeGroup("GoldBar", 15)
                 .AddIngredient(ItemID.Obsidian, 20)
                 .AddIngredient(ItemID.MeteoriteBar, 10)
                 .AddTile(TileID.Anvils)

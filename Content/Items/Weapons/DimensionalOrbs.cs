@@ -13,13 +13,13 @@ namespace lenen.Content.Items.Weapons
 {
     public class DimensionalOrbs : ModItem
     {
-        private int manaCost = 5;
+        private int manaCost = 4;
         private int spellCardTimer = 300;
         private int spellCardCost = 100;
 
         public override void SetDefaults()
         {
-            Item.damage = 65;
+            Item.damage = 75;
             Item.DamageType = DamageClass.Magic;
             Item.knockBack = 6;
             Item.shootSpeed = 32f;

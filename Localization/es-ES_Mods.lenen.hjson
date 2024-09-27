@@ -99,6 +99,63 @@ Items: {
 			Añade {0} enfriamiento de Spell Card al jugador.
 			'''
 	}
+
+	AkaWing: {
+		DisplayName: Ala en llamas
+		Tooltip:
+			'''
+			Un ala que protege al usuario de algunos debuffs relacionados al hielo.
+			Puede ser parte de algo mayor.
+			'''
+	}
+
+	HooakaWings: {
+		DisplayName: Alas duales
+		Tooltip:
+			'''
+			Alas que protegen al usuario de debuffs relacionados al hielo y el fuego.
+			Es algo mayor.
+			'''
+	}
+
+	HooWing: {
+		DisplayName: Ala fria
+		Tooltip:
+			'''
+			Un ala que protege al usuario de algunos debuffs relacionados al fuego.
+			Puede ser parte de algo mayor.
+			'''
+	}
+
+	BrokenBirdDrone: {
+		DisplayName: Dron roto
+		Tooltip:
+			'''
+			Un dron roto con la forma de un ave.
+			No es un ave que reconozcas.
+			'''
+	}
+
+	FunctionalBirdDrone: {
+		DisplayName: Dron reparado
+		Tooltip:
+			'''
+			Una versión funcional del dron que ahora puede disparar.
+			El mecanismo está más allá del alcance de tu habilidad para 
+			reparar al completo.
+			'''
+	}
+
+	TrueBirdDrone: {
+		DisplayName: Dron mejorado
+		Tooltip:
+			'''
+			El dron que arreglaste está completo, vino con otros 3 drones.
+			Cada dron dispara lasers en varias direcciones.
+			Click derecho para usar ARN "Retrovirus".
+			Añade {0} enfriamiento de Spell Card al jugador.
+			'''
+	}
 }
 
 NPCs.CurtainOfAwakening.DisplayName: Cortina del Despertar
@@ -115,6 +172,12 @@ Projectiles: {
 	BoneKnife.DisplayName: Cuchillo de hueso
 	DarkKnife.DisplayName: Cuchillo oscuro
 	Pellet.DisplayName: Pellet
+	WeakBirdProjectile.DisplayName: Weak Bird Projectile
+	KuroLaser.DisplayName: Laser
+	KuroLaserHoldout.DisplayName: Laser
+	BirdOption.DisplayName: Opción Kuroji
+	Retrovirus.DisplayName: Retrovirus
+	SmallBullet.DisplayName: Bala
 }
 
 Dialogue: {
@@ -126,3 +189,10 @@ Dialogue: {
 }
 
 Bestiary.CurtainOfAwakening: Un portal misterioso a algún lado.
+
+Buffs: {
+	Kurovirus: {
+		DisplayName: Retrovirus
+		Description: Algo está molestando tu ADN.
+	}
+}

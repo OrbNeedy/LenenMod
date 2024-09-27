@@ -1,11 +1,6 @@
 ﻿using lenen.Common.Players;
 using lenen.Content.Projectiles;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -19,7 +14,7 @@ namespace lenen.Content.Items.Weapons
         private int spellCardTimer = 420;
         public override void SetDefaults()
         {
-            Item.damage = 15;
+            Item.damage = 26;
             Item.shoot = ModContent.ProjectileType<ConcealedKnife>();
             Item.shootSpeed = 10f;
             Item.knockBack = 5f;
@@ -95,11 +90,11 @@ namespace lenen.Content.Items.Weapons
             SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
             manager.spellCardTimer = spellCardTimer;
 
-            int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(25));
+            int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(40));
             int desperation = 3;
             if (manager.desperateBomb)
             {
-                dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(105));
+                dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(125));
                 desperation = 5;
                 manager.spellCardTimer = spellCardTimer + 600;
             }

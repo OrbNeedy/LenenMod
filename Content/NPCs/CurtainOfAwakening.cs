@@ -1,4 +1,5 @@
 ﻿using lenen.Content.EmoteBubbles;
+using lenen.Content.Items.Accessories;
 using lenen.Content.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -133,17 +134,13 @@ namespace lenen.Content.NPCs
                 // It needs to be during runtime because on spawn, lists haven't been loaded
                 // Probably
                 Dictionary<int, int> items = GetItems();
-                Main.NewText("List: " + items.ToString());
-                Main.NewText("Awaken condition: " + CanItemSpawn(items[ModContent.ItemType<AssassinKnife>()]));
                 for (int i = 0; i < Main.LocalPlayer.inventory.Length; i++)
                 {
                     if (items.Keys.Contains(Main.LocalPlayer.inventory[i].type))
                     {
-                        Main.NewText("Hit");
                         int itemType = Main.LocalPlayer.inventory[i].type;
                         if (CanItemSpawn(itemType))
                         {
-                            Main.NewText("Hit 2");
                             Main.LocalPlayer.inventory[i].TurnToAir();
                             Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_GiftOrReward(), items[itemType]);
 
@@ -158,7 +155,6 @@ namespace lenen.Content.NPCs
                         }
                     }
                 }
-                Main.NewText("Miss");
                 Main.npcChatText = Language.GetTextValue("Mods.lenen.Dialogue.CurtainOfAwakening.Failed");
             }
         }
@@ -195,8 +191,10 @@ namespace lenen.Content.NPCs
             Dictionary<int, int> items = new Dictionary<int, int>
             {
                 [ModContent.ItemType<DimensionalFragment>()] = ModContent.ItemType<DimensionalOrbs>(),
-                [ModContent.ItemType<AssassinKnife>()] = ModContent.ItemType<ImprovedKnife>()
-
+                [ModContent.ItemType<AssassinKnife>()] = ModContent.ItemType<ImprovedKnife>(),
+                [ModContent.ItemType<HooWing>()] = ModContent.ItemType<HooakaWings>(),
+                [ModContent.ItemType<AkaWing>()] = ModContent.ItemType<HooakaWings>(),
+                [ModContent.ItemType<FunctionalBirdDrone>()] = ModContent.ItemType<TrueBirdDrone>()
             };
             return items;
         }
@@ -210,6 +208,36 @@ namespace lenen.Content.NPCs
             if (item == ModContent.ItemType<AssassinKnife>())
             {
                 return NPC.downedBoss3;
+            }
+            if (item == ModContent.ItemType<HooWing>())
+            {
+                if (Main.LocalPlayer.HasItem(ModContent.ItemType<AkaWing>()))
+                {
+                    if (NPC.downedPlantBoss)
+                    {
+                        int duoPosition = Main.LocalPlayer.FindItem(ModContent.ItemType<AkaWing>());
+                        Main.LocalPlayer.inventory[duoPosition].TurnToAir();
+                        return true;
+                    }
+                }
+                else return false;
+            }
+            if (item == ModContent.ItemType<AkaWing>())
+            {
+                if (Main.LocalPlayer.HasItem(ModContent.ItemType<HooWing>()))
+                {
+                    if (NPC.downedPlantBoss)
+                    {
+                        int duoPosition = Main.LocalPlayer.FindItem(ModContent.ItemType<HooWing>());
+                        Main.LocalPlayer.inventory[duoPosition].TurnToAir();
+                        return true;
+                    }
+                }
+                else return false;
+            }
+            if (item == ModContent.ItemType<FunctionalBirdDrone>())
+            {
+                return NPC.downedGolemBoss;
             }
             return false;
         }

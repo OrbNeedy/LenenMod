@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
@@ -27,6 +28,12 @@ namespace lenen.Content.Projectiles
             Projectile.tileCollide = false;
 
             DrawOffsetX = -20;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/e_shot_00"), Projectile.Center);
+            base.OnSpawn(source);
         }
 
         public override void AI()

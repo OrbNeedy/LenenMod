@@ -22,7 +22,7 @@ namespace lenen.Content.Items
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.IronBar, 5)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 5)
                 .AddTile(TileID.Anvils)
                 .AddTile(TileID.Furnaces)
                 .AddCondition(Condition.NearWater)

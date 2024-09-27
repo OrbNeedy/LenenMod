@@ -17,7 +17,7 @@ namespace lenen.Content.Items.Weapons
             Item.knockBack = 6;
             Item.shootSpeed = 32f;
             Item.shoot = ModContent.ProjectileType<DimensionalFragmentProjectile>();
-            Item.mana = 16;
+            Item.mana = 8;
 
             Item.width = 14;
             Item.height = 30;
