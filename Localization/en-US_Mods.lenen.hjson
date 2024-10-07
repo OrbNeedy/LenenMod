@@ -37,11 +37,10 @@ Items: {
 	DesperateBarrier: {
 		Tooltip:
 			'''
-			A powerful barrier that increases defense by {0}.
-			When health is lower than 50%, increase damage reduction by {1}% and 
-			increase the power and cooldown of all Spell Cards.
+			This item is deprecated, please use it to craft the new item with updated references.
+			Sorry for the inconvenience.
 			'''
-		DisplayName: Desperate Barrier
+		DisplayName: Deprecated barrier item
 	}
 
 	BottleOpener: {
@@ -149,6 +148,77 @@ Items: {
 			Adds {0} Spell Card cooldown to the player.
 			'''
 	}
+
+	GashadokuroSkull: {
+		DisplayName: Gashadokuro Skull
+		Tooltip:
+			'''
+			A strangely large skull that works fine as a helmet.
+			Gives the wearer a Skull Barrier, which reflects projectiles when hit.
+			Cooldown is increased by 150% when the barrier is broken by a projectile.
+			{$BarrierStats.Life}
+			{$BarrierStats.Cooldown}
+			{$BarrierStats.Recovery}
+			'''
+	}
+
+	BarrierPotion: {
+		DisplayName: Barrier Potion
+		Tooltip:
+			'''
+			Enhances the consumer's barriers, decreasing the time it 
+			takes for them to recover.
+			'''
+	}
+
+	MajorBarrierPotion: {
+		DisplayName: Major Barrier Potion
+		Tooltip:
+			'''
+			Enhances the consumer's barriers, greatly decreasing the time it 
+			takes for them to recover.
+			'''
+	}
+
+	MinorBarrierPotion: {
+		DisplayName: Minor Barrier Potion
+		Tooltip:
+			'''
+			Enhances the consumer's barriers, slightly decreasing the time it 
+			takes for them to recover.
+			'''
+	}
+
+	DesperateBarrierItem: {
+		DisplayName: Desperate Barrier
+		Tooltip:
+			'''
+			Gives the wearer a Desperate Barrier, which becomes more powerful when
+			below 50% health, also increasing the power and cooldown of all Spell Cards.
+			{$BarrierStats.Life}
+			{$BarrierStats.Cooldown}
+			{$BarrierStats.Recovery}
+			'''
+	}
+
+	RevivedGashadokuroSkull: {
+		DisplayName: Revitalized Gashadokuro Skull
+		Tooltip:
+			'''
+			A strangely large skull that works fine as a helmet.
+			It was improved after absorbing the spirits you were carrying.
+			Press the {$Keybinds.Revival.DisplayName} key to consume 
+			spirits and enter an upgraded state that lasts for {3} seconds.
+			The upgraded state increases base damage by {4}, multiplicative 
+			damage by {5} and armor penetration by {6}, but reduces damage 
+			reduction by {7} and defense by {8}.
+			Gives the wearer an improved Skull Barrier, which resists more 
+			hits and grants knockback resistance.
+			{$BarrierStats.Life}
+			{$BarrierStats.Cooldown}
+			{$BarrierStats.Recovery}
+			'''
+	}
 }
 
 NPCs.CurtainOfAwakening.DisplayName: Curtain of Awakening
@@ -188,4 +258,46 @@ Buffs: {
 		DisplayName: Retrovirus
 		Description: Something is messing with your DNA.
 	}
+
+	BarrierBuff: {
+		DisplayName: Super Barrier
+		Description:
+			'''
+			Increases all barrier regeneration by 50%.
+			"Heals as much as kissin' it better."
+			'''
+	}
+
+	BarrierBuff2: {
+		DisplayName: Mega Barrier
+		Description:
+			'''
+			Increases all barrier regeneration by 100%.
+			"Mooooore poooooower!"
+			'''
+	}
+
+	BarrierBuff3: {
+		DisplayName: Hyper Barrier
+		Description:
+			'''
+			Increases all barrier regeneration by 150%.
+			"It's super regeneration!"
+			'''
+	}
+}
+
+BarrierStats: {
+	Life: This barrier can take up to {0} hits.
+	Cooldown: This barrier needs {1} seconds to be set up.
+	Recovery: This barrier needs {2} seconds to recover from a hit.
+}
+
+SoulDescriptions.Reserve: It's storing {0} spirits.
+Keybinds.Revival.DisplayName: Revival
+
+Conditions: {
+	HasEnoughSouls: Collected 1400 spirits
+	AnyMechBoss: Defeated any mech boss
+	DownedPlantera: Defeated plantera
 }

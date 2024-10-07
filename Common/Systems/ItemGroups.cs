@@ -33,6 +33,11 @@ namespace lenen.Common.Systems
                 $"{Lang.GetItemNameValue(ItemID.MythrilBar)}", ItemID.MythrilBar, ItemID.OrichalcumBar);
 
             RecipeGroup.RegisterGroup("MythrilBar", group5);
+
+            RecipeGroup group6 = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} " +
+                $"{Lang.GetItemNameValue(ItemID.Ichor)}", ItemID.Ichor, ItemID.CursedFlame);
+
+            RecipeGroup.RegisterGroup("EvilBiomeHardmodeMaterial", group6);
         }
     }
 }

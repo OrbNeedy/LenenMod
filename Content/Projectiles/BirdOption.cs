@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using lenen.Common.Players;
+using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ModLoader;
@@ -77,8 +78,9 @@ namespace lenen.Content.Projectiles
         private void UpdateAim(Vector2 source, float speed)
         {
             float offsetRotation = DroneIndex <= 1 ? -MathHelper.PiOver4 : MathHelper.PiOver4;
+            int updateCount = Main.player[Projectile.owner].GetModPlayer<OptionsDrawingPlayer>().UpdateCount;
             Vector2 beamRotation = new Vector2(1, 0).RotatedBy(
-                Math.Sin((Main.GameUpdateCount + (230 * DroneIndex)) * 0.008) + offsetRotation) * 6f;
+                Math.Sin((updateCount + (230 * DroneIndex)) * 0.008) + offsetRotation) * 6f;
 
             Projectile.rotation = beamRotation.ToRotation() + (source - Main.MouseWorld).ToRotation() - 
                 MathHelper.PiOver2;

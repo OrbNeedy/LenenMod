@@ -13,7 +13,7 @@ namespace lenen.Content.Items.Weapons
 {
     public class DimensionalOrbs : ModItem
     {
-        private int manaCost = 4;
+        private int manaCost = 2;
         private int spellCardTimer = 300;
         private int spellCardCost = 100;
 

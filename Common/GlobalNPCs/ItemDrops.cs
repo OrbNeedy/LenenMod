@@ -21,8 +21,11 @@ namespace lenen.Common.GlobalNPCs
                     npcLoot.Add(ItemDropRule.ByCondition(new DropInNormal(), 
                         ModContent.ItemType<DimensionalFragment>(), 6));
                     break;
-                
+
                 // Normal Enemies
+                case NPCID.ChaosElemental:
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DimensionalFragment>(), 8));
+                    break;
                 case NPCID.Skeleton:
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
                     break;

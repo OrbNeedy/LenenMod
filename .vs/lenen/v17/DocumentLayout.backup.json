@@ -1,71 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\description.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:description.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\build.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:build.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\localization\\es-es_mods.lenen.hjson||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:localization\\es-es_mods.lenen.hjson||{8B382828-6202-11D1-8870-0000F87579D2}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 2,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "es-ES_Mods.lenen.hjson",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Localization\\es-ES_Mods.lenen.hjson",
-              "RelativeDocumentMoniker": "Localization\\es-ES_Mods.lenen.hjson",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Localization\\es-ES_Mods.lenen.hjson",
-              "RelativeToolTip": "Localization\\es-ES_Mods.lenen.hjson",
-              "ViewState": "AgIAAIcAAAAAAAAAAAAAAJQAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-09-27T20:32:00.694Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "build.txt",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\build.txt",
-              "RelativeDocumentMoniker": "build.txt",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\build.txt",
-              "RelativeToolTip": "build.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2024-09-27T19:44:26.822Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "description.txt",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\description.txt",
-              "RelativeDocumentMoniker": "description.txt",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\description.txt",
-              "RelativeToolTip": "description.txt",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAAACQAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2024-09-27T19:35:30.541Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

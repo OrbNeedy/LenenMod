@@ -10,16 +10,31 @@
 
 	<!-- References -->
 	<ItemGroup>
+	  <None Remove="Assets\Icons\BarrierIcon.png" />
+	  <None Remove="Assets\Icons\DesperateIcon.png" />
+	  <None Remove="Assets\Icons\SkullIcon.png" />
 	  <None Remove="Assets\Textures\Empty.png" />
+	  <None Remove="Assets\Textures\GashadokuroRibs.png" />
+	  <None Remove="Assets\Textures\GashadokuroRibsFront.png" />
+	  <None Remove="Common\ImprovedSkull.png" />
+	  <None Remove="Common\UI\BarrierBarFrame.png" />
+	  <None Remove="Common\UI\SpellCardFrame.png" />
 	  <None Remove="Content\Items\Accessories\AkaWing.png" />
 	  <None Remove="Content\Items\Accessories\AkaWing_Wings.png" />
-	  <None Remove="Content\Items\Accessories\DesperateBarrier.png" />
+	  <None Remove="Content\Items\Accessories\DesperateBarrierItem.png" />
+	  <None Remove="Content\Items\Accessories\GashadokuroSkull_Head.png" />
 	  <None Remove="Content\Items\Accessories\HooakaWings.png" />
 	  <None Remove="Content\Items\Accessories\HooakaWings_Wings.png" />
 	  <None Remove="Content\Items\Accessories\HooWing.png" />
 	  <None Remove="Content\Items\Accessories\HooWing_Wings.png" />
+	  <None Remove="Content\Items\Accessories\RevivedGashadokuroSkull_Face.png" />
+	  <None Remove="Content\Items\Accessories\RevivedGashadokuroSkull_Head.png" />
+	  <None Remove="Content\Items\Accessories\SkullBarrier.png" />
 	  <None Remove="Content\Items\BottleOpener.png" />
 	  <None Remove="Content\Items\BrokenBirdDrone.png" />
+	  <None Remove="Content\Items\Consumables\BarrierPotion.png" />
+	  <None Remove="Content\Items\Consumables\MajorBarrierPotion.png" />
+	  <None Remove="Content\Items\Consumables\MinorBarrierPotion.png" />
 	  <None Remove="Content\Items\DimensionalFragment.png" />
 	  <None Remove="Content\Items\UnstableRock.png" />
 	  <None Remove="Content\Items\Weapons\BirdOption.png" />

@@ -12,7 +12,6 @@ namespace lenen.Common.GlobalPlayers
     public class OptionsDrawingBack : PlayerDrawLayer
     {
         private Vector2 orbitReference = Vector2.Zero;
-        private bool reverse = false;
         private int spriteIndex = 0;
         private int spriteTimer = 0;
 
@@ -20,6 +19,7 @@ namespace lenen.Common.GlobalPlayers
         {
             return new Between(PlayerDrawLayers.JimsCloak, PlayerDrawLayers.MountBack);
         }
+
         protected override void Draw(ref PlayerDrawSet drawInfo)
         {
             if (drawInfo.shadow == 0f)

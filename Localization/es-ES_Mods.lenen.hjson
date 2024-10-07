@@ -41,11 +41,11 @@ Items: {
 	DesperateBarrier: {
 		Tooltip:
 			'''
-			Una poderosa barrera que aumenta la defensa en {0}.
-			Cuando la salud es menor que la mitad, aumenta la reducción de daño en 
-			{1}% y aumenta el poder y enfriamiento de todas las Spell Cards.
+			Este objeto es obsoleto, por facor uselo para crear el nuevo objeto con referencias 
+			actualizadas.
+			Lamento la inconveniencia.
 			'''
-		DisplayName: Barrera Desesperada
+		DisplayName: Objeto de barrera obsoleto
 	}
 
 	BottleOpener: {
@@ -156,6 +156,77 @@ Items: {
 			Añade {0} enfriamiento de Spell Card al jugador.
 			'''
 	}
+
+	GashadokuroSkull: {
+		DisplayName: Craneo de Gashadokuro
+		Tooltip:
+			'''
+			Un craneo extrañamente grande que funciona bien como casco.
+			Le da al portador una Barrera Calavera, que reflecta proyectiles cuando es golpeado.
+			El enfriamiento se aumenta en 150% cuando la barrera es destruida por un proyectil.
+			{$BarrierStats.Life}
+			{$BarrierStats.Cooldown}
+			{$BarrierStats.Recovery}
+			'''
+	}
+
+	BarrierPotion: {
+		DisplayName: Poción de barrera
+		Tooltip:
+			'''
+			Mejora las barreras del consumidor, reducindo el tiempo que se
+			tardan en recuperar.
+			'''
+	}
+
+	MajorBarrierPotion: {
+		DisplayName: Poción de barrera mayor
+		Tooltip:
+			'''
+			Mejora las barreras del consumidor, reducindo en gran medida 
+			el tiempo que se tardan en recuperar.
+			'''
+	}
+
+	MinorBarrierPotion: {
+		DisplayName: Poción de barrera menor
+		Tooltip:
+			'''
+			Mejora las barreras del consumidor, reducindo el tiempo que se
+			tardan en recuperar.
+			'''
+	}
+
+	DesperateBarrierItem: {
+		DisplayName: Barrera desesperada
+		Tooltip:
+			'''
+			Le da al portador una Barrera Desesperada, que se vuelve más poderosa cuando 
+			la salud baja al 50%, también aumentando el poder de todas las Spell Cards.
+			{$BarrierStats.Life}
+			{$BarrierStats.Cooldown}
+			{$BarrierStats.Recovery}
+			'''
+	}
+
+	RevivedGashadokuroSkull: {
+		DisplayName: Calavera de Gashadokuro revitalizada
+		Tooltip:
+			'''
+			Un craneo extrañamente grande que funciona bien como casco.
+			Fue mejorado luego de absorber los espiritus que cargabas.
+			Oprime la tecla de {$Keybinds.Revival.DisplayName} para consumir 
+			espiritus y entrar en un estado mejorado que dura {3} segundos.
+			El estado mejorado aumenta el daño base en {4}, daño multiplicativo 
+			en {5} y penetración de armadura en {6}, pero reduce la reducción 
+			de daño en {7} y la defensa en {8}.
+			Le da al portador una Barrera calavera mejorada, la cual resiste 
+			más golpes y otorga resistencia al retroceso.
+			{$BarrierStats.Life}
+			{$BarrierStats.Cooldown}
+			{$BarrierStats.Recovery}
+			'''
+	}
 }
 
 NPCs.CurtainOfAwakening.DisplayName: Cortina del Despertar
@@ -195,4 +266,46 @@ Buffs: {
 		DisplayName: Retrovirus
 		Description: Algo está molestando tu ADN.
 	}
+
+	BarrierBuff: {
+		DisplayName: Super Barrera
+		Description:
+			'''
+			Aumenta toda la regeneración de barrera en 50%.
+			"Sana tanto como un beso"
+			'''
+	}
+
+	BarrierBuff2: {
+		DisplayName: Mega Barrier
+		Description:
+			'''
+			Aumenta toda la regeneración de barrera en 100%.
+			"¡Maaaaas podeeeeeer!"
+			'''
+	}
+
+	BarrierBuff3: {
+		DisplayName: Hiper Barrera
+		Description:
+			'''
+			Aumenta toda la regeneración de barrera en 150%.
+			"¡Es super regeneración!"
+			'''
+	}
+}
+
+BarrierStats: {
+	Life: Esta barrera puede resistir hasta {0} golpes.
+	Cooldown: Esta barrera necesita {1} segundos para ser colocada.
+	Recovery: Esta barrera necesita {2} segundos para recuperarse de un golpe.
+}
+
+SoulDescriptions.Reserve: Está guardando {0} espiritus.
+Keybinds.Revival.DisplayName: Revitalización
+
+Conditions: {
+	HasEnoughSouls: Recolectar 1400 espiritus
+	AnyMechBoss: Derrotar a cualquier jefe mecanico
+	DownedPlantera: Derrotar a plantera
 }

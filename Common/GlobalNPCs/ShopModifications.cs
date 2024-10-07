@@ -1,4 +1,5 @@
 ﻿using lenen.Content.Items;
+using lenen.Content.Items.Consumables;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -17,6 +18,7 @@ namespace lenen.Common.GlobalNPCs
         public override void SetupTravelShop(int[] shop, ref int nextSlot)
         {
             shop[nextSlot] = ModContent.ItemType<BrokenBirdDrone>();
+            shop[nextSlot] = ModContent.ItemType<MinorBarrierPotion>();
         }
     }
 }

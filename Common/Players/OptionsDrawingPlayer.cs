@@ -3,6 +3,7 @@ using lenen.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -16,6 +17,40 @@ namespace lenen.Common.Players
             [2] = -1,
             [3] = -1
         };
+
+        public int UpdateCount = 0;
+
+        public override void OnEnterWorld()
+        {
+            UpdateCount = 0;
+        }
+
+        public void ReceivePlayerSync(BinaryReader reader)
+        {
+            UpdateCount = reader.ReadByte();
+        }
+
+        public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
+        {
+            ModPacket packet = Mod.GetPacket();
+            packet.Write(UpdateCount);
+            packet.Send(toWho, fromWho);
+        }
+
+        public override void CopyClientState(ModPlayer targetCopy)
+        {
+            OptionsDrawingPlayer clone = (OptionsDrawingPlayer)targetCopy;
+            clone.UpdateCount = UpdateCount;
+        }
+
+        public override void SendClientChanges(ModPlayer clientPlayer)
+        {
+            OptionsDrawingPlayer clone = (OptionsDrawingPlayer)clientPlayer;
+            if (UpdateCount != clone.UpdateCount)
+            {
+                SyncPlayer(toWho: -1, fromWho: Main.myPlayer, newPlayer: false);
+            }
+        }
 
         public override void PostUpdate()
         {
@@ -60,6 +95,11 @@ namespace lenen.Common.Players
                 BirdDrone[1] = -1;
                 BirdDrone[2] = -1;
                 BirdDrone[3] = -1;
+            }
+            UpdateCount++;
+            if (UpdateCount >= int.MaxValue)
+            {
+                UpdateCount = 0;
             }
         }
 

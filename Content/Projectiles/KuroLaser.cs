@@ -11,6 +11,7 @@ using Terraria.Graphics.Effects;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using System;
+using lenen.Common.Players;
 
 namespace lenen.Content.Projectiles
 {
@@ -62,8 +63,14 @@ namespace lenen.Content.Projectiles
             Projectile.ArmorPenetration = 10;
         }
 
-        public override void SendExtraAI(BinaryWriter writer) => writer.Write(BeamLength);
-        public override void ReceiveExtraAI(BinaryReader reader) => BeamLength = reader.ReadSingle();
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(BeamLength);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            BeamLength = reader.ReadSingle();
+        }
 
         public override void AI()
         {
@@ -84,8 +91,9 @@ namespace lenen.Content.Projectiles
 
             float hostPrismAngle = hostPrism.velocity.ToRotation();
             float offsetRotation = BeamID <= 1 ? -MathHelper.PiOver4 : MathHelper.PiOver4;
+            int updateCount = Main.player[Projectile.owner].GetModPlayer<OptionsDrawingPlayer>().UpdateCount;
             Vector2 beamRotation = new Vector2(1, 0).RotatedBy(
-                Math.Sin((Main.GameUpdateCount + (230*BeamID))*0.008) + offsetRotation)*6f;
+                Math.Sin((updateCount + (230*BeamID))*0.008) + offsetRotation)*6f;
 
             Projectile.Center = hostPrism.Center + beamIdOffset;
 

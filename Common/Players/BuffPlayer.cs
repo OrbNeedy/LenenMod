@@ -2,13 +2,19 @@
 
 namespace lenen.Common.Players
 {
-    public class DebuffPlayer : ModPlayer
+    public class BuffPlayer : ModPlayer
     {
         public bool virusDebuff { get; set; }
+        public int barrierBuff { get; set; }
 
         public override void ResetEffects()
         {
             virusDebuff = false;
+            barrierBuff = 0;
+        }
+
+        public override void PostUpdate()
+        {
         }
 
         public override void UpdateBadLifeRegen()

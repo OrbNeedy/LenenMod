@@ -1,5 +1,33 @@
-The Len'en mod is a mod that currently adds some objects from the Len'en project series.
+The Len'en mod is a mod that currently adds various objects from the Len'en project series.
 In the future, there will be more items added, with more characters in mind.
+Please report any bugs or suggestions in this mod's workshop page comment section.
+Also, if you are willing to help make a Wiki for this mod, please contact me.
+
+Ver 0.1.8.4
++ Added Minor barrier potion, barrier potion, and major barrier potion
++ Added Revitalized Gashadokuro Skull
++ Increased defense given by the Desperate Barrier
++ Increased the barriers from the Skull Barrier from 1 to 2
++ Decreased the recovery time from the Skull Barrier from 900 to 600
+- Increased the cooldown time from the Skull Barrier from 600 to 900
+- Removed the ability to put the Gashadokuro Skull in the head slot
+	! If you had a Gashadokuro Skull in you character's head slot, you may get an error message upon entering the world
+* Removed missinformation in the Gashadokuro Skull tooltip description
+* Changed the class for the Desperate Barrier
+	! You can still use the old Desperate Barrier item, but it won't do anything, and will be completely deleted next update
+	! The old Desperate Barrier item can be used to craft a free Desperate Barrier
+* Added cordialities in the mod description
+
+Ver 0.1.7.4
++ Added more ways to obtain the Dimensional Fragment weapon
++ Added a new UI for the Spell Card meter and the Barrier System
+* Fixed a bug where the recovery time for a barrier after getting hit would add up indefinitely to the previous time
+* Fixed a bug where a barrier's recovery timer would still run even if the cooldown timer was running
+
+Ver 0.1.6
++ Added the Gashadokuro Skull accessory
++ Added the Barrier system
+* Rebalanced the Desperate Barrier around the Barrier system
 
 Ver 0.1.4.8
 + Added/Finished the Upgraded drone weapon
@@ -39,6 +67,34 @@ Ver 0.1.1
 
 El mod de Len'en es un mod que actualmente añade algunos objetos de la serie de Len'en project.
 En el futuro, se añadirán más, con más personajes en mente.
+Por favor reporten cualquier bug o sugerencia en la sección de comentario de la pagina de workshop de este mod.
+También, si estás dispuesto a ayudar a hacer una Wiki para este mod, por favor contactame.
+
+Ver 0.1.8.4
++ Añadidas pocion de barrera menor, pocion de barrera, y poción de barrera mayor
++ Añadida la Calavera de Gashadokuro revitalizada
++ Aumento de la defensa dada por la Barrera desesperada
++ Aumento de las barreras de la Barrera Calavera de 1 a 2
++ Reducción del tiempo de recuperación de la Barrera calavera de 900 a 600
+- Aumento del tiempo de enfriamiento de la Barrera calavera de 600 a 900
+- Removida la capacidad de poner la Calavera de Gashadokuro en el campo de cabeza
+	! Si tenías una Calavera de Gashadokuro en el campo de cabeza de tu personaje, puede que salga un mensaje de error al entrar al mundo
+* Removida la desinformación en la descripción de la calavera de Gashadokuro
+* Cambiada la clase de la Barrera desesperada
+	! Aún puedes usar el antiguo objeto de Barrera desesperada, pero no hará nada, y será completamente borrado la proxima actualización
+	! El antiguo objeto de Barrera desesperada puede ser usado para crear una Barrera desesperada gratis
+* Añadidas cordialidades en la descripción del mod.
+
+Ver 0.1.7.4
++ Añadidas más formas de obtener el arma Fragmento Dimensional
++ Añadida una nueva IU para el medidor de Spell Card y el sistema de barrera
+* Arreglado un error en el que el tiempo de recuperación de una barrera luego de ser golpeado se añadiría indefinidamente al tiempo previo
+* Arreglado un error en el que el temporizador de recuperación de una barrera avanzaría incluso si el contador de enfriamiento estaba avanzando
+
+Ver 0.1.6
++ Añadida la Calavera de Gashadokuro
++ Añadido el sistema de barreras
+* Rebalanceada la Barrera Desesperada basada en el sistema de barreras
 
 Ver 0.1.4.8
 + Añadido/terminado el arma Dron mejorado
