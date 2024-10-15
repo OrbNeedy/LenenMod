@@ -219,6 +219,35 @@ Items: {
 			{$BarrierStats.Recovery}
 			'''
 	}
+
+	RiftDye: {
+		DisplayName: Dimension Dye
+		Tooltip: Lets you see the back side.
+	}
+
+	NoiseDye: {
+		DisplayName: Trace Dye
+		Tooltip: This is what you get for making so many mistakes.
+	}
+
+	MemoryKnife: {
+		DisplayName: Recollection Blade
+		Tooltip:
+			'''
+			A knife that fluctuates between states.
+			Press right click to change between them.
+			'''
+	}
+
+	BarrierWeapon: {
+		DisplayName: Tome of barriers Vol.3
+		Tooltip:
+			'''
+			A tome detailing how to use barriers in a more offensive way.
+			Right click to use "Prime Minister in Black Robes", spending {0} mana.
+			Adds {1} Spell Card cooldown to the player.
+			'''
+	}
 }
 
 NPCs.CurtainOfAwakening.DisplayName: Curtain of Awakening
@@ -241,6 +270,9 @@ Projectiles: {
 	BirdOption.DisplayName: Kuroji Option
 	Retrovirus.DisplayName: Retrovirus
 	SmallBullet.DisplayName: Bullet
+	KnifeProjectile.DisplayName: Memory
+	OffensiveBarrier.DisplayName: Barrier
+	BlackGridedSquare.DisplayName: Barrier
 }
 
 Dialogue: {
@@ -294,6 +326,17 @@ BarrierStats: {
 }
 
 SoulDescriptions.Reserve: It's storing {0} spirits.
+
+MemoryDescriptions: {
+	Trace: Trace: The knives will go back to their original spot after a while.
+	Reproduction:
+		'''
+		Reproduction: The knives will leave more knives as they travel that 
+		stay in place.
+		'''
+	Override: Override: The knives will ignore tiles and deal damage faster.
+}
+
 Keybinds.Revival.DisplayName: Revival
 
 Conditions: {
@@ -301,3 +344,5 @@ Conditions: {
 	AnyMechBoss: Defeated any mech boss
 	DownedPlantera: Defeated plantera
 }
+
+DamageClasses.MeleeRangedHybrid.DisplayName: Melee/Ranged

@@ -38,16 +38,14 @@ namespace lenen.Content.Items.Weapons
 
         public override void UpdateInventory(Player player)
         {
-            if (player.HasItem(Item.type))
+        }
+
+        public override void HoldItem(Player player)
+        {
+            player.aggro -= 250;
+            if (player.GetModPlayer<SpellCardManagement>().desperateBomb)
             {
-                if (player.inventory[player.selectedItem].type == Item.type)
-                {
-                    player.aggro -= 200;
-                    if (player.GetModPlayer<SpellCardManagement>().desperateBomb)
-                    {
-                        player.aggro -= 200;
-                    }
-                }
+                player.aggro -= 250;
             }
         }
 

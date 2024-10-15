@@ -227,6 +227,35 @@ Items: {
 			{$BarrierStats.Recovery}
 			'''
 	}
+
+	RiftDye: {
+		DisplayName: Tinte de dimension
+		Tooltip: Te deja ver el lado trasero.
+	}
+
+	NoiseDye: {
+		DisplayName: Tinte de rastro
+		Tooltip: Esto es lo que ganas por cometer tantos errores.
+	}
+
+	MemoryKnife: {
+		DisplayName: Hoja de recolección
+		Tooltip:
+			'''
+			Un cuchillo que fluctua entre estados.
+			Oprime click derecho para cambiar entre ellos.
+			'''
+	}
+
+	BarrierWeapon: {
+		DisplayName: Tomo de barreras Vol.3
+		Tooltip:
+			'''
+			Un tomo detallando como usar barreras de una forma más ofensiva.
+			Click derecho para usar "Primer Ministro en Ropaje Negro", gastando {0} mana.
+			Añade {1} enfriamiento de Spell Card al jugador.
+			'''
+	}
 }
 
 NPCs.CurtainOfAwakening.DisplayName: Cortina del Despertar
@@ -249,6 +278,9 @@ Projectiles: {
 	BirdOption.DisplayName: Opción Kuroji
 	Retrovirus.DisplayName: Retrovirus
 	SmallBullet.DisplayName: Bala
+	KnifeProjectile.DisplayName: Memoria
+	OffensiveBarrier.DisplayName: Barrera
+	BlackGridedSquare.DisplayName: Barrera
 }
 
 Dialogue: {
@@ -302,6 +334,21 @@ BarrierStats: {
 }
 
 SoulDescriptions.Reserve: Está guardando {0} espiritus.
+
+MemoryDescriptions: {
+	Trace: Rastro: Los cuchillos regresarán a su lugar original luego de un rato.
+	Reproduction:
+		'''
+		Reproducción: Los cuchillos dejaran más cuchillos mientras que viajan que 
+		se quedarán en su lugar.
+		'''
+	Override:
+		'''
+		Sobreescritura: Los cuchillos ignorarán el terreno y causarán daño más 
+		rápido.
+		'''
+}
+
 Keybinds.Revival.DisplayName: Revitalización
 
 Conditions: {
@@ -309,3 +356,5 @@ Conditions: {
 	AnyMechBoss: Derrotar a cualquier jefe mecanico
 	DownedPlantera: Derrotar a plantera
 }
+
+DamageClasses.MeleeRangedHybrid.DisplayName: Cuerpo a cuerpo/Rango

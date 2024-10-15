@@ -12,7 +12,7 @@ namespace lenen.Content.Items.Weapons
         private int knifeCooldown = 0;
         public override void SetDefaults()
         {
-            Item.damage = 20;
+            Item.damage = 22;
             Item.shoot = ModContent.ProjectileType<ConcealedKnife>();
             Item.shootSpeed = 8f;
             Item.knockBack = 4f;
@@ -44,7 +44,7 @@ namespace lenen.Content.Items.Weapons
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            velocity = velocity.RotatedByRandom(MathHelper.ToRadians(20));
+            velocity = velocity.RotatedByRandom(MathHelper.ToRadians(10));
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

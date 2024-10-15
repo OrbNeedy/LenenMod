@@ -36,7 +36,10 @@
 	  <None Remove="Content\Items\Consumables\MajorBarrierPotion.png" />
 	  <None Remove="Content\Items\Consumables\MinorBarrierPotion.png" />
 	  <None Remove="Content\Items\DimensionalFragment.png" />
+	  <None Remove="Content\Items\NoiseDye.png" />
+	  <None Remove="Content\Items\RiftDye.png" />
 	  <None Remove="Content\Items\UnstableRock.png" />
+	  <None Remove="Content\Items\Weapons\BarrierWeapon.png" />
 	  <None Remove="Content\Items\Weapons\BirdOption.png" />
 	  <None Remove="Content\Items\Weapons\FunctionalBirdDrone.png" />
 	  <None Remove="Content\Items\Weapons\ImprovedKnife.png" />
@@ -54,6 +57,7 @@
 	  <None Remove="Content\Projectiles\KuroLaser.png" />
 	  <None Remove="Content\Projectiles\LaserGrid.png" />
 	  <None Remove="Content\Projectiles\LaserStarter.png" />
+	  <None Remove="Content\Projectiles\OffensiveBarrier.png" />
 	  <None Remove="Content\Projectiles\Pellet.png" />
 	  <None Remove="Content\Projectiles\RustyKnife.png" />
 	  <None Remove="Content\Projectiles\WeakBirdProjectile.png" />

@@ -7,6 +7,7 @@ namespace lenen.Content.Projectiles
 {
     public class ConcealedKnife : ModProjectile
     {
+        float speed = 0f;
         public override void SetDefaults()
         {
             Projectile.width = 12;
@@ -27,6 +28,7 @@ namespace lenen.Content.Projectiles
 
         public override void OnSpawn(IEntitySource source)
         {
+            speed = Projectile.velocity.Length();
             if (Projectile.ai[0] > 0)
             {
                 Projectile.penetrate = -1;
@@ -46,10 +48,10 @@ namespace lenen.Content.Projectiles
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             if (Projectile.ai[0] == 0)
             {
-                if (Projectile.timeLeft <= 420 && Projectile.velocity.Y <= 12)
+                if (Projectile.timeLeft <= 420)
                 {
-                    // Projectile.velocity.RotatedBy(MathHelper.TwoPi / 210);
-                    Projectile.velocity += new Vector2(0, 0.35f);
+                    Vector2 down = new Vector2(0, 16);
+                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, down, 0.015f);
                 }
             } else
             {

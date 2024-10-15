@@ -11,7 +11,7 @@ namespace lenen.Content.Items.Weapons
 {
     public class Tasouken : ModItem
     {
-        private int spellCardTimer = 600;
+        private int spellCardTimer = 720;
         public override void SetDefaults()
         {
             Item.damage = 60;

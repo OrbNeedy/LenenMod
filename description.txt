@@ -3,6 +3,23 @@ In the future, there will be more items added, with more characters in mind.
 Please report any bugs or suggestions in this mod's workshop page comment section.
 Also, if you are willing to help make a Wiki for this mod, please contact me.
 
+Ver 0.1.9.4
++ Added Recollection Blade
++ Added Tome of barriers Vol.3
++ Increased aggro reduction while holding the Colt Snake from 200 to 250
++ Increased aggro reduction while holding the Colt Snake and under the effects of the desperate barrier from 400 to 500
++ Decreased the angle in which the Throwing Knife diverges from 20 to 10
++ Increased damage from the Throwing Knife from 20 to 22
++ Made the Curtain of Awakening a persistent NPC
+- Increased the Spell Card Cooldown of the Sword of parting clouds from 600 to 720
+- Decreased the drop rate of the Trace dye from 50% to 2.5%
+- Removed the Spanish description from Steam's workshop page due to the character limit
+* Fixed a bug where the aggro reduction of the Colt Snake wouldn't increase while under the effects of the desperate barrier
+* Changed the way the Laser Grid projectiles and knife projectiles from the Colt Snake and the Throwing Knife move downwards
+
+Ver 0.1.8.8
++ Added Dimension dye and Trace dye
+
 Ver 0.1.8.4
 + Added Minor barrier potion, barrier potion, and major barrier potion
 + Added Revitalized Gashadokuro Skull
@@ -64,70 +81,3 @@ Ver 0.1.2
 Ver 0.1.1
 + Added a Spanish localization
 * Changed the English localization file
-
-El mod de Len'en es un mod que actualmente añade algunos objetos de la serie de Len'en project.
-En el futuro, se añadirán más, con más personajes en mente.
-Por favor reporten cualquier bug o sugerencia en la sección de comentario de la pagina de workshop de este mod.
-También, si estás dispuesto a ayudar a hacer una Wiki para este mod, por favor contactame.
-
-Ver 0.1.8.4
-+ Añadidas pocion de barrera menor, pocion de barrera, y poción de barrera mayor
-+ Añadida la Calavera de Gashadokuro revitalizada
-+ Aumento de la defensa dada por la Barrera desesperada
-+ Aumento de las barreras de la Barrera Calavera de 1 a 2
-+ Reducción del tiempo de recuperación de la Barrera calavera de 900 a 600
-- Aumento del tiempo de enfriamiento de la Barrera calavera de 600 a 900
-- Removida la capacidad de poner la Calavera de Gashadokuro en el campo de cabeza
-	! Si tenías una Calavera de Gashadokuro en el campo de cabeza de tu personaje, puede que salga un mensaje de error al entrar al mundo
-* Removida la desinformación en la descripción de la calavera de Gashadokuro
-* Cambiada la clase de la Barrera desesperada
-	! Aún puedes usar el antiguo objeto de Barrera desesperada, pero no hará nada, y será completamente borrado la proxima actualización
-	! El antiguo objeto de Barrera desesperada puede ser usado para crear una Barrera desesperada gratis
-* Añadidas cordialidades en la descripción del mod.
-
-Ver 0.1.7.4
-+ Añadidas más formas de obtener el arma Fragmento Dimensional
-+ Añadida una nueva IU para el medidor de Spell Card y el sistema de barrera
-* Arreglado un error en el que el tiempo de recuperación de una barrera luego de ser golpeado se añadiría indefinidamente al tiempo previo
-* Arreglado un error en el que el temporizador de recuperación de una barrera avanzaría incluso si el contador de enfriamiento estaba avanzando
-
-Ver 0.1.6
-+ Añadida la Calavera de Gashadokuro
-+ Añadido el sistema de barreras
-* Rebalanceada la Barrera Desesperada basada en el sistema de barreras
-
-Ver 0.1.4.8
-+ Añadido/terminado el arma Dron mejorado
-+ Aumentado el numero de proyectiles de la Espada de nubes partientes de 4 a 8
-- Reducido el daño hecho por cada proyectil de la Espada de nubes partientes de 35 a 30
-- Reducido el daño hecho por el Dron reparado de 50 a 40
-* Cambiado el sprite del Dron reparado
-* Modificado el sprite de Tasouken levemente
-* Añadidas más luces a la Espada de nubes partientes
-* Cambio de redacción de descripciones previas de versiones antiguas
-
-Ver 0.1.3.8
-+ Añadidas las Ala en llamas, Ala fría, y Alas duales
-+ Añadido el Dron roto y el Dron reparado
-* Arreglo de muchas recetas solo pudiendo aceptar un mineral especifico y no su contraparte
-* Muchos cambios de balance con respecto al daño de armas existentes
-
-Ver 0.1.3
-+ Añadido el Cuchillo oxidado
-+ Añadidos los Cuchillos para lanzar
-+ Añadido Colt Snake
-* Cambio del color y posición del medidor de enfriamiento de Spell Cards
-* Arreglo de el consumo de pociones de los Orbes Dimensionales cuando no deberían
-* Arreglo de la Espada de nubes partientes no cortando pasto que colisiona con su hitbox
-
-Ver 0.1.2
-+ Añadido el accesorio Barrera Desesperada
-+ Añadido el Destapador
-+ Añadido el Destapador con forma de espada
-+ Añadido el Tasouken
-+ Reducción del tiempo adicional de enfriamento de Spell card de Red Laser desesperada
-* Cambio en el patrón de orbita de las Opciones Dimensionales
-
-Ver 0.1.1
-+ Añadida la localización a español
-* Cambio en el archivo de localización en inglés

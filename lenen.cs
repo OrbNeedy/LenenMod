@@ -3,11 +3,21 @@ using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using lenen.Common.Players;
+using ReLogic.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace lenen
 {
 	public class lenen : Mod
     {
+        /*public override void Load()
+        {
+            if (Main.netMode != NetmodeID.Server)
+            {
+                Asset<Effect> dyeShader = this.Assets.Request<Effect>("Effects/RiftEffect");
+            }
+        }*/
+
         internal enum MessageType : byte
         {
             PlayerUpdateCount

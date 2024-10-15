@@ -1,4 +1,5 @@
 ﻿using lenen.Content.Items.Weapons;
+using lenen.Content.NPCs;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -92,6 +93,8 @@ namespace lenen.Common.GlobalNPCs
                 case NPCID.SmallPantlessSkeleton:
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
                     break;
+
+                // Friendly NPCs
                 case NPCID.Clothier:
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AssassinKnife>(), 2));
                     break;

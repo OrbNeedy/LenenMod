@@ -1,5 +1,4 @@
 ﻿using lenen.Common;
-using lenen.Common.Players;
 using lenen.Common.Players.Barriers;
 using System.Collections.Generic;
 using Terraria;

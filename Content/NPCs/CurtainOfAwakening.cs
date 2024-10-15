@@ -1,12 +1,16 @@
 ﻿using lenen.Content.EmoteBubbles;
+using lenen.Content.Items;
 using lenen.Content.Items.Accessories;
 using lenen.Content.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -74,10 +78,10 @@ namespace lenen.Content.NPCs
             return true;
         }
 
-        /*public override bool NeedSaving()
+        public override bool NeedSaving()
         {
             return true;
-        }*/
+        }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -142,6 +146,12 @@ namespace lenen.Content.NPCs
                         {
                             Main.LocalPlayer.inventory[i].TurnToAir();
                             Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_GiftOrReward(), items[itemType]);
+                            if (Main.rand.NextBool())
+                            {
+                                int stack = Main.rand.Next(1, 4);
+                                Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_GiftOrReward(),
+                                ModContent.ItemType<RiftDye>(), stack);
+                            }
 
                             NPC.active = false;
                             // NPC.netSkip = -1;
@@ -206,6 +216,16 @@ namespace lenen.Content.NPCs
             }
             if (item == ModContent.ItemType<AssassinKnife>())
             {
+                if (NPC.downedMechBossAny)
+                {
+                    if (Main.LocalPlayer.HasItem(ModContent.ItemType<UnstableRock>()))
+                    {
+                        int duoPosition = Main.LocalPlayer.FindItem(ModContent.ItemType<UnstableRock>());
+                        Main.LocalPlayer.inventory[duoPosition].TurnToAir();
+                        Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_GiftOrReward(),
+                            ModContent.ItemType<MemoryKnife>(), 1);
+                    }
+                }
                 return NPC.downedBoss3;
             }
             if (item == ModContent.ItemType<HooWing>())
@@ -252,19 +272,34 @@ namespace lenen.Content.NPCs
                 }
             }
             Texture2D texture = ModContent.Request<Texture2D>("lenen/Content/NPCs/CurtainOfAwakening").Value;
+            //Texture2D overlay = ModContent.Request<Texture2D>("lenen/Content/NPCs/ShaderOfAwakening").Value;
             int height = texture.Bounds.Height / Main.npcFrameCount[Type];
             Rectangle bounds = new Rectangle(0, AnimationFrame*height, 
                 texture.Bounds.Width, height);
-            Main.EntitySpriteDraw(
-                    texture,
+            //ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(ModContent.ItemType<RiftDye>());
+            
+            DrawData data = new DrawData(texture,
                     NPC.position - Main.screenPosition - new Vector2(2, 2),
                     bounds,
                     Color.White,
                     0f,
                     Vector2.Zero,
                     new Vector2(1f, 1f),
-                    SpriteEffects.None
-                );
+                    SpriteEffects.None);
+
+            /*DrawData data2 = new DrawData(overlay,
+                    NPC.position - Main.screenPosition - new Vector2(2, 2),
+                    bounds,
+                    Color.White,
+                    0f,
+                    Vector2.Zero,
+                    new Vector2(1f, 1f),
+                    SpriteEffects.None);*/
+
+            //shader.Apply(Entity, data2);
+
+            Main.EntitySpriteDraw(data);
+            //Main.EntitySpriteDraw(data2);
             return false;
         }
     }

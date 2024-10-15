@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -32,10 +31,8 @@ namespace lenen.Content.Projectiles
 
         public override void AI()
         {
-            if (Projectile.velocity.Y < 10)
-            {
-                Projectile.velocity.Y += 0.2f;
-            }
+            Vector2 down = new Vector2(0, 16);
+            Projectile.velocity = Vector2.Lerp(Projectile.velocity, down, 0.015f);
             if (Projectile.timeLeft < 510 && Main.rand.NextBool(45))
             {
                 Projectile.timeLeft = 0;
