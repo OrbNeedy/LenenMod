@@ -14,11 +14,6 @@ namespace lenen.Content.Projectiles
             set => Projectile.ai[0] = value;
         }
 
-        public override void SetStaticDefaults()
-        {
-            Main.projPet[Projectile.type] = true;
-        }
-
         public override void SetDefaults()
         {
             Projectile.width = 24;
@@ -78,7 +73,7 @@ namespace lenen.Content.Projectiles
         private void UpdateAim(Vector2 source, float speed)
         {
             float offsetRotation = DroneIndex <= 1 ? -MathHelper.PiOver4 : MathHelper.PiOver4;
-            int updateCount = Main.player[Projectile.owner].GetModPlayer<OptionsDrawingPlayer>().UpdateCount;
+            int updateCount = Main.player[Projectile.owner].GetModPlayer<OptionsManagingPlayer>().UpdateCount;
             Vector2 beamRotation = new Vector2(1, 0).RotatedBy(
                 Math.Sin((updateCount + (230 * DroneIndex)) * 0.008) + offsetRotation) * 6f;
 

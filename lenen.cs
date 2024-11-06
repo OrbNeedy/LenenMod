@@ -31,7 +31,7 @@ namespace lenen
                 // This message syncs ExampleStatIncreasePlayer.exampleLifeFruits and ExampleStatIncreasePlayer.exampleManaCrystals
                 case MessageType.PlayerUpdateCount:
                     byte playerNumber = reader.ReadByte();
-                    OptionsDrawingPlayer drawPlayer = Main.player[playerNumber].GetModPlayer<OptionsDrawingPlayer>();
+                    OptionsManagingPlayer drawPlayer = Main.player[playerNumber].GetModPlayer<OptionsManagingPlayer>();
                     drawPlayer.ReceivePlayerSync(reader);
 
                     if (Main.netMode == NetmodeID.Server)

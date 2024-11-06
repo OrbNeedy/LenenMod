@@ -91,7 +91,7 @@ namespace lenen.Content.Projectiles
 
             float hostPrismAngle = hostPrism.velocity.ToRotation();
             float offsetRotation = BeamID <= 1 ? -MathHelper.PiOver4 : MathHelper.PiOver4;
-            int updateCount = Main.player[Projectile.owner].GetModPlayer<OptionsDrawingPlayer>().UpdateCount;
+            int updateCount = Main.player[Projectile.owner].GetModPlayer<OptionsManagingPlayer>().UpdateCount;
             Vector2 beamRotation = new Vector2(1, 0).RotatedBy(
                 Math.Sin((updateCount + (230*BeamID))*0.008) + offsetRotation)*6f;
 

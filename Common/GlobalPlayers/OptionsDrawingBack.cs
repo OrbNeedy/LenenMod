@@ -22,9 +22,10 @@ namespace lenen.Common.GlobalPlayers
 
         protected override void Draw(ref PlayerDrawSet drawInfo)
         {
+            Player player = drawInfo.drawPlayer;
+            if (player.DeadOrGhost) return;
             if (drawInfo.shadow == 0f)
             {
-                Player player = drawInfo.drawPlayer;
                 int item = player.HeldItem.type;
 
                 if (item == ModContent.ItemType<DimensionalOrbs>())

@@ -1,5 +1,7 @@
 ﻿using lenen.Common.Systems;
+using lenen.Content.Buffs;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -11,9 +13,15 @@ namespace lenen.Common.Players
         public int soulsCollected = 0;
         public bool activateRevival = false;
         public bool revivedState = false;
+        public float harujionPotency = 0f;
 
         public override void Initialize()
         {
+        }
+
+        public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource)
+        {
+            return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genDust, ref damageSource);
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet)
@@ -36,6 +44,7 @@ namespace lenen.Common.Players
         public override void ResetEffects()
         {
             revivedState = false;
+            harujionPotency = 0f;
         }
 
         public override void SaveData(TagCompound tag)
@@ -51,8 +60,14 @@ namespace lenen.Common.Players
             }
         }
 
+        public override void UpdateBadLifeRegen()
+        {
+            base.UpdateBadLifeRegen();
+        }
+
         public override void PostUpdateEquips()
         {
+            //Main.NewText($"Player location: {Player.Center}");
             //Main.NewText("Current souls: " + soulsCollected);
             base.PostUpdateEquips();
         }

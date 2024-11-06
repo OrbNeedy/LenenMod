@@ -256,14 +256,70 @@ Items: {
 			Añade {1} enfriamiento de Spell Card al jugador.
 			'''
 	}
+
+	HammerShapedBottleOpener: {
+		DisplayName: Destapador con forma de hachamartillo
+		Tooltip:
+			'''
+			Un destapador con la forma de un martillo.
+			También puedes cortar arboles con el si quieres.
+			'''
+	}
+
+	ExtendedGrab: {
+		DisplayName: Extensión de agarre
+		Tooltip:
+			'''
+			Invoca un par de haniwa con forma de mano para actuar como tus manos.
+			Oprime click izquierdo para guiarlos a una ubicación mientras 
+			agarran objetos en el camino.
+			Oprime click derecho para agarrar NPCs amistosos en su lugar.
+			Los objetos serán liberados cuando se acercan a ti, y los NPCs serán 
+			liberados cuando las manos comiencen a regresar a tu lado.
+			'''
+	}
+
+	HaniwaMaker: {
+		DisplayName: Invocador de Haniwa
+		Tooltip: Invoca una Unidad Especial de Artillería Haniwa.
+	}
+
+	SoulItem: {
+		DisplayName: Espiritu
+		Tooltip:
+			'''
+			El espiritu de un ser previamente vivo.
+			Puede darle poder a varias cosas.
+			'''
+	}
+
+	Harujion: {
+		DisplayName: Harujion
+		Tooltip:
+			'''
+			Una hermosa flor que absorbe la vida alrededor constantemente.
+			Ya que fue cortada, no puede hacerlo más, pero aún puedes usar su 
+			poder para revivirte, si le das alimento primero.
+			Consume 400 espiritus para revivir.
+			Da una barrera al activarse.
+			{$BarrierStats.Life}
+			{$BarrierStats.Cooldown}
+			{$BarrierStats.Recovery}
+			'''
+	}
 }
 
-NPCs.CurtainOfAwakening.DisplayName: Cortina del Despertar
+NPCs: {
+	CurtainOfAwakening.DisplayName: Cortina del Despertar
+	// FairyBase.DisplayName: Fairy Base
+	// SmallFairy.DisplayName: Small Fairy
+}
 
 Projectiles: {
 	DimensionalFragmentProjectile.DisplayName: Fragmento Dimensional
 	LaserStarter.DisplayName: Laser
 	LaserGrid.DisplayName: Laser
+	// Laser.DisplayName: Laser
 	Swing.DisplayName: Swing
 	Cut.DisplayName: Corte
 	InfiniteLaser.DisplayName: Nubes partientes
@@ -281,6 +337,12 @@ Projectiles: {
 	KnifeProjectile.DisplayName: Memoria
 	OffensiveBarrier.DisplayName: Barrera
 	BlackGridedSquare.DisplayName: Barrera
+	HaniwaFist.DisplayName: Puño Haniwa
+	Cannon.DisplayName: Cañon
+	HaniwaCannon.DisplayName: Unidad Especial de Artillería Haniwa
+	StrikeHaniwa.DisplayName: Unidad Especial de Ataque Haniwa
+	Bullet.DisplayName: Bala
+	// EnemyBullet.DisplayName: Enemy Bullet
 }
 
 Dialogue: {
@@ -325,6 +387,33 @@ Buffs: {
 			"¡Es super regeneración!"
 			'''
 	}
+
+	HaniwaCannonBuff: {
+		DisplayName: Fuego de soporte de Haniwa de Artillery
+		Description: Estás recibiendo apoyo de una Unidad Especial de Artillería Haniwa.
+	}
+
+	HarujionAbsorb: {
+		DisplayName: Alma drenada
+		Description:
+			'''
+			Tu alma está siendo absorbida por un Harujion cercano.
+			Se volverá más fuerte mientras más cerca estés.
+			'''
+	}
+
+	ResurrectionCooldown: {
+		DisplayName: Neonatál
+		Description:
+			'''
+			Has renacido, y no puedes resucitar otra vez.
+			Estás siendo protegido por una barrera debil que se recupera 
+			rápido.
+			{$BarrierStats.Life}
+			{$BarrierStats.Cooldown}
+			{$BarrierStats.Recovery}
+			'''
+	}
 }
 
 BarrierStats: {
@@ -349,6 +438,13 @@ MemoryDescriptions: {
 		'''
 }
 
+Death: {
+	Denied: Fuiste resucitado por el poder del Harujion.
+	BigMistake: "{0} cometió un gran error."
+	Harujion: El alma de {0} es comida para plantas.
+	RNA: El ADN de {0} fue revuelto más allá de reparación.
+}
+
 Keybinds.Revival.DisplayName: Revitalización
 
 Conditions: {
@@ -358,3 +454,4 @@ Conditions: {
 }
 
 DamageClasses.MeleeRangedHybrid.DisplayName: Cuerpo a cuerpo/Rango
+Tiles.HarujionSapling.MapEntry: Harujion

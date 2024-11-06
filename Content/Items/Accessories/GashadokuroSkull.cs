@@ -65,8 +65,7 @@ namespace lenen.Content.Items.Accessories
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
-            if (equippedItem.type == ModContent.ItemType<RevivedGashadokuroSkull>() ||
-                player.armor[0].type == ModContent.ItemType<RevivedGashadokuroSkull>())
+            if (equippedItem.type == ModContent.ItemType<RevivedGashadokuroSkull>())
             {
                 return false;
             }

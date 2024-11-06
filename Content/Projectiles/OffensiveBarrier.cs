@@ -3,6 +3,7 @@ using lenen.Common.Players;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace lenen.Content.Projectiles
@@ -10,6 +11,11 @@ namespace lenen.Content.Projectiles
     public class OffensiveBarrier : ModProjectile
     {
         float speed = 0;
+
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+        }
 
         public override void SetDefaults()
         {

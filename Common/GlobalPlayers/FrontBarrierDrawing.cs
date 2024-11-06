@@ -19,9 +19,10 @@ namespace lenen.Common.GlobalPlayers
 
         protected override void Draw(ref PlayerDrawSet drawInfo)
         {
+            Player player = drawInfo.drawPlayer;
+            if (player.DeadOrGhost) return;
             if (drawInfo.shadow == 0f)
             {
-                PlayerBarrier player = drawInfo.drawPlayer.GetModPlayer<PlayerBarrier>();
                 if (BarrierLookups.BarrierDictionary[BarrierLookups.Barriers.SkullBarrier].IsAvailable() ||
                     BarrierLookups.BarrierDictionary[BarrierLookups.Barriers.BetterSkullBarrier].IsAvailable())//player.GetBarrier(typeof(SkullBarrier)) != null)
                 {
@@ -58,10 +59,10 @@ namespace lenen.Common.GlobalPlayers
                             RotatedBy((Main.GameUpdateCount * 0.08) + (i * MathHelper.TwoPi / 5));
                         Vector2 additionalOffset = new Vector2(0, 25);
                         SpriteEffects effects = SpriteEffects.None;
-                        if (drawInfo.drawPlayer.direction == -1) effects = SpriteEffects.FlipHorizontally;
+                        if (player.direction == -1) effects = SpriteEffects.FlipHorizontally;
 
                         Main.EntitySpriteDraw(skullTexture.Value,
-                            drawInfo.drawPlayer.MountedCenter - Main.screenPosition + offset + additionalOffset,
+                            player.MountedCenter - Main.screenPosition + offset + additionalOffset,
                             bounds,
                             Color.White,
                             0f,

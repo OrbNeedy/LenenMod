@@ -57,7 +57,7 @@ namespace lenen.Common.Players
                         switch (buffs.barrierBuff)
                         {
                             case 1:
-                                if (Player.GetModPlayer<OptionsDrawingPlayer>().UpdateCount % 2 == 0)
+                                if (Player.GetModPlayer<OptionsManagingPlayer>().UpdateCount % 2 == 0)
                                 {
                                     barrier.Cooldown--;
                                 }
@@ -67,7 +67,7 @@ namespace lenen.Common.Players
                                 break;
                             case 3:
                                 barrier.Cooldown--;
-                                if (Player.GetModPlayer<OptionsDrawingPlayer>().UpdateCount % 2 == 0)
+                                if (Player.GetModPlayer<OptionsManagingPlayer>().UpdateCount % 2 == 0)
                                 {
                                     barrier.Cooldown--;
                                 }
@@ -89,7 +89,7 @@ namespace lenen.Common.Players
                             switch (buffs.barrierBuff)
                             {
                                 case 1:
-                                    if (Player.GetModPlayer<OptionsDrawingPlayer>().UpdateCount % 2 == 0)
+                                    if (Player.GetModPlayer<OptionsManagingPlayer>().UpdateCount % 2 == 0)
                                     {
                                         barrier.Recovery--;
                                     }
@@ -99,7 +99,7 @@ namespace lenen.Common.Players
                                     break;
                                 case 3:
                                     barrier.Recovery--;
-                                    if (Player.GetModPlayer<OptionsDrawingPlayer>().UpdateCount % 2 == 0)
+                                    if (Player.GetModPlayer<OptionsManagingPlayer>().UpdateCount % 2 == 0)
                                     {
                                         barrier.Recovery--;
                                     }
@@ -216,7 +216,7 @@ namespace lenen.Common.Players
         {
             foreach (var barrier in BarrierLookups.BarrierDictionary.Values)
             {
-                if (barrier.State != 0 && barrier.Cooldown >= (barrier.MaxCooldown - 5))
+                if (barrier.State != 0 && barrier.Cooldown >= (barrier.MaxCooldown - 10))
                 {
                     SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/j_end"),
                         Player.Center);

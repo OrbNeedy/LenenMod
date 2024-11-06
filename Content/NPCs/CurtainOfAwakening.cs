@@ -4,13 +4,11 @@ using lenen.Content.Items.Accessories;
 using lenen.Content.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -21,6 +19,7 @@ namespace lenen.Content.NPCs
     public class CurtainOfAwakening : ModNPC
     {
         private static Profiles.StackedNPCProfile NPCProfile;
+        private int timeSpent = 0;
 
         private int AnimationFrame = 0;
         private int AnimationTime = 0;
@@ -181,6 +180,14 @@ namespace lenen.Content.NPCs
 
         public override void AI()
         {
+            if (timeSpent >= 18000)
+            {
+                if (Main.rand.NextBool(120))
+                {
+                    NPC.active = false;
+                    NPC.life = 0;
+                }
+            }
             if (Main.rand.NextBool(60))
             {
                 Dust.NewDust(NPC.position, 30, 52, DustID.ShimmerSpark, newColor: new(10, 255, 60));
@@ -193,6 +200,7 @@ namespace lenen.Content.NPCs
                 NPC.velocity *= 0.95f;
             }
             NPC.homeless = true;
+            timeSpent++;
         }
 
         private Dictionary<int, int> GetItems()

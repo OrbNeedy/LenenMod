@@ -1,9 +1,7 @@
 ﻿using lenen.Common.Players;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using lenen.Content.Buffs;
+using lenen.Content.Items;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -11,20 +9,55 @@ namespace lenen.Common.GlobalNPCs
 {
     public class SoulDrops : GlobalNPC
     {
+        public float harujionPotency = 0f;
+
+        public override bool InstancePerEntity => true;
+
+        public override void ResetEffects(NPC npc)
+        {
+            harujionPotency = 0f;
+        }
+
+        public override void UpdateLifeRegen(NPC npc, ref int damage)
+        {
+            if (harujionPotency > 0f)
+            {
+                npc.lifeRegen -= (int)(60*harujionPotency);
+            }
+        }
+
+        public override void AI(NPC npc)
+        {
+            if (harujionPotency > 0) npc.AddBuff(ModContent.BuffType<HarujionAbsorb>(), 2);
+            base.AI(npc);
+        }
+
         public override void OnKill(NPC npc)
         {
-            int playerIndex = npc.lastInteraction;
-            if (playerIndex == 255) return;
-            SoulAbsorptionPlayer player = Main.player[playerIndex].GetModPlayer<SoulAbsorptionPlayer>();
-
             int souls = 1;
-            souls += (npc.life * npc.rarity) / 1000;
+            int volume = 1;
+            souls *= (1 + npc.rarity);
 
-            if (npc.boss) souls += Main.rand.Next(20, 41);
+            volume += npc.life/1000;
 
-            if (NPC.downedPlantBoss) souls = (int)(souls * Main.rand.NextFloat(1f, 2f));
+            if (Main.hardMode && !npc.CountsAsACritter) volume *= 2;
 
-            player.AddSouls(souls);
+            if (npc.boss) souls += Main.rand.Next(10, 21);
+
+            if (NPC.downedPlantBoss) souls += (int)(2 * Main.rand.NextFloat(1f, 2f));
+
+            Vector2 position = npc.position;
+            for (int i = 0; i < souls; i++)
+            {
+                Item.NewItem(npc.GetSource_DropAsItem(), new Rectangle((int)position.X, (int)position.Y,
+                npc.width, npc.height), ModContent.ItemType<SoulItem>(), Main.rand.Next(1, 1 + volume));
+            }
+            /*int playerIndex = npc.lastInteraction;
+            if (playerIndex != 255)
+            {
+                SoulAbsorptionPlayer player = Main.player[playerIndex].GetModPlayer<SoulAbsorptionPlayer>();
+                player.AddSouls(souls);
+            }*/
         }
     }
 }

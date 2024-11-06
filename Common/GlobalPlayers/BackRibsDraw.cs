@@ -17,9 +17,10 @@ namespace lenen.Common.GlobalPlayers
 
         protected override void Draw(ref PlayerDrawSet drawInfo)
         {
+            Player player = drawInfo.drawPlayer;
+            if (player.DeadOrGhost) return;
             if (drawInfo.shadow == 0f)
             {
-                Player player = drawInfo.drawPlayer;
                 if (!player.GetModPlayer<SoulAbsorptionPlayer>().revivedState) return;
                 Asset<Texture2D> sprite = ModContent.Request<Texture2D>("lenen/Assets/Textures/GashadokuroRibs");
 
@@ -28,7 +29,7 @@ namespace lenen.Common.GlobalPlayers
 
                 SpriteEffects effects = SpriteEffects.None;
                 if (drawInfo.drawPlayer.direction == -1) effects = SpriteEffects.FlipHorizontally;
-
+                
                 drawInfo.DrawDataCache.Add(new DrawData(
                     texture,
                     drawInfo.drawPlayer.MountedCenter + offset - Main.screenPosition,

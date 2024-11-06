@@ -10,6 +10,7 @@ namespace lenen.Common
         {
             SkullBarrier,
             BetterSkullBarrier,
+            HarujionBarrier,
             DesperateBarrier
         }
 
@@ -17,6 +18,7 @@ namespace lenen.Common
         {
             [Barriers.SkullBarrier] = new SkullBarrier(),
             [Barriers.BetterSkullBarrier] = new BetterSkullBarrier(),
+            [Barriers.HarujionBarrier] = new ResurrectionBarrier(),
             [Barriers.DesperateBarrier] = new DesperateBarrier(),
         };
 
@@ -25,6 +27,7 @@ namespace lenen.Common
             BarrierDictionary.Clear();
             BarrierDictionary[Barriers.SkullBarrier] = new SkullBarrier();
             BarrierDictionary[Barriers.BetterSkullBarrier] = new BetterSkullBarrier();
+            BarrierDictionary[Barriers.HarujionBarrier] = new ResurrectionBarrier();
             BarrierDictionary[Barriers.DesperateBarrier] = new DesperateBarrier();
         }
     }

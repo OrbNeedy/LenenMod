@@ -248,14 +248,70 @@ Items: {
 			Adds {1} Spell Card cooldown to the player.
 			'''
 	}
+
+	HammerShapedBottleOpener: {
+		DisplayName: Hamaxe-shaped Bottle Opener
+		Tooltip:
+			'''
+			A bottle opener in the shape of a hammer.
+			You can also cut trees with it if you want.
+			'''
+	}
+
+	ExtendedGrab: {
+		DisplayName: Grab Extension
+		Tooltip:
+			'''
+			Summons a pair of hand-shaped Haniwa to act as your hands.
+			Press left click to guide them to a location as they grab items 
+			on the way.
+			Press right click to grab friendly NPCs instead.
+			Items will be released when they get close to you, NPCs will 
+			be released when the hands start to return to your side.
+			'''
+	}
+
+	HaniwaMaker: {
+		DisplayName: Haniwa Caller
+		Tooltip: Summons a Special Haniwa Artillery Unit.
+	}
+
+	SoulItem: {
+		DisplayName: Spirit
+		Tooltip:
+			'''
+			The spirit of a previously living being.
+			It can power many things.
+			'''
+	}
+
+	Harujion: {
+		DisplayName: Harujion
+		Tooltip:
+			'''
+			A beautiful flower that constantly absorbs the life around it.
+			Since it was cut down, it can't do so any more, but you may still use 
+			it's powers to resurrect yourself, if you give it sustenance first.
+			Consumes 400 spirits to resurrect.
+			It will give you a barrier upon activation.
+			{$BarrierStats.Life}
+			{$BarrierStats.Cooldown}
+			{$BarrierStats.Recovery}
+			'''
+	}
 }
 
-NPCs.CurtainOfAwakening.DisplayName: Curtain of Awakening
+NPCs: {
+	CurtainOfAwakening.DisplayName: Curtain of Awakening
+	FairyBase.DisplayName: Fairy Base
+	SmallFairy.DisplayName: Small Fairy
+}
 
 Projectiles: {
 	DimensionalFragmentProjectile.DisplayName: Dimensional Fragment
 	LaserStarter.DisplayName: Laser
 	LaserGrid.DisplayName: Laser
+	Laser.DisplayName: Laser
 	Swing.DisplayName: Swing
 	Cut.DisplayName: Cut
 	InfiniteLaser.DisplayName: Parting Clouds
@@ -273,6 +329,12 @@ Projectiles: {
 	KnifeProjectile.DisplayName: Memory
 	OffensiveBarrier.DisplayName: Barrier
 	BlackGridedSquare.DisplayName: Barrier
+	HaniwaFist.DisplayName: Haniwa Fist
+	Cannon.DisplayName: Cannon
+	HaniwaCannon.DisplayName: Special Haniwa Artillery Unit
+	StrikeHaniwa.DisplayName: Special Haniwa Strike Unit
+	Bullet.DisplayName: Bullet
+	EnemyBullet.DisplayName: Enemy Bullet
 }
 
 Dialogue: {
@@ -317,6 +379,32 @@ Buffs: {
 			"It's super regeneration!"
 			'''
 	}
+
+	HaniwaCannonBuff: {
+		DisplayName: Haniwa Artillery Support Fire
+		Description: You're getting support from a Special Haniwa Artillery Unit.
+	}
+
+	HarujionAbsorb: {
+		DisplayName: Soul Siphon
+		Description:
+			'''
+			Your soul is being absorbed by a nearby Harujion.
+			It will get stronger as you get closer.
+			'''
+	}
+
+	ResurrectionCooldown: {
+		DisplayName: Neonatal
+		Description:
+			'''
+			You have been reborn, and can't resurrect again.
+			You are protected by a weak barrier that recovers fast.
+			{$BarrierStats.Life}
+			{$BarrierStats.Cooldown}
+			{$BarrierStats.Recovery}
+			'''
+	}
 }
 
 BarrierStats: {
@@ -337,6 +425,13 @@ MemoryDescriptions: {
 	Override: Override: The knives will ignore tiles and deal damage faster.
 }
 
+Death: {
+	Denied: You were resurrected by the power of the Harujion.
+	BigMistake: "{0} made a big mistake."
+	Harujion: "{0}'s soul became plant food."
+	RNA: "{0}'s DNA was scrambled beyond repair."
+}
+
 Keybinds.Revival.DisplayName: Revival
 
 Conditions: {
@@ -346,3 +441,4 @@ Conditions: {
 }
 
 DamageClasses.MeleeRangedHybrid.DisplayName: Melee/Ranged
+Tiles.HarujionSapling.MapEntry: Harujion

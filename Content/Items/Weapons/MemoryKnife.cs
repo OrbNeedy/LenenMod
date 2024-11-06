@@ -18,7 +18,7 @@ namespace lenen.Content.Items.Weapons
 
         public override void SetDefaults()
         {
-            Item.damage = 70;
+            Item.damage = 55;
             Item.shoot = ModContent.ProjectileType<KnifeProjectile>();
             Item.shootSpeed = 8f;
             Item.knockBack = 4f;
@@ -74,22 +74,20 @@ namespace lenen.Content.Items.Weapons
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            if (player.altFunctionUse == 2)
-            {
-                state++;
-                if (state >= 3)
-                {
-                    state = 0;
-                }
-                SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/warning"), player.Center);
-            }
-            switch(state)
+        }
+
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+        {
+            switch (state)
             {
                 case 0:
-                    damage += 15;
+                    damage.Base += 15;
+                    break;
+                case 1:
+                    //damage.Base = 55;
                     break;
                 case 2:
-                    damage -= 10;
+                    damage.Base -= 10;
                     break;
             }
         }
@@ -113,6 +111,12 @@ namespace lenen.Content.Items.Weapons
 
         public override bool AltFunctionUse(Player player)
         {
+            state++;
+            if (state >= 3)
+            {
+                state = 0;
+            }
+            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/warning"), player.Center);
             return true;
         }
 
