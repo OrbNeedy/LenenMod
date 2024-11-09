@@ -60,6 +60,11 @@ namespace lenen.Content.Projectiles
             //Main.NewText("Drone position after UpdateAim " + Projectile.Center);
         }
 
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
+
         private void UpdatePlayerVisuals(Player player)
         {
             float additionalOffsetRotation = player.Center.DirectionTo(Main.MouseWorld).ToRotation();

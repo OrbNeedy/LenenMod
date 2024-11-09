@@ -9,7 +9,6 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using lenen.Common.Players.Barriers;
 using Terraria.Audio;
-using Terraria.GameContent.Creative;
 
 namespace lenen.Content.Items.Accessories
 {
@@ -17,7 +16,7 @@ namespace lenen.Content.Items.Accessories
     public class RevivedGashadokuroSkull : ModItem
     {
         public int soulsCollected = 0;
-        public int maxSouls = 200;
+        public int maxSouls = 250;
         private int soulConsumptionTimer = 0;
         private int transformedTimer = 0;
         private int maxTransformedTime = 3600;

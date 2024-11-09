@@ -28,7 +28,7 @@ namespace lenen.Content.Projectiles
             Projectile.DamageType = DamageClass.Melee;
             Projectile.timeLeft = 600;
             Projectile.light = 0.65f;
-            Projectile.ownerHitCheck = true;
+            Projectile.ownerHitCheck = false;
             Projectile.tileCollide = false;
             Projectile.ArmorPenetration = 50;
 
@@ -177,7 +177,7 @@ namespace lenen.Content.Projectiles
         {
             if (Projectile.ai[1] == 0 && Projectile.ai[2] > 0)
             {
-                if (Projectile.timeLeft == (400 + ((20 - Projectile.ai[2]) * 10)))
+                if (Projectile.timeLeft == (400 + ((10 - Projectile.ai[2]) * 20)))
                 {
                     Vector2 spawn = player.Center + new Vector2(Main.rand.Next(-400, 400),
                         Main.rand.Next(-250, 250));

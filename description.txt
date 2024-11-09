@@ -3,6 +3,24 @@ In the future, there will be more items added, with more characters in mind.
 Please report any bugs or suggestions in this mod's workshop page comment section.
 Also, if you are willing to help make a Wiki for this mod, please contact me.
 
+Ver 0.2.2
++ Added Hamaxe-shaped Bottle Opener Hamaxe, Grab Extension Summoner weapon, Haniwa Caller Summoner weapon, and Harujion accessory.
++ Added neonatal barrier.
++ Added Harujion as a tile.
++ Added Spirit items.
++ Added Harujion Tracker item.
++ Added a Small Fairy enemy with 4 variants.
++ Increased tracking range for all weapons that use it.
++ Added Custom death messages for Retrovirus and getting a Trace dye upon death.
+- Increased all Spirit costs.
+- The player now drops Spirit items upon death if it has any, up to 100 spirits.
+- Decreased Prime Minister in Black Robe's damage.
+- Decreased Desperate Prime Minister in Black Robes' damage and number of projectiles spawned.
+- Decreased damage from the Recollection Blade.
+- Added a time limit to the Curtain of awakening that resets upon exiting the world.
+* Fixed the Bird Drone's options cutting grass when they shouldn't.
+* Recollection Blade now displays the modified damage on it's tooltip.
+
 Ver 0.1.9.4
 + Added Recollection Blade
 + Added Tome of barriers Vol.3

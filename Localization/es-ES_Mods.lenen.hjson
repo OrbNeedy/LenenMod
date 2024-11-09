@@ -300,11 +300,21 @@ Items: {
 			Una hermosa flor que absorbe la vida alrededor constantemente.
 			Ya que fue cortada, no puede hacerlo más, pero aún puedes usar su 
 			poder para revivirte, si le das alimento primero.
-			Consume 400 espiritus para revivir.
-			Da una barrera al activarse.
+			Consume 500 espiritus para revivir.
+			También atrae objetos de espiritu.
+			Da una barrera al revivir.
 			{$BarrierStats.Life}
 			{$BarrierStats.Cooldown}
 			{$BarrierStats.Recovery}
+			'''
+	}
+
+	HarujionTracker: {
+		DisplayName: Localizador de Harujion
+		Tooltip:
+			'''
+			Una ingeniosa invención tuya.
+			Localiza y te dice la dirección del Harujion, si existe.
 			'''
 	}
 }
@@ -312,14 +322,14 @@ Items: {
 NPCs: {
 	CurtainOfAwakening.DisplayName: Cortina del Despertar
 	// FairyBase.DisplayName: Fairy Base
-	// SmallFairy.DisplayName: Small Fairy
+	SmallFairy.DisplayName: Hada pequeña
 }
 
 Projectiles: {
 	DimensionalFragmentProjectile.DisplayName: Fragmento Dimensional
 	LaserStarter.DisplayName: Laser
 	LaserGrid.DisplayName: Laser
-	// Laser.DisplayName: Laser
+	Laser.DisplayName: Laser
 	Swing.DisplayName: Swing
 	Cut.DisplayName: Corte
 	InfiniteLaser.DisplayName: Nubes partientes
@@ -342,7 +352,7 @@ Projectiles: {
 	HaniwaCannon.DisplayName: Unidad Especial de Artillería Haniwa
 	StrikeHaniwa.DisplayName: Unidad Especial de Ataque Haniwa
 	Bullet.DisplayName: Bala
-	// EnemyBullet.DisplayName: Enemy Bullet
+	EnemyBullet.DisplayName: Bala
 }
 
 Dialogue: {
@@ -353,7 +363,19 @@ Dialogue: {
 	}
 }
 
-Bestiary.CurtainOfAwakening: Un portal misterioso a algún lado.
+Fairy: {
+	Small: {
+		Mono: Hada monocromica pequeña
+		Slash: Hada con espada pequeña
+		Magic: Hada magica pequeña
+		Shot: Hada con pistola pequeña
+	}
+}
+
+Bestiary: {
+	CurtainOfAwakening: Un portal misterioso a algún lado.
+	SmallFairy: Un hada pequeña que siempre busca conflicto. A pesar de ser debil por su cuenta, tiene varios amigos con muchos talentos diferentes que puede llamar. Normalmente se encuentra en la superficie, revisando la tierra desde el cielo o vagando sin rumbo.
+}
 
 Buffs: {
 	Kurovirus: {
@@ -422,6 +444,7 @@ BarrierStats: {
 	Recovery: Esta barrera necesita {2} segundos para recuperarse de un golpe.
 }
 
+HarujionGeneration: Creciendo una flor youkai.
 SoulDescriptions.Reserve: Está guardando {0} espiritus.
 
 MemoryDescriptions: {
@@ -448,7 +471,7 @@ Death: {
 Keybinds.Revival.DisplayName: Revitalización
 
 Conditions: {
-	HasEnoughSouls: Recolectar 1400 espiritus
+	HasEnoughSouls: Recolectar 1500 espiritus
 	AnyMechBoss: Derrotar a cualquier jefe mecanico
 	DownedPlantera: Derrotar a plantera
 }

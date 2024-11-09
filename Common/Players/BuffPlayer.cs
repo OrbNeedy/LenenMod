@@ -42,7 +42,8 @@ namespace lenen.Common.Players
         {
             if (harujionDebuff > 0)
             {
-                Player.lifeRegen -= (int)(10 * harujionDebuff);
+                //Main.NewText("Potency: " + harujionDebuff);
+                Player.lifeRegen -= (int)(14 * harujionDebuff) - 14;
             }
 
             if (virusDebuff)

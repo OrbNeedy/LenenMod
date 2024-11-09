@@ -21,10 +21,10 @@ namespace lenen.Common.Players
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource)
         {
             SoulAbsorptionPlayer soulManager = Player.GetModPlayer<SoulAbsorptionPlayer>();
-            if (harujionRevival && soulManager.soulsCollected >= 400 && 
+            if (harujionRevival && soulManager.soulsCollected >= 500 && 
                 !Player.HasBuff(ModContent.BuffType<ResurrectionCooldown>()))
             {
-                soulManager.soulsCollected -= 400;
+                soulManager.soulsCollected -= 500;
                 Player.Heal(Player.statLifeMax + Player.statLifeMax2);
                 Player.AddBuff(ModContent.BuffType<ResurrectionCooldown>(), 3600);
                 SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/rei_drain_00"), Player.Center);

@@ -3,15 +3,18 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Audio;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.ID;
 
 namespace lenen.Content.Projectiles
 {
     public class EnemyBullet : ModProjectile
     {
+        private Vector2 origin = Vector2.Zero;
         public override void SetDefaults()
         {
-            Projectile.width = 40;
-            Projectile.height = 40;
+            Projectile.width = 26;
+            Projectile.height = 26;
             Projectile.scale = 1f;
             Projectile.light = 0.35f;
 
@@ -24,42 +27,99 @@ namespace lenen.Content.Projectiles
             Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 210;
+            Projectile.timeLeft = 300;
         }
-
-        public override string Texture => "lenen/Content/Projectiles/Bullet";
 
         public override void OnSpawn(IEntitySource source)
         {
             SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/e_shot_00"), Projectile.Center);
+            origin = Projectile.Center;
+            base.OnSpawn(source);
+        }
 
-            // Sprite changer
-            switch(Projectile.ai[0])
+        public override void AI()
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient) return;
+            switch (Projectile.ai[0])
             {
-                default:
+                case 1:
+                    int width = 1350;
+                    int height = 1000;
+                    if (Projectile.Center.X <= origin.X - width && Projectile.ai[2] > 0)
+                    {
+                        Projectile.velocity.X *= -1;
+                        Projectile.Center = new Vector2(origin.X - width + 1, Projectile.Center.Y);
+                        Projectile.ai[2] -= 1;
+                    }
+                    if (Projectile.Center.Y <= origin.Y - height && Projectile.ai[2] > 0)
+                    {
+                        Projectile.velocity.Y *= -1;
+                        Projectile.Center = new Vector2(Projectile.Center.X, origin.Y - height + 1);
+                        Projectile.ai[2] -= 1;
+                    }
+                    if (Projectile.Center.X >= origin.X + width && Projectile.ai[2] > 0)
+                    {
+                        Projectile.velocity.X *= -1;
+                        Projectile.Center = new Vector2(origin.X + width - 1,
+                            Projectile.Center.Y);
+                        Projectile.ai[2] -= 1;
+                    }
+                    if (Projectile.Center.Y >= origin.Y + width && Projectile.ai[2] > 0)
+                    {
+                        Projectile.velocity.Y *= -1;
+                        Projectile.Center = new Vector2(Projectile.Center.X,
+                            origin.Y + width - 1);
+                        Projectile.ai[2] -= 1;
+                    }
                     break;
             }
-
-            if (Projectile.ai[2] > 0)
-            {
-                Projectile.scale = Projectile.ai[2];
-            }
-
-            base.OnSpawn(source);
+            Projectile.netUpdate = true;
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
             // Color changer
-            switch(Projectile.ai[1])
+            Color color = Color.White;
+            Texture2D texture = ModContent.Request<Texture2D>("lenen/Content/Projectiles/ColoredEnemyBullet").Value;
+
+            lightColor = Color.White;
+
+            switch (Projectile.ai[1])
             {
+                case 0:
+                    color = Color.DarkCyan;
+                    break;
                 case 1:
-                    lightColor = Color.Yellow;
+                    color = Color.GreenYellow;
+                    break;
+                case 2:
+                    color = Color.Yellow;
+                    break;
+                case 3:
+                    color = Color.Red;
+                    break;
+                case 4:
+                    color = Color.Purple;
+                    break;
+                case 5:
+                    color = Color.Black;
+                    lightColor = Color.Black;
                     break;
                 default:
-                    lightColor = Color.White;
+                    color = Color.White;
                     break;
             }
+
+            Main.EntitySpriteDraw(new DrawData(texture,
+                Projectile.Center - Main.screenPosition - (new Vector2(16) * Projectile.scale),
+                null,
+                color,
+                0f,
+                Vector2.Zero,
+                Projectile.scale,
+                SpriteEffects.None)
+            );
+
             return base.PreDraw(ref lightColor);
         }
 

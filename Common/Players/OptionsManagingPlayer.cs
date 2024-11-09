@@ -98,6 +98,7 @@ namespace lenen.Common.Players
                     {
                         SpawnDrone(index);
                     }
+                    drone.netUpdate = true;
                 }
             }
             else
@@ -133,6 +134,7 @@ namespace lenen.Common.Players
                     {
                         SpawnFist(index);
                     }
+                    fist.netUpdate = true;
                 }
             }
             else
@@ -180,6 +182,7 @@ namespace lenen.Common.Players
                     verifiedFist.shooting = true;
                     verifiedFist.safeReturnTimer = 0;
                     fist.ai[2] = altUse;
+                    fist.netUpdate = true;
                 } else
                 {
                     SpawnFist(index, true);

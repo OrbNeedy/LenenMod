@@ -20,8 +20,8 @@ namespace lenen.Content.Items
 
         public override void SetDefaults()
         {
-            Item.width = 44;
-            Item.height = 44;
+            Item.width = 0;
+            Item.height = 0;
             Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 60, 0);
             Item.rare = ItemRarityID.Master;
@@ -38,7 +38,8 @@ namespace lenen.Content.Items
             foreach (Player player in Main.ActivePlayers)
             {
                 if (player.DeadOrGhost) continue;
-                if (Collision.CheckAABBvAABBCollision(Item.position, Item.Size, player.position, player.Size))
+                if (Collision.CheckAABBvAABBCollision(Item.position - new Vector2(22), new Vector2(44), 
+                    player.position, player.Size))
                 {
                     player.GetModPlayer<SoulAbsorptionPlayer>().AddSouls(Item.stack);
                     Item.active = false;

@@ -12,6 +12,8 @@
 	<ItemGroup>
 	  <None Remove="Assets\Icons\BarrierIcon.png" />
 	  <None Remove="Assets\Icons\DesperateIcon.png" />
+	  <None Remove="Assets\Icons\NoHarujionIcon.png" />
+	  <None Remove="Assets\Icons\PointToHarujion.png" />
 	  <None Remove="Assets\Icons\SkullIcon.png" />
 	  <None Remove="Assets\Textures\Empty.png" />
 	  <None Remove="Assets\Textures\GashadokuroRibs.png" />
@@ -41,6 +43,8 @@
 	  <None Remove="Content\Items\RiftDye.png" />
 	  <None Remove="Content\Items\SoulItem.png" />
 	  <None Remove="Content\Items\Tools\HammerShapedBottleOpener.png" />
+	  <None Remove="Content\Items\Tools\HarujionTracker.png" />
+	  <None Remove="Content\Items\Tools\HarujionTracker_Glowmask.png" />
 	  <None Remove="Content\Items\UnstableRock.png" />
 	  <None Remove="Content\Items\Weapons\BarrierWeapon.png" />
 	  <None Remove="Content\Items\Weapons\BirdOption.png" />
@@ -60,10 +64,12 @@
 	  <None Remove="Content\Projectiles\BoneKnife.png" />
 	  <None Remove="Content\Projectiles\Bullet.png" />
 	  <None Remove="Content\Projectiles\Cannon.png" />
+	  <None Remove="Content\Projectiles\ColoredEnemyBullet.png" />
 	  <None Remove="Content\Projectiles\ConcealedKnife.png" />
 	  <None Remove="Content\Projectiles\Cut.png" />
 	  <None Remove="Content\Projectiles\DarkKnife.png" />
 	  <None Remove="Content\Projectiles\DimensionalFragmentProjectile.png" />
+	  <None Remove="Content\Projectiles\EnemyBullet.png" />
 	  <None Remove="Content\Projectiles\HaniwaCannon.png" />
 	  <None Remove="Content\Projectiles\HaniwaFist.png" />
 	  <None Remove="Content\Projectiles\InfiniteLaser.png" />

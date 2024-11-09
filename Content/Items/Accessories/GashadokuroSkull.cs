@@ -12,7 +12,6 @@ namespace lenen.Content.Items.Accessories
     [AutoloadEquip(EquipType.Face)]
     public class GashadokuroSkull : ModItem
     {
-        private string soulsDescription;
         private Barrier barrier = BarrierLookups.BarrierDictionary[BarrierLookups.Barriers.SkullBarrier];
 
         public override void Load()

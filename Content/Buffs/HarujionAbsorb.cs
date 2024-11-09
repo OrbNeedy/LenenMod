@@ -30,12 +30,12 @@ namespace lenen.Content.Buffs
         public override void Update(Player player, ref int buffIndex)
         {
             HarujionLocations locations = ModContent.GetInstance<HarujionLocations>();
-            Main.NewText($"Location instance souls: {locations.soulsAbsorbed}");
+            //Main.NewText($"Location instance souls: {locations.soulsAbsorbed}");
             float multiplier = locations.GetGrowth();
             float radius = locations.GetRadius();
             float distance = player.DistanceSQ(locations.harujionLocation.ToWorldCoordinates());
             float potency = 1 + (((radius * multiplier) - distance + 0.001f) / radius);
-            Main.NewText($"Final potency: {potency}");
+            //Main.NewText($"Final potency: {potency}");
 
             player.GetModPlayer<BuffPlayer>().harujionDebuff = potency;
         }

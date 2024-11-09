@@ -76,17 +76,17 @@ namespace lenen.Content.Items.Weapons
             player.manaRegenDelay = player.manaRegenCount;
             manager.spellCardTimer = spellCardTimer;
 
-            int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(120));
+            int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(100));
             if (manager.desperateBomb)
             {
-                dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(200));
+                dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(180));
                 manager.spellCardTimer = spellCardTimer + 1200;
 
                 Vector2 baseOffset = new Vector2(Main.rand.Next(-400, 400), Main.rand.Next(-250, 250));
                 Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center + baseOffset, Vector2.Zero,
-                    ModContent.ProjectileType<BlackGridedSquare>(), dmg, Item.knockBack, player.whoAmI, 1, 0, 20);
+                    ModContent.ProjectileType<BlackGridedSquare>(), dmg, Item.knockBack, player.whoAmI, 1, 0, 10);
                 Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center + baseOffset, Vector2.Zero,
-                    ModContent.ProjectileType<BlackGridedSquare>(), dmg, Item.knockBack, player.whoAmI, 1, 1, 20);
+                    ModContent.ProjectileType<BlackGridedSquare>(), dmg, Item.knockBack, player.whoAmI, 1, 1, 10);
                 return;
             }
 

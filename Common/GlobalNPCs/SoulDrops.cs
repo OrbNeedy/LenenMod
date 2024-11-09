@@ -1,6 +1,7 @@
 ﻿using lenen.Common.Players;
 using lenen.Content.Buffs;
 using lenen.Content.Items;
+using lenen.Content.NPCs.Fairy;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -34,17 +35,27 @@ namespace lenen.Common.GlobalNPCs
 
         public override void OnKill(NPC npc)
         {
+            if (npc.SpawnedFromStatue) return;
+            if (npc.lifeMax <= 20) return;
             int souls = 1;
             int volume = 1;
             souls *= (1 + npc.rarity);
 
-            volume += npc.life/1000;
+            volume += npc.life / 900;
 
-            if (Main.hardMode && !npc.CountsAsACritter) volume *= 2;
+            souls += npc.defense / 20;
 
-            if (npc.boss) souls += Main.rand.Next(10, 21);
+            if (Main.hardMode) volume *= 2;
+
+            if (npc.boss) souls += Main.rand.Next(5, 16);
 
             if (NPC.downedPlantBoss) souls += (int)(2 * Main.rand.NextFloat(1f, 2f));
+
+            if (npc.type == ModContent.NPCType<SmallFairy>())
+            {
+                souls += Main.rand.Next(5);
+                volume += Main.rand.Next(1, 3);
+            }
 
             Vector2 position = npc.position;
             for (int i = 0; i < souls; i++)

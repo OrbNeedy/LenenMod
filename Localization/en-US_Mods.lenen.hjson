@@ -291,12 +291,22 @@ Items: {
 			'''
 			A beautiful flower that constantly absorbs the life around it.
 			Since it was cut down, it can't do so any more, but you may still use 
-			it's powers to resurrect yourself, if you give it sustenance first.
-			Consumes 400 spirits to resurrect.
-			It will give you a barrier upon activation.
+			it's powers to resurrect yourself, if you give it enough spirits.
+			Consumes 500 spirits to resurrect.
+			Also attracts Spirit items.
+			It will give you a barrier upon resurrection.
 			{$BarrierStats.Life}
 			{$BarrierStats.Cooldown}
 			{$BarrierStats.Recovery}
+			'''
+	}
+
+	HarujionTracker: {
+		DisplayName: Harujion Tracker
+		Tooltip:
+			'''
+			An ingenious invension of yours.
+			It locates and tells you the direction to the Harujion, if it exists.
 			'''
 	}
 }
@@ -345,7 +355,19 @@ Dialogue: {
 	}
 }
 
-Bestiary.CurtainOfAwakening: A mysterious portal to somewhere.
+Fairy: {
+	Small: {
+		Mono: Small Monochrome Fairy
+		Slash: Small Sword Fairy
+		Magic: Small Magic Fairy
+		Shot: Small Gun Fairy
+	}
+}
+
+Bestiary: {
+	CurtainOfAwakening: A mysterious portal to somewhere.
+	SmallFairy: A small fairy who's always looking for conflict, despite being weak on their own, they have many friends with many different talents they can call. It's normally found in the surface, scouting the ground from the sky or wandering aimlessly.
+}
 
 Buffs: {
 	Kurovirus: {
@@ -413,6 +435,7 @@ BarrierStats: {
 	Recovery: This barrier needs {2} seconds to recover from a hit.
 }
 
+HarujionGeneration: Growing a youkai flower.
 SoulDescriptions.Reserve: It's storing {0} spirits.
 
 MemoryDescriptions: {
@@ -435,7 +458,7 @@ Death: {
 Keybinds.Revival.DisplayName: Revival
 
 Conditions: {
-	HasEnoughSouls: Collected 1400 spirits
+	HasEnoughSouls: Collected 1500 spirits
 	AnyMechBoss: Defeated any mech boss
 	DownedPlantera: Defeated plantera
 }
