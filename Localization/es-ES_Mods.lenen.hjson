@@ -239,7 +239,7 @@ Items: {
 	}
 
 	MemoryKnife: {
-		DisplayName: Hoja de recolección
+		DisplayName: Hoja de secuelas
 		Tooltip:
 			'''
 			Un cuchillo que fluctua entre estados.
@@ -317,11 +317,79 @@ Items: {
 			Localiza y te dice la dirección del Harujion, si existe.
 			'''
 	}
+
+	SpiritVision: {
+		DisplayName: Visión de espiritu
+		Tooltip:
+			'''
+			Un visor que permite ver los espiritus que tienen otros seres.
+			Tiene el efecto secundario de permitir detectar enemigos.
+			Esconde el accesorio para desactivar las lecturas de espiritus.
+			'''
+	}
+
+	AntiGravityCape: {
+		DisplayName: Capa anti gravedad
+		Tooltip:
+			'''
+			Una capa con estilo que otorga al usuario una barrera gravitacional.
+			La barrera da vuelo infinito y permite levitar desde el suelo.
+			También hace lentas las caidas y empuja enemigos lejos de ti.
+			Oprime la tecla de Ajustar Gravedad para desactivar la levitación.
+			{$BarrierStats.Life}
+			{$BarrierStats.Cooldown}
+			{$BarrierStats.Recovery}
+			'''
+	}
+
+	ClauseCape: {
+		DisplayName: Capa de Clause
+		Tooltip:
+			'''
+			Una capa festiva que le otorga a usuario una barrera gravitacional jovial.
+			La barrera da vuelo infinito y permite levitar desde el suelo.
+			También hace lentas las caidas y empuja enemigos lejos de ti.
+			Oprime la tecla de Ajustar Gravedad para desactivar la levitación.
+			{$BarrierStats.Life}
+			{$BarrierStats.Cooldown}
+			{$BarrierStats.Recovery}
+			'''
+	}
+
+	GravitationalAnomaly: {
+		DisplayName: Anomalía gravitacional
+		Tooltip:
+			'''
+			Una anomalía encontrada en el espacio y alrededor de distorciones espaciales
+			poderosas.
+			Modifica la gravedad ligeramente.
+			'''
+	}
+
+	GravityGlobe: {
+		DisplayName: Anomalía controlada
+		Tooltip:
+			'''
+			Una anomalía en un globo que da control completo de ella.
+			Click derecho para usar Nueva Estrella "Super Nova", gastando {0} mana.
+			Añade {1} enfriamiento de Spell Card al jugador.
+			'''
+	}
+
+	ChristmasGlobe: {
+		DisplayName: Christmas Globe
+		Tooltip:
+			'''
+			Un globo lleno de tanta alegría y felicidad que permite controlar la 
+			gravedad.
+			Click derecho para usar Paquete "Super Regalo", gastando {0} mana.
+			Añade {1} enfriamiento de Spell Card al jugador.
+			'''
+	}
 }
 
 NPCs: {
 	CurtainOfAwakening.DisplayName: Cortina del Despertar
-	// FairyBase.DisplayName: Fairy Base
 	SmallFairy.DisplayName: Hada pequeña
 }
 
@@ -353,6 +421,7 @@ Projectiles: {
 	StrikeHaniwa.DisplayName: Unidad Especial de Ataque Haniwa
 	Bullet.DisplayName: Bala
 	EnemyBullet.DisplayName: Bala
+	FriendlyBullet.DisplayName: Bala
 }
 
 Dialogue: {
@@ -420,7 +489,8 @@ Buffs: {
 		Description:
 			'''
 			Tu alma está siendo absorbida por un Harujion cercano.
-			Se volverá más fuerte mientras más cerca estés.
+			Se volverá más fuerte mientras más cerca estés, pero los espiritus que has 
+			recolectado reducirán su efecto.
 			'''
 	}
 
@@ -468,7 +538,13 @@ Death: {
 	RNA: El ADN de {0} fue revuelto más allá de reparación.
 }
 
-Keybinds.Revival.DisplayName: Revitalización
+Keybinds: {
+	Revival.DisplayName: Revitalización
+	HideJar.DisplayName: Esconder jarra
+	Gravity.DisplayName: Ajustar gravedad
+}
+
+UI.Spirits: Espiritus: {0}
 
 Conditions: {
 	HasEnoughSouls: Recolectar 1500 espiritus
@@ -478,3 +554,4 @@ Conditions: {
 
 DamageClasses.MeleeRangedHybrid.DisplayName: Cuerpo a cuerpo/Rango
 Tiles.HarujionSapling.MapEntry: Harujion
+WorldGen.Harujion: Un youkai planta peligroso ha aparecido en el mundo.

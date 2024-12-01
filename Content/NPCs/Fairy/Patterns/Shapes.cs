@@ -23,8 +23,12 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                 return 0;
             }
             Player target = Main.player[npc.target];
+
+            if (!Collision.CanHitLine(npc.position, npc.width, npc.height,
+                        target.position, target.width, target.height)) return 120;
+
             int speed = size * 90;
-            int damage = 10 + (5 * size);
+            int damage = 15 + (5 * size);
             float bulletSpeed = 10f;
             int color;
             color = Main.rand.NextFromList<int>(0, 1);
@@ -43,7 +47,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                     ai2 = 1 + (level / 5);
                     break;
                 case FairyType.Shot:
-                    direction = npc.Center.DirectionTo(target.Center + target.velocity);
+                    direction = npc.Center.DirectionTo(target.Center + (target.velocity*20));
                     bulletSpeed = 12.5f;
                     baseDistance = 30f;
                     offset = new Vector2(baseDistance, 0);

@@ -48,21 +48,23 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                 return 0;
             }
             Player target = Main.player[npc.target];
+
+            if (!Collision.CanHitLine(npc.position, npc.width, npc.height,
+                        target.position, target.width, target.height)) return 120;
+
             int speed = size * 60;
-            int damage = 10 + (5 * size);
+            int damage = 15 + (5 * size);
             int color;
             color = Main.rand.NextFromList<int>(0, 1);
             if (Main.expertMode)
             {
                 color = Main.rand.NextFromList<int>(2, 3);
                 speed += 60;
-                damage = 15 + (10 * size);
             }
             if (Main.masterMode)
             {
                 color = Main.rand.NextFromList<int>(3, 4);
                 speed += 60;
-                damage = 25 + (15 * size);
             }
             damage += (level * (1 + size));
 

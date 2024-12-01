@@ -1,9 +1,11 @@
-﻿using lenen.Content.Items.Weapons;
-using lenen.Content.NPCs;
+﻿using lenen.Content.Items.Accessories;
+using lenen.Content.Items.Weapons;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace lenen.Common.GlobalNPCs
 {
@@ -11,6 +13,21 @@ namespace lenen.Common.GlobalNPCs
     {
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.ByCondition(new DropGravity(), ModContent.ItemType<GravitationalAnomaly>(), 
+                30));
+            npcLoot.Add(ItemDropRule.ByCondition(new DropGravity2(), ModContent.ItemType<GravitationalAnomaly>(),
+                100));
+            /*ItemDropRule.ByCondition(new SimpleItemDropRuleCondition(
+            Language.GetText("Condition.Localization.Here"), () => Main.LocalPlayer.zone,
+            ShowItemDropInUI.WhenConditionSatisfied),
+            ModContent.ItemType<GravitationalAnomaly>()));*/
+
+            // Skeleton clause
+            if (NPCID.Sets.Skeletons[npc.type])
+            {
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
+            }
+
             switch (npc.type)
             {
                 // Bosses
@@ -22,81 +39,28 @@ namespace lenen.Common.GlobalNPCs
                     npcLoot.Add(ItemDropRule.ByCondition(new DropInNormal(), 
                         ModContent.ItemType<DimensionalFragment>(), 6));
                     break;
+                case NPCID.MoonLordCore:
+                    npcLoot.Add(ItemDropRule.ByCondition(new DropInNormal(),
+                        ModContent.ItemType<AntiGravityCape>(), 4));
+                    break;
 
                 // Normal Enemies
                 case NPCID.ChaosElemental:
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DimensionalFragment>(), 8));
                     break;
-                case NPCID.Skeleton:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.SkeletonAlien:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.SkeletonArcher:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.SkeletonAstonaut:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.SkeletonCommando:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.SkeletonSniper:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.ArmoredSkeleton:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.BoneThrowingSkeleton:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.BoneThrowingSkeleton2:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.BoneThrowingSkeleton3:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.BoneThrowingSkeleton4:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.GreekSkeleton:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.SkeletonMerchant:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.SkeletonTopHat:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.TacticalSkeleton:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.SporeSkeleton:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.SmallSkeleton:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.BigHeadacheSkeleton:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.BigMisassembledSkeleton:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.BigPantlessSkeleton:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.BigSkeleton:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
-                    break;
-                case NPCID.SmallPantlessSkeleton:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
+                case NPCID.LunarTowerVortex:
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GravitationalAnomaly>(), 2));
                     break;
 
                 // Friendly NPCs
                 case NPCID.Clothier:
+                case NPCID.OldMan:
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AssassinKnife>(), 2));
+                    
+                    /*npcLoot.Add(ItemDropRule.ByCondition(new SimpleItemDropRuleCondition(
+                        Language.GetText("Condition.Localization.Here"), () => !Main.expertMode, 
+                        ShowItemDropInUI.WhenConditionSatisfied), 
+                        ModContent.ItemType<YourItem>()));*/
                     break;
             }
         }

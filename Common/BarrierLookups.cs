@@ -1,6 +1,5 @@
 ﻿using lenen.Common.Players.Barriers;
 using System.Collections.Generic;
-using Terraria;
 
 namespace lenen.Common
 {
@@ -11,7 +10,8 @@ namespace lenen.Common
             SkullBarrier,
             BetterSkullBarrier,
             HarujionBarrier,
-            DesperateBarrier
+            DesperateBarrier,
+            GravityBarrier
         }
 
         public static Dictionary<Barriers, Barrier> BarrierDictionary = new Dictionary<Barriers, Barrier>()
@@ -20,6 +20,7 @@ namespace lenen.Common
             [Barriers.BetterSkullBarrier] = new BetterSkullBarrier(),
             [Barriers.HarujionBarrier] = new ResurrectionBarrier(),
             [Barriers.DesperateBarrier] = new DesperateBarrier(),
+            [Barriers.GravityBarrier] = new GravityBarrier(),
         };
 
         public static void ResetBarriers()
@@ -29,6 +30,7 @@ namespace lenen.Common
             BarrierDictionary[Barriers.BetterSkullBarrier] = new BetterSkullBarrier();
             BarrierDictionary[Barriers.HarujionBarrier] = new ResurrectionBarrier();
             BarrierDictionary[Barriers.DesperateBarrier] = new DesperateBarrier();
+            BarrierDictionary[Barriers.GravityBarrier] = new GravityBarrier();
         }
     }
 }

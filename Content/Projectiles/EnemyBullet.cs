@@ -43,8 +43,8 @@ namespace lenen.Content.Projectiles
             switch (Projectile.ai[0])
             {
                 case 1:
-                    int width = 1350;
-                    int height = 1000;
+                    int width = 1200;
+                    int height = 850;
                     if (Projectile.Center.X <= origin.X - width && Projectile.ai[2] > 0)
                     {
                         Projectile.velocity.X *= -1;

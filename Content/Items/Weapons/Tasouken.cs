@@ -71,11 +71,13 @@ namespace lenen.Content.Items.Weapons
             SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
             manager.spellCardTimer = spellCardTimer;
 
-            int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(20));
+            // 20
+            int dmg = (int)(player.GetWeaponDamage(Item)/3);
             float desperation = MathHelper.TwoPi / 210;
             if (manager.desperateBomb)
             {
-                dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(35));
+                // 35
+                dmg = (int)(player.GetWeaponDamage(Item) * 0.58333f);
                 desperation = MathHelper.TwoPi / 70;
                 manager.spellCardTimer = spellCardTimer + 300;
             }

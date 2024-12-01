@@ -20,7 +20,10 @@ namespace lenen.Common.Players.Barriers
             Colors = [new Color(141, 168, 132), new Color(194, 182, 134), new Color(236, 188, 133)];
         }
 
-        public override string IconPath { get => "lenen/Assets/Icons/DesperateIcon"; }
+        public override string IconPath()
+        {
+            return "lenen/Assets/Icons/DesperateIcon";
+        }
 
         public override bool GeneralOnHitLogic(ref Player.HurtModifiers modifiers, Player player, Projectile proj = null, NPC npc = null)
         {

@@ -23,7 +23,7 @@ namespace lenen.Content.Tiles.Plants
         Grown
     }
 
-    public class HarujionSapling : ModTile
+    public class HarujionSapling : ModTile, ITileData
     {
         private const int FrameWidth = 18; 
         private Asset<Texture2D> glowTexture;
@@ -93,10 +93,9 @@ namespace lenen.Content.Tiles.Plants
 
         public override void PlaceInWorld(int i, int j, Item item)
         {
-            HarujionLocations locations = ModContent.GetInstance<HarujionLocations>();
-            locations.harujionLocation = new Point16(i, j);
-            locations.soulsAbsorbed = 0;
-            locations.UpdateHarujion();
+            HarujionLocations.instance.harujionLocation = new Point16(i, j);
+            HarujionLocations.instance.soulsAbsorbed = 0;
+            HarujionLocations.instance.UpdateHarujion();
             base.PlaceInWorld(i, j, item);
         }
 
@@ -117,9 +116,8 @@ namespace lenen.Content.Tiles.Plants
         {
             if (!fail)
             {
-                HarujionLocations locations = ModContent.GetInstance<HarujionLocations>();
-                locations.harujionLocation = new Point16(0, 0);
-                locations.soulsAbsorbed = 0;
+                HarujionLocations.instance.harujionLocation = new Point16(0, 0);
+                HarujionLocations.instance.soulsAbsorbed = 0;
             } else
             {
             }
@@ -139,43 +137,39 @@ namespace lenen.Content.Tiles.Plants
 
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
-            num = fail ? 1 : 3;
+            num = fail ? 5 : 15;
         }
 
         public override void RandomUpdate(int i, int j)
         {
             Tile tile = Framing.GetTileSafely(i, j);
             PlantStage stage = GetStage(i, j);
-            HarujionLocations locations = ModContent.GetInstance<HarujionLocations>();
-            //Main.NewText("Random update happening");
 
-            // Overgrown Harujion will simply become a tree
-            if (locations.harujionLocation != new Point16(i, j)) return;
-            //Main.NewText("Reached? Idk");
+            if (HarujionLocations.instance.harujionLocation != new Point16(i, j)) return;
 
-            if (stage == PlantStage.Planted && locations.soulsAbsorbed >= 1200)
+            if (stage == PlantStage.Planted && HarujionLocations.instance.soulsAbsorbed >= 1500)
             {
                 tile.TileFrameX = FrameWidth; 
                 MinPick = 150;
-                //Main.NewText("Harujion at stage 2");
 
                 if (Main.netMode != NetmodeID.SinglePlayer)
                 {
                     NetMessage.SendTileSquare(-1, i, j, 1);
                 }
             }
-            else if (stage == PlantStage.Growing && locations.soulsAbsorbed >= 2400)
+            else if (stage == PlantStage.Growing && HarujionLocations.instance.soulsAbsorbed >= 3000)
             {
                 tile.TileFrameX = FrameWidth * 2; 
                 MinPick = 200;
-                //Main.NewText("Harujion at stage 3");
 
                 if (Main.netMode != NetmodeID.SinglePlayer)
                 {
                     NetMessage.SendTileSquare(-1, i, j, 1);
                 }
+            } else if (stage == PlantStage.Growing && HarujionLocations.instance.soulsAbsorbed >= 6000)
+            {
+                // Transform the Harujion into a tree
             }
-            // Transform tiles
 
         }
 

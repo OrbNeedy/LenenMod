@@ -1,9 +1,7 @@
-﻿using lenen.Common.Players;
-using lenen.Content.Buffs;
+﻿using lenen.Content.Buffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -58,7 +56,10 @@ namespace lenen.Content.Projectiles
         {
             Player player = Main.player[Projectile.owner];
             baseDamage = Projectile.damage;
-            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/haniwa_00"), Projectile.Center);
+            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/haniwa_00") with
+            {
+                Volume = 0.35f
+            }, Projectile.Center);
 
             int[] cannonAIs = new int[] { 0, -1, -2 };
             if (Projectile.ai[0] == 1)
@@ -81,6 +82,7 @@ namespace lenen.Content.Projectiles
                 body = ModContent.Request<Texture2D>("lenen/Assets/Textures/ClayHaniwaFrame");
                 return;
             }
+
             if (player.ZoneSnow)
             {
                 body = ModContent.Request<Texture2D>("lenen/Assets/Textures/IceHaniwaFrame");
@@ -132,6 +134,7 @@ namespace lenen.Content.Projectiles
             Vector2 wantedPosition = player.Center + new Vector2((0 * Projectile.ai[0]) - Projectile.width/2, -360);
             float distanceToPosition = Projectile.Center.Distance(wantedPosition);
             Projectile.position = wantedPosition;
+            Projectile.netUpdate = true;
 
             Projectile.damage = (int)(Projectile.damage + (increase * Projectile.minionSlots));
         }
@@ -166,8 +169,26 @@ namespace lenen.Content.Projectiles
         {
             //Main.PlayerRenderer.DrawPlayer(Main.Camera, Main.player[Projectile.owner], 
             //    Projectile.Center + new Vector2(0, 200), 0, Vector2.Zero);
-
             float alpha = 1;
+            /*SpriteBatchState state = SpriteBatchExt.GetState(Main.spriteBatch);
+            SpriteBatchExt.Restart(Main.spriteBatch, state, SpriteSortMode.Immediate);
+            
+
+            MiscShaderData shader = GameShaders.Misc["Rift"];
+            DrawData data2 = new DrawData(body.Value,
+                Projectile.position - Main.screenPosition,
+                body.Value.Bounds,
+                Color.White * alpha,
+                Projectile.rotation,
+                Vector2.Zero,
+                Projectile.scale,
+                SpriteEffects.None);
+
+            shader.Apply(data2);
+
+            data2.Draw(Main.spriteBatch);
+
+            SpriteBatchExt.Restart(Main.spriteBatch, state);*/
 
             Main.EntitySpriteDraw(body.Value,
                 Projectile.Center - Main.screenPosition,

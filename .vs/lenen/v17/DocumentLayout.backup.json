@@ -1,88 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\content\\npcs\\fairy\\smallfairy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:content\\npcs\\fairy\\smallfairy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\common\\systems\\harujionlocations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:common\\systems\\harujionlocations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\content\\items\\soulitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:content\\items\\soulitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|c:\\users\\usuario\\documents\\my games\\terraria\\tmodloader\\modsources\\lenen\\description.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{9B2EF6CA-7A36-493E-8370-677C07F74FB3}|lenen.csproj|solutionrelative:description.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 3,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "HarujionLocations.cs",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Common\\Systems\\HarujionLocations.cs",
-              "RelativeDocumentMoniker": "Common\\Systems\\HarujionLocations.cs",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Common\\Systems\\HarujionLocations.cs",
-              "RelativeToolTip": "Common\\Systems\\HarujionLocations.cs",
-              "ViewState": "AgIAAF4AAAAAAAAAAAAAAG4AAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T05:47:10.361Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "description.txt",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\description.txt",
-              "RelativeDocumentMoniker": "description.txt",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\description.txt",
-              "RelativeToolTip": "description.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA6AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2024-11-09T05:42:05.414Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SoulItem.cs",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Items\\SoulItem.cs",
-              "RelativeDocumentMoniker": "Content\\Items\\SoulItem.cs",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\Items\\SoulItem.cs",
-              "RelativeToolTip": "Content\\Items\\SoulItem.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAA9wCoAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T05:41:22.759Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SmallFairy.cs",
-              "DocumentMoniker": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\NPCs\\Fairy\\SmallFairy.cs",
-              "RelativeDocumentMoniker": "Content\\NPCs\\Fairy\\SmallFairy.cs",
-              "ToolTip": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\Content\\NPCs\\Fairy\\SmallFairy.cs",
-              "RelativeToolTip": "Content\\NPCs\\Fairy\\SmallFairy.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAD4v0kAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T05:34:23.103Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

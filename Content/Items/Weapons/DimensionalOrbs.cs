@@ -94,11 +94,13 @@ namespace lenen.Content.Items.Weapons
             player.manaRegenDelay = player.manaRegenCount;
             manager.spellCardTimer = spellCardTimer;
 
-            int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(30));
+            // 30
+            int dmg = (int)(player.GetWeaponDamage(Item) * 0.42857f);
             float desperation = 0f;
             if (manager.desperateBomb)
             {
-                dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(45));
+                // 45
+                dmg = (int)(player.GetWeaponDamage(Item) * 0.64285f);
                 desperation = 1f;
                 manager.spellCardTimer = spellCardTimer + 180;
             }

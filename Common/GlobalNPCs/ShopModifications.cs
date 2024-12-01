@@ -18,7 +18,9 @@ namespace lenen.Common.GlobalNPCs
         public override void SetupTravelShop(int[] shop, ref int nextSlot)
         {
             shop[nextSlot] = ModContent.ItemType<BrokenBirdDrone>();
+            nextSlot += 1;
             shop[nextSlot] = ModContent.ItemType<MinorBarrierPotion>();
+            nextSlot += 1;
         }
     }
 }

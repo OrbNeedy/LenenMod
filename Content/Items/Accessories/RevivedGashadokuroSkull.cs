@@ -46,7 +46,7 @@ namespace lenen.Content.Items.Accessories
                 return;
             int equipSlotHead = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head);
             ArmorIDs.Head.Sets.DrawHatHair[equipSlotHead] = true;
-            ArmorIDs.Face.Sets.OverrideHelmet[Item.faceSlot] = true;
+            //ArmorIDs.Face.Sets.OverrideHelmet[Item.faceSlot] = true;
             ArmorIDs.Face.Sets.PreventHairDraw[Item.faceSlot] = true;
         }
 

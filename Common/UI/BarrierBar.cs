@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using lenen.Common.Players.Barriers;
 using System;
-using System.Linq;
 
 namespace lenen.Common.UI
 {
@@ -38,7 +37,7 @@ namespace lenen.Common.UI
                 barFrames[index].Width.Set(26, 0f);
                 barFrames[index].Height.Set(130, 0f);
 
-                barIcons.Add(new UIImage(ModContent.Request<Texture2D>(barrier.IconPath)));
+                barIcons.Add(new UIImage(ModContent.Request<Texture2D>(barrier.IconPath())));
                 barIcons[index].Left.Set(4, 0f);
                 barIcons[index].Top.Set(114, 0f);
                 barIcons[index].Width.Set(12, 0f);

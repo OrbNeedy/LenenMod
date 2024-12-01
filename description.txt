@@ -1,7 +1,49 @@
-The Len'en mod is a mod that currently adds various objects from the Len'en project series.
+The Len'en mod is a mod that currently adds various objects and NPCs from the Len'en project series.
 In the future, there will be more items added, with more characters in mind.
 Please report any bugs or suggestions in this mod's workshop page comment section.
 Also, if you are willing to help make a Wiki for this mod, please contact me.
+
+Ver 0.2.8.2
++ Added the Spirit Vision, Anti Gravity Cape, and Clause Cape accessories.
++ Added Gravitational Anomaly, Controled Anomaly, and Christmas Globe weapons.
++ Added more evident visuals to the Harujion Tile.
++ Added an UI element that tells how many spirits the player has.
++ Gave the Haniwa summon a better aim.
++ Gave the Shot Fairy a better aim.
++ Increased Fairie's base health.
++ Added two mod calls to add NPCs to the list of NPCs that don't drop spirits or the list of NPCs that aren't detected with spirit vision.
+	* Call: AddSoulessNPC 
+	Description: Adds the given NPCs to the list of NPCs that should not drop spirit items or be detected by Spirit Vision.
+	Returns: "Success adding NPCs" if successful. 
+	Parameters: [List<int>] A list of the NPCIDs to add.
+	* Call: AddUndetectableNPC 
+	Description: Adds the given NPCs to the list of NPCs that should not be detected by Spirit Vision but still drop spirit items.
+	Returns: "Success adding NPCs" if successful. 
+	Parameters: [List<int>] A list of the NPCIDs to add.
++ Increased the recollection range of Spirit items.
++ Increased the hitbox of Spirit items.
++ Added a sound effect for recollecting a Spirit item.
++ Added a sound effect to the Prime Minister in Black Robe's projectiles.
+- Removed the ability of certain NPCs to drop Spirit items.
+- Decreased the range at which fairies are comfortable attacking the player.
+- Decreased the fairie's damage scaling.
+* Fixed the Prime Minister in Black Robe's projectiles not activating magic bonuses.
+* Decreased the volume of the Retrovirus activation and the Haniwa summoning.
+* Changed the name of the Recollection Blade, it's now the Aftermath Blade.
+* Changed the Haniwa summon's projectiles.
+* Fixed a mistake in the way the Harujion's area of effect was calculated.
+* Improved the Dimension Dye's shader.
+* Changed the Curtain of Awakening's visuals.
+
+Ver 0.2.2.2
+* Changed the Spirit item's sprite.
+* Removed debug message when killing an enemy.
+
+Ver 0.2.2.1
++ Increased Fairie's base health.
++ Reduced Harujion range and damage scaling.
+- Halved the damage the player takes from the Harujion while having spirits, at the cost of taking spirits from the player.
+* Fixed a bug where the fairies would not drop soul items on Journey difficulty.
 
 Ver 0.2.2
 + Added Hamaxe-shaped Bottle Opener Hamaxe, Grab Extension Summoner weapon, Haniwa Caller Summoner weapon, and Harujion accessory.

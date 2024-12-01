@@ -37,14 +37,22 @@ namespace lenen.Content.Projectiles
         public override void OnSpawn(IEntitySource source)
         {
             Projectile.scale = 0.3f;
-            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/bom_00"), Projectile.Center);
+            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/bom_00") with 
+            { 
+                Volume = 0.65f, 
+                PitchVariance = 0.1f 
+            }, Projectile.Center);
         }
 
         public override void AI()
         {
             if (Projectile.timeLeft == 210)
             {
-                SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/bom_05"), Projectile.Center);
+                SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/bom_05") with
+                {
+                    Volume = 0.65f,
+                    PitchVariance = 0.1f
+                }, Projectile.Center);
             }
             Projectile.rotation += MathHelper.TwoPi/45;
             if (Projectile.scale < 2)

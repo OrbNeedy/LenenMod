@@ -88,13 +88,15 @@ namespace lenen.Content.Items.Weapons
             SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
             manager.spellCardTimer = spellCardTimer;
 
-            int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(40));
+            // 40
+            int dmg = (int)(player.GetWeaponDamage(Item) * 1.53846f);
             int desperation = 3;
             if (manager.desperateBomb)
             {
-                dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(125));
+                // 125
+                dmg = (int)(player.GetWeaponDamage(Item) * 4.80769f);
                 desperation = 5;
-                manager.spellCardTimer = spellCardTimer + 600;
+                manager.spellCardTimer = spellCardTimer + 480;
             }
 
             int direction = player.Center.X <= Main.MouseWorld.X ? 1 : -1;

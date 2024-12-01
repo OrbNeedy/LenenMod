@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -12,7 +11,7 @@ namespace lenen.Common.Players
 {
     public class OptionsManagingPlayer : ModPlayer
     {
-        public Dictionary<int, int> BirdDrone = new Dictionary<int, int>{
+        public Dictionary<int, int> BirdDrone = new Dictionary<int, int> {
             [0] = -1,
             [1] = -1,
             [2] = -1,
@@ -25,6 +24,8 @@ namespace lenen.Common.Players
             [1] = -1
         };
         public bool fistShootState = false;
+
+        public int GravityAnomaly = -1;
 
         public int UpdateCount = 0;
 
@@ -66,6 +67,7 @@ namespace lenen.Common.Players
             int selectedItem = Player.inventory[Player.selectedItem].type;
             CheckDrone(selectedItem);
             CheckHaniwaFists(selectedItem);
+            CheckGravityAnomaly(selectedItem);
             UpdateCount++;
             if (UpdateCount >= int.MaxValue)
             {
@@ -144,6 +146,33 @@ namespace lenen.Common.Players
             }
         }
 
+        private void CheckGravityAnomaly(int selectedItem)
+        {
+            if (selectedItem == ModContent.ItemType<GravitationalAnomaly>() || 
+                selectedItem == ModContent.ItemType<GravityGlobe>() || 
+                selectedItem == ModContent.ItemType<ChristmasGlobe>())
+            { 
+                if (GravityAnomaly == -1)
+                {
+                    //Main.NewText("Spawning anomaly (No anomaly)");
+                    SpawnAnomaly();
+                    return;
+                }
+                Projectile anomaly = Main.projectile[GravityAnomaly];
+                bool anomalyExists = anomaly.active && anomaly.owner == Player.whoAmI &&
+                    anomaly.ModProjectile is FriendlyBullet && anomaly.ai[0] == (int)BulletAIs.GravityWheel;
+                if (anomalyExists)
+                {
+                    //Main.NewText("Keeping the anomaly alive");
+                    anomaly.timeLeft = 3;
+                } else
+                {
+                    //Main.NewText("Spawning anomaly (Nonexistant anomaly)");
+                    SpawnAnomaly();
+                }
+            }
+        }
+
         private void SpawnDrone(int droneIndex)
         {
             BirdDrone[droneIndex] = Projectile.NewProjectile(Player.GetSource_FromThis(),
@@ -164,6 +193,13 @@ namespace lenen.Common.Players
                     Player.Center, Vector2.Zero, ModContent.ProjectileType<HaniwaFist>(), 0, 10,
                     Player.whoAmI, fistIndex);
             }
+        }
+
+        private void SpawnAnomaly()
+        {
+            GravityAnomaly = Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld, Vector2.Zero, 
+                ModContent.ProjectileType<FriendlyBullet>(), 0, 0, Player.whoAmI, (int)BulletAIs.GravityWheel, 
+                (int)BulletColors.White, (int)BulletSprites.Gravity);
         }
 
         public void ShootFists(int altUse)

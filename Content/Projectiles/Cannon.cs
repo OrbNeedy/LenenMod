@@ -120,7 +120,7 @@ namespace lenen.Content.Projectiles
 
                     if (between < 4000f)
                     {
-                        targetPosition = npc.Center;
+                        targetPosition = npc.Center + (npc.velocity * 18);
                         hasTarget = true;
                         return;
                     }
@@ -134,7 +134,7 @@ namespace lenen.Content.Projectiles
                     if (Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height,
                         target.position, target.width, target.height))
                     {
-                        targetPosition = target.Center;
+                        targetPosition = target.Center + (target.velocity * 18);
                         hasTarget = true;
                     }
                 }
@@ -154,10 +154,15 @@ namespace lenen.Content.Projectiles
                             Vector2 direction = Projectile.Center.DirectionTo(targetPosition);
                             for (int i = 0; i < 6; i++)
                             {
-                                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, 
+                                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center,
+                                    direction.RotatedBy((i * MathHelper.Pi / 6) - MathHelper.PiOver2) * 13,
+                                    ModContent.ProjectileType<FriendlyBullet>(), Projectile.damage, 
+                                    Projectile.knockBack, Projectile.owner, 0, (int)BulletColors.White, 
+                                    (int)BulletSprites.AllColored);
+                                /*Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, 
                                     direction.RotatedBy((i * MathHelper.Pi/6) - MathHelper.PiOver2) * 13, 
                                     ModContent.ProjectileType<Bullet>(), Projectile.damage, Projectile.knockBack, 
-                                    Projectile.owner, ai2: 0.45f);
+                                    Projectile.owner, ai2: 0.45f);*/
                             }
                             shootTimer = 60;
                         }
@@ -176,8 +181,12 @@ namespace lenen.Content.Projectiles
                         {
                             Vector2 direction = Projectile.Center.DirectionTo(targetPosition);
                             Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center,
+                                direction * 13, ModContent.ProjectileType<FriendlyBullet>(), Projectile.damage,
+                                Projectile.knockBack, Projectile.owner, 0, (int)BulletColors.Yellow,
+                                (int)BulletSprites.AllColored);
+                            /*Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center,
                                 direction * 13, ModContent.ProjectileType<Bullet>(), Projectile.damage,
-                                Projectile.knockBack, Projectile.owner, ai1: 1, ai2: 0.65f);
+                                Projectile.knockBack, Projectile.owner, ai1: 1, ai2: 0.65f);*/
                             barrageLeft--;
                             barrageTimer = 4;
                         }

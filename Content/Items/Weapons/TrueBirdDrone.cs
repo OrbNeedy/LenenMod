@@ -68,7 +68,8 @@ namespace lenen.Content.Items.Weapons
             SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
             manager.spellCardTimer = spellCardTimer;
 
-            int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(35));
+            // 35
+            int dmg = (int)(player.GetWeaponDamage(Item) * 0.5f);
 
             if (!manager.desperateBomb)
             {
@@ -77,7 +78,8 @@ namespace lenen.Content.Items.Weapons
             } else
             {
                 manager.spellCardTimer += 300;
-                dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(210));
+                // 210
+                dmg = (int)(player.GetWeaponDamage(Item) * 3f);
                 Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center,
                     player.Center.DirectionTo(Main.MouseWorld)*12, ModContent.ProjectileType<SmallBullet>(), dmg, Item.knockBack, player.whoAmI, 1, 
                     ai2: ai2);

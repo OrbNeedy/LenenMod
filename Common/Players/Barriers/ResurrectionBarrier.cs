@@ -20,7 +20,10 @@ namespace lenen.Common.Players.Barriers
             Colors = [new Color(172, 120, 248), new Color(213, 163, 242), new Color(239, 190, 227)];
         }
 
-        public override string IconPath { get => "lenen/Assets/Icons/HarujionIcon"; }
+        public override string IconPath()
+        {
+            return "lenen/Assets/Icons/HarujionIcon";
+        }
 
         public override void PassiveEffects(Player player)
         {

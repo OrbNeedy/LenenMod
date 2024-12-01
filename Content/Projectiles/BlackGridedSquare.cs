@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,6 +12,7 @@ namespace lenen.Content.Projectiles
     public class BlackGridedSquare : ModProjectile
     {
         bool growing = false;
+        bool sound = false;
         int growth = 20;
         public override void SetDefaults()
         {
@@ -25,7 +27,7 @@ namespace lenen.Content.Projectiles
             Projectile.localNPCHitCooldown = 5;
 
             Projectile.friendly = true;
-            Projectile.DamageType = DamageClass.Melee;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.timeLeft = 600;
             Projectile.light = 0.65f;
             Projectile.ownerHitCheck = false;
@@ -42,6 +44,7 @@ namespace lenen.Content.Projectiles
             {
                 Projectile.scale = 0;
             }
+            sound = Projectile.ai[1]%10 == 0 && Projectile.ai[0] == 0;
         }
 
         public override void AI()
@@ -75,6 +78,7 @@ namespace lenen.Content.Projectiles
 
             switch (Projectile.ai[0])
             {
+                //bom_flash_01
                 case 0:
                     // ai1: Growth timer
                     // ai2: Direction of growth (Up or down)
@@ -98,6 +102,13 @@ namespace lenen.Content.Projectiles
                         if (Projectile.ai[2] == 1) Projectile.position.Y -= growth;
                         if (Projectile.height >= 580)
                         {
+                            if (sound)
+                            {
+                                SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/bom_flash_01") with
+                                {
+                                    Volume = 1f
+                                }, Projectile.Center);
+                            }
                             growing = false;
                             Projectile.ai[1] = 60;
                         }
@@ -116,6 +127,10 @@ namespace lenen.Content.Projectiles
                     if (Projectile.timeLeft == 480)
                     {
                         growing = true;
+                        SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/haniwa_00") with
+                        {
+                            Volume = 0.35f
+                        }, Projectile.Center);
                     }
 
                     // Evaluate new Spawn

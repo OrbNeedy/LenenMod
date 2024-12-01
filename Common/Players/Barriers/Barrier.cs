@@ -8,7 +8,6 @@ namespace lenen.Common.Players.Barriers
 {
     public abstract class Barrier
     {
-        public virtual string IconPath { get; } = "lenen/Assets/Icons/BarrierIcon";
         public Color[] Colors { get; set; } = new Color[3];
         public int State { get; set; } = 0;
         public int Cooldown { get; set; } = 1;
@@ -28,6 +27,11 @@ namespace lenen.Common.Players.Barriers
             Cooldown = 0; 
             Life = MaxLife; 
             Recovery = 0;
+        }
+
+        public virtual string IconPath()
+        {
+            return "lenen/Assets/Icons/BarrierIcon";
         }
 
         public virtual void PassiveEffects(Player player)
@@ -141,9 +145,6 @@ namespace lenen.Common.Players.Barriers
 
         public virtual void OnHitByMiscEffects(ref Player.HurtModifiers modifiers, Player player)
         {
-            /*Main.NewText("Playing hit effects at " + player.Center);
-            Main.NewText("Player health: " + player.statLife);
-            Main.NewText("Player's id: " + player.whoAmI);*/
             SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/j_hit"), player.Center);
             for (int i = 0; i < 20; i++)
             {

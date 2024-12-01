@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using lenen.Content.NPCs.Fairy.Patterns;
 using Terraria.GameContent.ItemDropRules;
-using lenen.Content.Items;
 using System.IO;
 using System;
 using Terraria.Localization;
@@ -15,6 +14,7 @@ using Terraria.GameContent.Bestiary;
 
 namespace lenen.Content.NPCs.Fairy
 {
+    // TODO: Apply the hunter effect manually to the sprite
     public enum FairyType
     {
         Mono, 
@@ -82,16 +82,16 @@ namespace lenen.Content.NPCs.Fairy
             NPC.width = 30;
             NPC.height = 60;
             NPC.aiStyle = -1;
-            // If it's a Slash type fairy, double it's damage (Contact only)
-            NPC.damage = 10;
-            NPC.defense = 10;
+            NPC.damage = 15;
+            NPC.defense = 8;
             NPC.knockBackResist = 0.2f;
             
-            NPC.lifeMax = 40;
+            NPC.lifeMax = 60;
             NPC.HitSound = SoundID.NPCHit5;
             NPC.DeathSound = SoundID.NPCHit54;
             NPC.value = 50f;
-            NPC.rarity = 1;
+            NPC.rarity = 0;
+            NPC.townNPC = false;
 
             NPC.GravityIgnoresType = true;
             NPC.GravityIgnoresLiquid = true;
@@ -186,6 +186,7 @@ namespace lenen.Content.NPCs.Fairy
             if (CheckTarget())
             {
                 MoveToTarget();
+                
                 if (attackTimer <= 0)
                 {
                     attackTimer = attackPattern.Shoot(0, powerLevel, NPC, fairyType);
@@ -280,10 +281,13 @@ namespace lenen.Content.NPCs.Fairy
             } else
             {
                 // Other fairies prefer to stay at a distance
+                float preferedDistance = 325;
+                // Shot fairies specifically like to be farther away from the player
+                if (fairyType == FairyType.Shot) preferedDistance = 400;
                 if (NPC.HasPlayerTarget)
                 {
                     Player player = Main.player[NPC.target];
-                    if (player.Distance(NPC.Center) > 350)
+                    if (player.Distance(NPC.Center) > preferedDistance)
                     {
                         targetPosition = player.Center;
                     } else
@@ -295,7 +299,7 @@ namespace lenen.Content.NPCs.Fairy
                 if (NPC.HasNPCTarget)
                 {
                     NPC target = Main.npc[NPC.target];
-                    if (target.Distance(NPC.Center) > 300)
+                    if (target.Distance(NPC.Center) > preferedDistance)
                     {
                         targetPosition = target.Center;
                     }
@@ -492,6 +496,11 @@ namespace lenen.Content.NPCs.Fairy
 				// The ExampleSurfaceBiome ModBiomeBestiaryInfoElement is automatically populated into bestiaryEntry.Info prior to this method being called
 				// so we use this line to tell the game to prioritize a specific InfoElement for sourcing the background image.
             });
+        }
+
+        public override void DrawEffects(ref Color drawColor)
+        {
+            base.DrawEffects(ref drawColor);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

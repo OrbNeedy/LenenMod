@@ -231,7 +231,7 @@ Items: {
 	}
 
 	MemoryKnife: {
-		DisplayName: Recollection Blade
+		DisplayName: Aftermath Blade
 		Tooltip:
 			'''
 			A knife that fluctuates between states.
@@ -309,11 +309,77 @@ Items: {
 			It locates and tells you the direction to the Harujion, if it exists.
 			'''
 	}
+
+	SpiritVision: {
+		DisplayName: Spirit Vision
+		Tooltip:
+			'''
+			A visor that lets you see the spirits held by other living beings.
+			It has the unintended side effect of allowing you to detect enemies.
+			Hide the accessory to deactivate the spirit readings.
+			'''
+	}
+
+	AntiGravityCape: {
+		DisplayName: Anti Gravity Cape
+		Tooltip:
+			'''
+			A stylish cape that gives the user a gravitational barrier.
+			The barrier gives infinite flight and allows levitating from the ground.
+			It also slows down falls and pushes enemies away from you.
+			Press the Adjust Gravity key to deactivate levitation.
+			{$BarrierStats.Life}
+			{$BarrierStats.Cooldown}
+			{$BarrierStats.Recovery}
+			'''
+	}
+
+	ClauseCape: {
+		DisplayName: Clause Cape
+		Tooltip:
+			'''
+			A festive cape that gives the user a jolly gravitational barrier.
+			The barrier gives infinite flight and allows levitating from the ground.
+			It also slows down falls and pushes enemies away from you.
+			Press the Adjust Gravity key to deactivate levitation.
+			{$BarrierStats.Life}
+			{$BarrierStats.Cooldown}
+			{$BarrierStats.Recovery}
+			'''
+	}
+
+	GravitationalAnomaly: {
+		DisplayName: Gravitational Anomaly
+		Tooltip:
+			'''
+			An anomaly found in space and around powerful space distortions.
+			Slightly modifies gravity.
+			'''
+	}
+
+	GravityGlobe: {
+		DisplayName: Controlled Anomaly
+		Tooltip:
+			'''
+			An anomaly in a globe that gives full control of it.
+			Right click to use New Star "Super Nova", spending {0} mana.
+			Adds {1} Spell Card cooldown to the player.
+			'''
+	}
+
+	ChristmasGlobe: {
+		DisplayName: Christmas Globe
+		Tooltip:
+			'''
+			A globe filled with so much cheer and joy that allows control of gravity.
+			Right click to use Package "Super Present", spending {0} mana.
+			Adds {1} Spell Card cooldown to the player.
+			'''
+	}
 }
 
 NPCs: {
 	CurtainOfAwakening.DisplayName: Curtain of Awakening
-	FairyBase.DisplayName: Fairy Base
 	SmallFairy.DisplayName: Small Fairy
 }
 
@@ -345,6 +411,7 @@ Projectiles: {
 	StrikeHaniwa.DisplayName: Special Haniwa Strike Unit
 	Bullet.DisplayName: Bullet
 	EnemyBullet.DisplayName: Enemy Bullet
+	FriendlyBullet.DisplayName: Bullet
 }
 
 Dialogue: {
@@ -412,7 +479,8 @@ Buffs: {
 		Description:
 			'''
 			Your soul is being absorbed by a nearby Harujion.
-			It will get stronger as you get closer.
+			It will get stronger as you get closer, but the spirits you have collected 
+			will decrease it's effect.
 			'''
 	}
 
@@ -455,7 +523,13 @@ Death: {
 	RNA: "{0}'s DNA was scrambled beyond repair."
 }
 
-Keybinds.Revival.DisplayName: Revival
+Keybinds: {
+	Revival.DisplayName: Revival
+	HideJar.DisplayName: Hide Jar
+	Gravity.DisplayName: Adjust Gravity
+}
+
+UI.Spirits: Spirits: {0}
 
 Conditions: {
 	HasEnoughSouls: Collected 1500 spirits
@@ -465,3 +539,4 @@ Conditions: {
 
 DamageClasses.MeleeRangedHybrid.DisplayName: Melee/Ranged
 Tiles.HarujionSapling.MapEntry: Harujion
+WorldGen.Harujion: A dangerous youkai plant has appeared in the world.

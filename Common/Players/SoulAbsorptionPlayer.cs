@@ -13,6 +13,7 @@ namespace lenen.Common.Players
         public int soulsCollected = 0;
         public bool activateRevival = false;
         public bool revivedState = false;
+        public bool seeSpirits = false;
         public float harujionPotency = 0f;
 
         public override void Initialize()
@@ -45,6 +46,7 @@ namespace lenen.Common.Players
         {
             revivedState = false;
             harujionPotency = 0f;
+            seeSpirits = false;
         }
 
         public override void SaveData(TagCompound tag)

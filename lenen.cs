@@ -5,23 +5,30 @@ using Terraria.ModLoader;
 using lenen.Common.Players;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.Graphics.Shaders;
 
 namespace lenen
 {
-	public class lenen : Mod
+	public partial class lenen : Mod
     {
-        /*public override void Load()
+        public override void Load()
         {
             if (Main.netMode != NetmodeID.Server)
             {
-                Asset<Effect> dyeShader = this.Assets.Request<Effect>("Effects/RiftEffect");
+                Asset<Effect> curtainShader = this.Assets.Request<Effect>("Effects/RiftEffect");
+                Asset<Effect> textureShader = this.Assets.Request<Effect>("Effects/TextureEffect");
+
+                GameShaders.Misc["Rift"] = new MiscShaderData(curtainShader, "RiftShader").UseColor(0, 1, 0);
+                GameShaders.Misc["Harujion"] = new MiscShaderData(textureShader, "TextureShader").
+                    UseImage1(Assets.Request<Texture2D>("Assets/Textures/FlowerPattern"));
             }
-        }*/
+        }
 
         internal enum MessageType : byte
         {
             PlayerUpdateCount
         }
+
         public override void HandlePacket(BinaryReader reader, int whoAmI)
         {
             MessageType msgType = (MessageType)reader.ReadByte();

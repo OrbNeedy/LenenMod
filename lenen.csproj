@@ -11,18 +11,25 @@
 	<!-- References -->
 	<ItemGroup>
 	  <None Remove="Assets\Icons\BarrierIcon.png" />
+	  <None Remove="Assets\Icons\CheerIcon.png" />
 	  <None Remove="Assets\Icons\DesperateIcon.png" />
+	  <None Remove="Assets\Icons\GravityPlusIcon.png" />
 	  <None Remove="Assets\Icons\NoHarujionIcon.png" />
 	  <None Remove="Assets\Icons\PointToHarujion.png" />
 	  <None Remove="Assets\Icons\SkullIcon.png" />
 	  <None Remove="Assets\Textures\Empty.png" />
+	  <None Remove="Assets\Textures\FlowerPattern.png" />
 	  <None Remove="Assets\Textures\GashadokuroRibs.png" />
 	  <None Remove="Assets\Textures\GashadokuroRibsFront.png" />
+	  <None Remove="Assets\Textures\SpiritJarWithGlass.png" />
+	  <None Remove="Common\GravityPullBulletWithAura.png" />
 	  <None Remove="Common\ImprovedSkull.png" />
 	  <None Remove="Common\UI\BarrierBarFrame.png" />
 	  <None Remove="Common\UI\SpellCardFrame.png" />
 	  <None Remove="Content\Items\Accessories\AkaWing.png" />
 	  <None Remove="Content\Items\Accessories\AkaWing_Wings.png" />
+	  <None Remove="Content\Items\Accessories\AntiGravityCape.png" />
+	  <None Remove="Content\Items\Accessories\ClauseCape.png" />
 	  <None Remove="Content\Items\Accessories\DesperateBarrierItem.png" />
 	  <None Remove="Content\Items\Accessories\GashadokuroSkull_Head.png" />
 	  <None Remove="Content\Items\Accessories\Harujion.png" />
@@ -61,6 +68,9 @@
 	  <None Remove="Content\NPCs\Fairy\MonoFairy.png" />
 	  <None Remove="Content\NPCs\Fairy\SmallFairyWings.png" />
 	  <None Remove="Content\NPCs\Fairy\SmallFairyWingsBack.png" />
+	  <None Remove="Content\Projectiles\AttractiveBullet.png" />
+	  <None Remove="Content\Projectiles\BigBullet.png" />
+	  <None Remove="Content\Projectiles\BigBulletInside.png" />
 	  <None Remove="Content\Projectiles\BoneKnife.png" />
 	  <None Remove="Content\Projectiles\Bullet.png" />
 	  <None Remove="Content\Projectiles\Cannon.png" />
@@ -69,6 +79,8 @@
 	  <None Remove="Content\Projectiles\Cut.png" />
 	  <None Remove="Content\Projectiles\DarkKnife.png" />
 	  <None Remove="Content\Projectiles\DimensionalFragmentProjectile.png" />
+	  <None Remove="Content\Projectiles\DoubleBullet.png" />
+	  <None Remove="Content\Projectiles\DoubleBulletInside.png" />
 	  <None Remove="Content\Projectiles\EnemyBullet.png" />
 	  <None Remove="Content\Projectiles\HaniwaCannon.png" />
 	  <None Remove="Content\Projectiles\HaniwaFist.png" />
@@ -79,8 +91,11 @@
 	  <None Remove="Content\Projectiles\LaserStarter.png" />
 	  <None Remove="Content\Projectiles\OffensiveBarrier.png" />
 	  <None Remove="Content\Projectiles\Pellet.png" />
+	  <None Remove="Content\Projectiles\PelletBullet.png" />
+	  <None Remove="Content\Projectiles\PelletBulletInside.png" />
 	  <None Remove="Content\Projectiles\RustyKnife.png" />
 	  <None Remove="Content\Projectiles\StrikeHaniwa.png" />
+	  <None Remove="Content\Projectiles\SuperPresent.png" />
 	  <None Remove="Content\Projectiles\WeakBirdProjectile.png" />
 	  <None Remove="localization\es-ES_Mods.lenen.hjson" />
 	</ItemGroup>

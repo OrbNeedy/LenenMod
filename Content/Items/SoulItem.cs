@@ -1,12 +1,10 @@
-﻿using Terraria.GameContent.Creative;
-using Terraria.ID;
+﻿using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using lenen.Common.Players;
-using lenen.Content.Tiles.Plants;
 using Terraria.DataStructures;
-using lenen.Common.Systems;
+using Terraria.Audio;
 
 namespace lenen.Content.Items
 {
@@ -38,9 +36,14 @@ namespace lenen.Content.Items
             foreach (Player player in Main.ActivePlayers)
             {
                 if (player.DeadOrGhost) continue;
-                if (Collision.CheckAABBvAABBCollision(Item.position - new Vector2(22), new Vector2(44), 
+                if (Collision.CheckAABBvAABBCollision(Item.position - new Vector2(25), new Vector2(50), 
                     player.position, player.Size))
                 {
+                    SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/item_00") with
+                    {
+                        Volume = 1f,
+                        PitchVariance = 0.25f
+                    }, player.Center);
                     player.GetModPlayer<SoulAbsorptionPlayer>().AddSouls(Item.stack);
                     Item.active = false;
                 }
@@ -49,16 +52,22 @@ namespace lenen.Content.Items
 
         public override void PostUpdate()
         {
-            Lighting.AddLight(Item.Center, Color.Beige.ToVector3() * 0.45f * Main.essScale);
+            Lighting.AddLight(Item.Center, Color.Beige.ToVector3() * 0.8f * Main.essScale);
         }
 
         public override bool CanPickup(Player player)
         {
-            return player.GetModPlayer<DeathManagingPlayer>().harujionRevival;
+            return player.GetModPlayer<DeathManagingPlayer>().harujionRevival || 
+                player.Distance(Item.Center) <= 120;
         }
 
         public override bool OnPickup(Player player)
         {
+            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/item_00") with
+            {
+                Volume = 1f,
+                PitchVariance = 0.25f
+            }, player.Center);
             player.GetModPlayer<SoulAbsorptionPlayer>().AddSouls(Item.stack);
             return false;
         }

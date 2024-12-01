@@ -76,10 +76,12 @@ namespace lenen.Content.Items.Weapons
             player.manaRegenDelay = player.manaRegenCount;
             manager.spellCardTimer = spellCardTimer;
 
-            int dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(100));
+            //100
+            int dmg = (int)(player.GetWeaponDamage(Item) * 3.57142f);
             if (manager.desperateBomb)
             {
-                dmg = (int)(player.GetTotalDamage(Item.DamageType).ApplyTo(180));
+                //180
+                dmg = (int)(player.GetWeaponDamage(Item) * 6.42857f);
                 manager.spellCardTimer = spellCardTimer + 1200;
 
                 Vector2 baseOffset = new Vector2(Main.rand.Next(-400, 400), Main.rand.Next(-250, 250));

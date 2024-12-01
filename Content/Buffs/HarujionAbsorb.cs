@@ -18,24 +18,22 @@ namespace lenen.Content.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            HarujionLocations locations = ModContent.GetInstance<HarujionLocations>();
-            float radius = locations.GetRadius();
-            float distance = npc.DistanceSQ(locations.harujionLocation.ToWorldCoordinates());
-            float multiplier = locations.GetGrowth();
-            float potency = 1 + (((radius*multiplier) - distance + 0.001f) / radius);
+            float radius = HarujionLocations.instance.GetRadius();
+            float distance = npc.DistanceSQ(HarujionLocations.instance.harujionLocation.ToWorldCoordinates());
+            float distancePotency = (radius - distance) / radius;
+            float multiplier = HarujionLocations.instance.GetGrowth();
+            float potency = (distancePotency * 0.65f) + (multiplier * 0.35f);
 
             npc.GetGlobalNPC<SoulDrops>().harujionPotency = potency;
         }
 
         public override void Update(Player player, ref int buffIndex)
         {
-            HarujionLocations locations = ModContent.GetInstance<HarujionLocations>();
-            //Main.NewText($"Location instance souls: {locations.soulsAbsorbed}");
-            float multiplier = locations.GetGrowth();
-            float radius = locations.GetRadius();
-            float distance = player.DistanceSQ(locations.harujionLocation.ToWorldCoordinates());
-            float potency = 1 + (((radius * multiplier) - distance + 0.001f) / radius);
-            //Main.NewText($"Final potency: {potency}");
+            float multiplier = HarujionLocations.instance.GetGrowth();
+            float radius = HarujionLocations.instance.GetRadius();
+            float distance = player.DistanceSQ(HarujionLocations.instance.harujionLocation.ToWorldCoordinates());
+            float distancePotency = (radius - distance)/radius;
+            float potency = (distancePotency * 0.9f) + (multiplier* 0.4f);
 
             player.GetModPlayer<BuffPlayer>().harujionDebuff = potency;
         }

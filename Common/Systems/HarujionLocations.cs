@@ -1,11 +1,19 @@
-﻿using lenen.Content.Buffs;
+﻿using lenen.Common.Graphics;
+using lenen.Common.Players;
+using lenen.Content.Buffs;
 using lenen.Content.Items;
 using lenen.Content.Tiles.Plants;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Chat;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.Localization;
@@ -17,6 +25,8 @@ namespace lenen.Common.Systems
 {
     public class HarujionLocations : ModSystem
     {
+        public static HarujionLocations instance;
+
         public Point16 harujionLocation = new(0, 0);
         public int soulsAbsorbed = 0;
         public int[] validTiles = new[] { (int)TileID.Dirt, (int)TileID.Grass,
@@ -25,6 +35,11 @@ namespace lenen.Common.Systems
                 (int)TileID.Mud, (int)TileID.Sand, (int)TileID.AshGrass, (int)TileID.Ash, (int)TileID.GolfGrass,
             (int)TileID.GolfGrassHallowed, (int)TileID.HallowedGrass, (int)TileID.SnowBlock,
                 (int)TileID.DirtiestBlock};
+
+        public override void Load()
+        {
+            instance = this;
+        }
 
         public override void SaveWorldData(TagCompound tag)
         {
@@ -73,10 +88,20 @@ namespace lenen.Common.Systems
         {
 
             //Main.NewText("Harujion: " + harujionLocation);
-            if (Main.rand.NextBool(7200))
+            if (Main.hardMode)
             {
-                //Main.NewText("PreUpdateWorld: Reafirming Harujion");
-                ReafirmHarujion();
+                if (Main.rand.NextBool(8000))
+                {
+                    //Main.NewText("PreUpdateWorld: Reafirming Harujion");
+                    ReafirmHarujion();
+                }
+            } else
+            {
+                if (Main.rand.NextBool(20000))
+                {
+                    //Main.NewText("PreUpdateWorld: Reafirming Harujion");
+                    ReafirmHarujion();
+                }
             }
 
             //Main.NewText("Harujion position: " + harujionLocation);
@@ -121,6 +146,60 @@ namespace lenen.Common.Systems
             base.PreUpdateWorld();
         }
 
+        public override void PostDrawTiles()
+        {
+            if (harujionLocation == Point16.Zero) return;
+
+            Tile harujion = Framing.GetTileSafely(harujionLocation);
+            if (harujion == null || !harujion.HasTile || harujion.TileType != ModContent.TileType<HarujionSapling>())
+            {
+                return;
+            }
+
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+
+            PlantStage stage = (PlantStage)(harujion.TileFrameX / 18);
+
+            Texture2D texture = ModContent.Request<Texture2D>(
+                "lenen/Content/Tiles/Plants/HarujionSapling_Aura").Value;
+            Rectangle bounds = new Rectangle(0 + (36 * (int)stage), 0, 34, 38);
+
+            DrawData data = new DrawData(
+                texture, 
+                harujionLocation.ToWorldCoordinates() - Main.screenPosition - new Vector2(16, 26),
+                bounds, 
+                Color.White * 0.4f
+            );
+
+            MiscShaderData shader = GameShaders.Misc["Harujion"];
+            shader.Apply(data);
+
+            data.Draw(Main.spriteBatch);
+
+            Main.spriteBatch.End();
+
+            if (Main.LocalPlayer.GetModPlayer<SoulAbsorptionPlayer>().seeSpirits)
+            {
+                Main.spriteBatch.Begin();
+                texture = ModContent.Request<Texture2D>(
+                        "lenen/Assets/Textures/SpiritLock").Value;
+                Vector2 center = harujionLocation.ToWorldCoordinates() + new Vector2(0);
+
+                Rectangle rect = new Rectangle((int)(center.X - texture.Width / 2 - Main.screenPosition.X),
+                    (int)(center.Y - texture.Height / 2 - Main.screenPosition.Y), texture.Width, texture.Height);
+                Main.spriteBatch.Draw(
+                    texture,
+                    rect,
+                    Color.White * 0.588235f
+                );
+
+                Main.spriteBatch.DrawString(FontAssets.MouseText.Value, "Aprox. Spirits: " + soulsAbsorbed,
+                    center + new Vector2(0, -texture.Height * 0.7f) - Main.screenPosition,
+                    new Color(202, 159, 224));
+                Main.spriteBatch.End();
+            }
+        }
+
         public override void PreUpdatePlayers()
         {
             if (harujionLocation == Point16.Zero) return;
@@ -157,14 +236,14 @@ namespace lenen.Common.Systems
         public float GetRadius()
         {
             float radius = 60000f;
-            radius *= (80f + soulsAbsorbed) / 80f;
+            radius *= (float)Math.Pow((60+soulsAbsorbed)/60, 0.7f);
             return radius;
         }
 
         public float GetGrowth()
         {
             float growth = 1f;
-            growth += soulsAbsorbed / 2000f;
+            growth += soulsAbsorbed / 1500f;
             return growth;
         }
 
@@ -192,7 +271,7 @@ namespace lenen.Common.Systems
             //Main.NewText($"Saved location: {harujionLocation}");
             if (harujionLocation == Point16.Zero)
             {
-                ModContent.GetInstance<lenen>().Logger.Info($"UpdateHarujion says there is no Harujion");
+                //ModContent.GetInstance<lenen>().Logger.Info($"UpdateHarujion says there is no Harujion");
                 //Main.NewText("It is supposed to not exist");
                 var response = WorldHasHarujion();
                 if (response != null && response != Point16.Zero)
@@ -307,9 +386,23 @@ namespace lenen.Common.Systems
             }
         }
 
+        public override void ModifyHardmodeTasks(List<GenPass> list)
+        {
+            int PilesIndex = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Walls"));
+
+            if (PilesIndex != -1)
+            {
+                ReafirmHarujion();
+                UpdateHarujion();
+                ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Mods.lenen.WorldGen.Harujion"), 
+                    Color.HotPink);
+            }
+        }
+
         private void DeleteLife()
         {
-            Point16 range = new Point16((int)Math.Sqrt(200f * (80f + soulsAbsorbed) / 80f));
+            //(25f + soulsAbsorbed) / 25f, 3/4
+            Point16 range = new Point16((int)Math.Sqrt(200f * Math.Pow((30f + soulsAbsorbed) / 30f, 0.8)));
             float rangeSquared = (float)range.X;
             Point16 searchStart = harujionLocation - range;
             Point16 searchEnd = harujionLocation + range;
@@ -317,7 +410,11 @@ namespace lenen.Common.Systems
             //Main.NewText($"Referenced Harujion position: {harujion}");
             //Main.NewText($"Range of search: {rangeSquared}");
             //Main.NewText($"That means from {searchStart} to {searchEnd}");
-            int amount = (int)MathHelper.Clamp(30 + (soulsAbsorbed / 50), 30, 100);
+            int amount = (int)MathHelper.Clamp(30 + (soulsAbsorbed / 60), 30, 100);
+            if (Main.rand.NextBool())
+            {
+                amount += Main.rand.Next(0, (int)MathHelper.Clamp((soulsAbsorbed / 100), 0, 100));
+            }
             //Main.NewText("Souls collected: " + soulsAbsorbed);
             //Main.NewText("Tiles to check: " + amount);
 
@@ -341,7 +438,7 @@ namespace lenen.Common.Systems
                 if (circlePoint < rangeSquared)
                 {
                     Tile tile = Framing.GetTileSafely(randTileSelect.X, randTileSelect.Y);
-                    if (tile.HasTile)
+                    if (tile.HasTile || tile.WallType != WallID.None)
                     {
                         //Main.NewText($"Trying to eliminate tile {tile.TileType}");
                         float chance = MathHelper.Clamp((rangeSquared - circlePoint) / rangeSquared, 0, 1);
@@ -362,7 +459,7 @@ namespace lenen.Common.Systems
                             }
                             if (success && Main.rand.NextBool())
                             {
-                                soulsAbsorbed += Main.rand.Next(1, 3);
+                                soulsAbsorbed += 1;
                             }
                         }
                     } else
@@ -380,57 +477,61 @@ namespace lenen.Common.Systems
 
         private bool ReplaceByType(Tile tile)
         {
+            //Main.NewText("Sand ID: " + TileID.Sand);
+            //Main.NewText("Tile ID: " + tile.TileType);
             if (TileID.Sets.Conversion.Sand[tile.TileType] && tile.TileType != TileID.Sand)
             {
                 tile.TileType = TileID.Sand;
+                //Main.NewText("Found sand that is not sand");
                 return true;
             }
 
             if (TileID.Sets.Conversion.Ice[tile.TileType] && tile.TileType != TileID.IceBlock)
             {
                 tile.TileType = TileID.IceBlock;
+                //Main.NewText("Found Ice that is not Ice");
                 return true;
             }
 
             if (TileID.Sets.Conversion.Dirt[tile.TileType] && tile.TileType != TileID.Dirt)
             {
                 tile.TileType = TileID.Dirt;
+                //Main.NewText("Found Dirt that is not Dirt");
                 return true;
             }
 
             if (TileID.Sets.Conversion.Snow[tile.TileType] && tile.TileType != TileID.SnowBlock)
             {
                 tile.TileType = TileID.SnowBlock;
+                //Main.NewText("Found Snow that is not Snow");
                 return true;
             }
 
-            if (TileID.Sets.Conversion.JungleGrass[tile.TileType] && tile.TileType != TileID.JungleGrass)
+            if (TileID.Sets.Conversion.JungleGrass[tile.TileType] && tile.TileType != TileID.Mud)
             {
                 tile.TileType = TileID.Mud;
+                //Main.NewText("Found Mud that is not Mud");
                 return true;
             }
 
             if (TileID.Sets.Conversion.MushroomGrass[tile.TileType] && tile.TileType != TileID.Mud)
             {
                 tile.TileType = TileID.Mud;
+                //Main.NewText("Found Mud(Mushroom) that is not Mud");
                 return true;
             }
 
             if (TileID.Sets.Conversion.GolfGrass[tile.TileType] && tile.TileType != TileID.Dirt)
             {
                 tile.TileType = TileID.Dirt;
+                //Main.NewText("Found Dirt(Gold) that is not Dirt");
                 return true;
             }
 
             if (TileID.Sets.Conversion.Moss[tile.TileType] && tile.TileType != TileID.Stone)
             {
                 tile.TileType = TileID.Stone;
-                return true;
-            }
-
-            if (tile.TileType == TileID.JungleGrass && tile.TileType != TileID.Mud)
-            {
-                tile.TileType = TileID.Mud;
+                //Main.NewText("Found Stone(Moss) that is not Stone");
                 return true;
             }
 
@@ -541,6 +642,7 @@ namespace lenen.Common.Systems
 
             switch (tile.TileType)
             {
+                case TileID.Cactus:
                 case TileID.LivingWood:
                 case TileID.LivingMahoganyLeaves:
                 case TileID.LivingMahogany:
@@ -620,12 +722,12 @@ namespace lenen.Common.Systems
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
-            int PilesIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Water Plants"));
+            /*int PilesIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Water Plants"));
 
             if (PilesIndex != -1)
             {
                 tasks.Insert(PilesIndex + 1, new HarujionGenPass("Harujion Flower Generation", 100f));
-            }
+            }*/
         }
     }
 
@@ -662,12 +764,12 @@ namespace lenen.Common.Systems
                 success = Main.tile[x, y].TileType == ModContent.TileType<HarujionSapling>();
                 if (success)
                 {
-                    HarujionLocations manager = ModContent.GetInstance<HarujionLocations>();
-                    manager.harujionLocation = new Point16(x, y);
+                    HarujionLocations.instance.harujionLocation = new Point16(x, y);
                     ModContent.GetInstance<lenen>().Logger.Info($"Added Harujion at {attempts} attempts");
                     ModContent.GetInstance<lenen>().Logger.Info($"Harujion at tile coordinates " +
                         $"X:{x} and Y: {y}");
-                    ModContent.GetInstance<lenen>().Logger.Info($"Gave it the coordinates of {manager.harujionLocation}");
+                    ModContent.GetInstance<lenen>().Logger.Info($"Gave it the coordinates of " +
+                        $"{HarujionLocations.instance.harujionLocation}");
                 }
             }
         }
