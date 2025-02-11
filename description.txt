@@ -1,143 +1,27 @@
-The Len'en mod is a mod that currently adds various objects and NPCs from the Len'en project series.
-In the future, there will be more items added, with more characters in mind.
-Please report any bugs or suggestions in this mod's workshop page comment section.
-Also, if you are willing to help make a Wiki for this mod, please contact me.
+The Len'en mod is a mod based on the Bullet Hell series "Len'en Project".
+It adds 13 accessories, 16 weapons, two NPCs and a special tile.
+Please report any bugs or suggestions in this mod's workshop page comment section or make a new Discussion.
+I'm looking for a person to help with making a wiki for this mod.
 
-Ver 0.2.8.2
-+ Added the Spirit Vision, Anti Gravity Cape, and Clause Cape accessories.
-+ Added Gravitational Anomaly, Controled Anomaly, and Christmas Globe weapons.
-+ Added more evident visuals to the Harujion Tile.
-+ Added an UI element that tells how many spirits the player has.
-+ Gave the Haniwa summon a better aim.
-+ Gave the Shot Fairy a better aim.
-+ Increased Fairie's base health.
-+ Added two mod calls to add NPCs to the list of NPCs that don't drop spirits or the list of NPCs that aren't detected with spirit vision.
-	* Call: AddSoulessNPC 
-	Description: Adds the given NPCs to the list of NPCs that should not drop spirit items or be detected by Spirit Vision.
-	Returns: "Success adding NPCs" if successful. 
-	Parameters: [List<int>] A list of the NPCIDs to add.
-	* Call: AddUndetectableNPC 
-	Description: Adds the given NPCs to the list of NPCs that should not be detected by Spirit Vision but still drop spirit items.
-	Returns: "Success adding NPCs" if successful. 
-	Parameters: [List<int>] A list of the NPCIDs to add.
-+ Increased the recollection range of Spirit items.
-+ Increased the hitbox of Spirit items.
-+ Added a sound effect for recollecting a Spirit item.
-+ Added a sound effect to the Prime Minister in Black Robe's projectiles.
-- Removed the ability of certain NPCs to drop Spirit items.
-- Decreased the range at which fairies are comfortable attacking the player.
-- Decreased the fairie's damage scaling.
-* Fixed the Prime Minister in Black Robe's projectiles not activating magic bonuses.
-* Decreased the volume of the Retrovirus activation and the Haniwa summoning.
-* Changed the name of the Recollection Blade, it's now the Aftermath Blade.
-* Changed the Haniwa summon's projectiles.
-* Fixed a mistake in the way the Harujion's area of effect was calculated.
-* Improved the Dimension Dye's shader.
-* Changed the Curtain of Awakening's visuals.
+Ver 0.2.8.8
++ Added Light Shell, Thrill Engine, and Fire Tray accessories.
++ Added Shell Fragments item.
++ Increased Gravitational Anomaly's damage from 80 to 120.
++ Increased Controlled Anomaly's damage from 120 to 165.
++ Increased Christmas Globe's damage from 120 to 165.
+- Decreased Gravitational Anomaly's projectiles from 15 to 10.
+- Decreased Gravitational Anomaly's shoot speed.
+- Decreased Controlled Anomaly's projectiles from 25 to 18.
+- Decreased Controlled Anomaly's shoot speed.
+- Decreased Christmas Globe's projectiles from 25 to 18.
+- Decreased Christmas Globe's shoot speed.
+- Reduced Spawn rate for the Gravitational Anomaly.
+* Changed the Fairy's sprite and animations.
+* Fixed the gravity wheel from the Gravitational Anomaly, Controlled Anomaly, and Christmas Globe cutting grass.
+* Fixed the Spanish translation for the Christmas Globe.
+* Fixed the recipe for the Revitalized Gashadokuro Skull having the incorrect number of spirits listed in its conditions.
+* Fixed typos in the description.
 
-Ver 0.2.2.2
-* Changed the Spirit item's sprite.
-* Removed debug message when killing an enemy.
-
-Ver 0.2.2.1
-+ Increased Fairie's base health.
-+ Reduced Harujion range and damage scaling.
-- Halved the damage the player takes from the Harujion while having spirits, at the cost of taking spirits from the player.
-* Fixed a bug where the fairies would not drop soul items on Journey difficulty.
-
-Ver 0.2.2
-+ Added Hamaxe-shaped Bottle Opener Hamaxe, Grab Extension Summoner weapon, Haniwa Caller Summoner weapon, and Harujion accessory.
-+ Added neonatal barrier.
-+ Added Harujion as a tile.
-+ Added Spirit items.
-+ Added Harujion Tracker item.
-+ Added a Small Fairy enemy with 4 variants.
-+ Increased tracking range for all weapons that use it.
-+ Added Custom death messages for Retrovirus and getting a Trace dye upon death.
-- Increased all Spirit costs.
-- The player now drops Spirit items upon death if it has any, up to 100 spirits.
-- Decreased Prime Minister in Black Robe's damage.
-- Decreased Desperate Prime Minister in Black Robes' damage and number of projectiles spawned.
-- Decreased damage from the Recollection Blade.
-- Added a time limit to the Curtain of awakening that resets upon exiting the world.
-* Fixed the Bird Drone's options cutting grass when they shouldn't.
-* Recollection Blade now displays the modified damage on it's tooltip.
-
-Ver 0.1.9.4
-+ Added Recollection Blade
-+ Added Tome of barriers Vol.3
-+ Increased aggro reduction while holding the Colt Snake from 200 to 250
-+ Increased aggro reduction while holding the Colt Snake and under the effects of the desperate barrier from 400 to 500
-+ Decreased the angle in which the Throwing Knife diverges from 20 to 10
-+ Increased damage from the Throwing Knife from 20 to 22
-+ Made the Curtain of Awakening a persistent NPC
-- Increased the Spell Card Cooldown of the Sword of parting clouds from 600 to 720
-- Decreased the drop rate of the Trace dye from 50% to 2.5%
-- Removed the Spanish description from Steam's workshop page due to the character limit
-* Fixed a bug where the aggro reduction of the Colt Snake wouldn't increase while under the effects of the desperate barrier
-* Changed the way the Laser Grid projectiles and knife projectiles from the Colt Snake and the Throwing Knife move downwards
-
-Ver 0.1.8.8
-+ Added Dimension dye and Trace dye
-
-Ver 0.1.8.4
-+ Added Minor barrier potion, barrier potion, and major barrier potion
-+ Added Revitalized Gashadokuro Skull
-+ Increased defense given by the Desperate Barrier
-+ Increased the barriers from the Skull Barrier from 1 to 2
-+ Decreased the recovery time from the Skull Barrier from 900 to 600
-- Increased the cooldown time from the Skull Barrier from 600 to 900
-- Removed the ability to put the Gashadokuro Skull in the head slot
-	! If you had a Gashadokuro Skull in you character's head slot, you may get an error message upon entering the world
-* Removed missinformation in the Gashadokuro Skull tooltip description
-* Changed the class for the Desperate Barrier
-	! You can still use the old Desperate Barrier item, but it won't do anything, and will be completely deleted next update
-	! The old Desperate Barrier item can be used to craft a free Desperate Barrier
-* Added cordialities in the mod description
-
-Ver 0.1.7.4
-+ Added more ways to obtain the Dimensional Fragment weapon
-+ Added a new UI for the Spell Card meter and the Barrier System
-* Fixed a bug where the recovery time for a barrier after getting hit would add up indefinitely to the previous time
-* Fixed a bug where a barrier's recovery timer would still run even if the cooldown timer was running
-
-Ver 0.1.6
-+ Added the Gashadokuro Skull accessory
-+ Added the Barrier system
-* Rebalanced the Desperate Barrier around the Barrier system
-
-Ver 0.1.4.8
-+ Added/Finished the Upgraded drone weapon
-+ Increased the number of projectiles for the Sword of Parting Clouds from 4 to 8
-- Decreased the damage made by each projectile of the Sword of Parting Clouds from 35 to 30
-- Decreased the damage made by the Repaired drone from 50 to 40
-* Changed the sprite for the Repaired drone
-* Slightly modified the sprite for the Tasouken
-* Added more light to the Sword of Parting Clouds
-* Changed the wording of previous descriptions of older versions
-
-Ver 0.1.3.8
-+ Added the Fiery wing, Icy wing, and dual wings
-+ Added the Broken Drone and the Repaired drone
-* Fixed many recipes only accepting a specific ore and not it's counterparts
-* Many balance changes regarding the damage of existing weapons
-
-Ver 0.1.3
-+ Added the Rusty knife
-+ Added the Throwing knives
-+ Added the Colt Snake
-* Changed the color and position of the Spell Card cooldown meter
-* Fixed the Dimensional Orbs consuming potions when they shouldn't
-* Fixed the Sword of Parting Clouds not cutting grass that colides with it's hitbox
-
-Ver 0.1.2
-+ Added the Desperate Barrier accessory
-+ Added the Bottle Opener
-+ Added the Sword-Shaped Bottle Opener
-+ Added the Tasouken
-+ Decreased the additional Spell Card cooldown time from desperate Laser Grid
-* Changed the Dimensional Option's orbiting pattern
-
-Ver 0.1.1
-+ Added a Spanish localization
-* Changed the English localization file
+Due to steam workshop's character limit, the full changelog has been moved to Google docs.
+Full Changelog: 
+https://docs.google.com/document/d/1dBdMw9PxNLXdM2Gow2wa3m1KSztPdhIxH7jsUP6s1O4/edit?usp=sharing

@@ -73,16 +73,16 @@ namespace lenen.Content.Items.Weapons
 
             if (!manager.desperateBomb)
             {
-                Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center,
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item, "Spellcard"), player.Center,
                     Vector2.Zero, ModContent.ProjectileType<Retrovirus>(), dmg, Item.knockBack, player.whoAmI);
             } else
             {
                 manager.spellCardTimer += 300;
                 // 210
                 dmg = (int)(player.GetWeaponDamage(Item) * 3f);
-                Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center,
-                    player.Center.DirectionTo(Main.MouseWorld)*12, ModContent.ProjectileType<SmallBullet>(), dmg, Item.knockBack, player.whoAmI, 1, 
-                    ai2: ai2);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item, "Spellcard"), player.Center,
+                    player.Center.DirectionTo(Main.MouseWorld)*12, ModContent.ProjectileType<SmallBullet>(), dmg, 
+                    Item.knockBack, player.whoAmI, 1, ai2: ai2);
                 if (ai2 == 0) ai2 = 1;
                 else ai2 = 0;
             }

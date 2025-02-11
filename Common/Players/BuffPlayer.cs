@@ -1,4 +1,6 @@
 ﻿using lenen.Common.Systems;
+using lenen.Content.Projectiles;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Localization;
@@ -12,9 +14,11 @@ namespace lenen.Common.Players
         public float harujionDebuff { get; set; }
         private int harujionTimer = 0;
         public int barrierBuff { get; set; }
+        public bool lumenBuff { get; set; }
 
         public override void ResetEffects()
         {
+            lumenBuff = false;
             virusDebuff = false;
             harujionDebuff = 0;
             barrierBuff = 0;
@@ -22,6 +26,16 @@ namespace lenen.Common.Players
 
         public override void PostUpdate()
         {
+
+            if (lumenBuff && Player.ownedProjectileCounts[ModContent.ProjectileType<LumenBall>()] < 1)
+            {
+                EntitySource_Parent source = new EntitySource_Parent(Player);
+                var projectile = Projectile.NewProjectileDirect(source, Player.Center, Vector2.Zero,
+                ModContent.ProjectileType<LumenBall>(), (int)Player.GetTotalDamage(DamageClass.Summon).ApplyTo(35),
+                0, Main.myPlayer, 0);
+                projectile.damage = 35;
+            }
+
             if (harujionTimer > 0)
             {
                 harujionTimer--;

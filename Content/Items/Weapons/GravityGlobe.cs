@@ -15,7 +15,7 @@ namespace lenen.Content.Items.Weapons
         private int spellCardCost = 150;
         public override void SetDefaults()
         {
-            Item.damage = 120;
+            Item.damage = 165;
             Item.shoot = ModContent.ProjectileType<FriendlyBullet>();
             Item.shootSpeed = 6f;
             Item.knockBack = 6f;
@@ -27,8 +27,8 @@ namespace lenen.Content.Items.Weapons
             Item.value = Item.sellPrice(0, 0, 50, 80);
             Item.rare = ItemRarityID.Yellow;
 
-            Item.useTime = 45;
-            Item.useAnimation = 45;
+            Item.useTime = 50;
+            Item.useAnimation = 50;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.autoReuse = true;
             Item.noMelee = true;
@@ -45,12 +45,12 @@ namespace lenen.Content.Items.Weapons
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (player.altFunctionUse == 2) return false;
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < 18; i++)
             {
                 int spriteType = Main.rand.Next((int)BulletSprites.Simple, (int)BulletSprites.Pellet + 1);
                 int color = Main.rand.Next((int)BulletColors.White, (int)BulletColors.DarkBlue + 1);
-                Projectile.NewProjectile(Item.GetSource_FromThis(), position,
-                    velocity.RotatedBy(MathHelper.TwoPi * i / 25), type, damage, knockback, player.whoAmI,
+                Projectile.NewProjectile(source, position,
+                    velocity.RotatedBy(MathHelper.TwoPi * i / 18), type, damage, knockback, player.whoAmI,
                     (int)BulletAIs.Simple, color, spriteType);
             }
             return false;
@@ -85,9 +85,10 @@ namespace lenen.Content.Items.Weapons
 
             Vector2 vel = player.Center.DirectionTo(Main.MouseWorld);
 
-            player.GetModPlayer<GravityPlayer>().SpawnExplosion();
+            player.GetModPlayer<GravityPlayer>().SpawnExplosion(source: 
+                new EntitySource_ItemUse(player, Item, "Spellcard"));
 
-            Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center, vel,
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item, "Spellcard"), player.Center, vel,
                 ModContent.ProjectileType<FriendlyBullet>(), 0, 0, player.whoAmI, desperation, 
                 (int)BulletColors.Black, (int)BulletSprites.SuperNova);
         }

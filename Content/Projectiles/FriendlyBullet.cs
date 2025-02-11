@@ -360,6 +360,15 @@ namespace lenen.Content.Projectiles
             }
         }
 
+        public override bool? CanCutTiles()
+        {
+            if (Projectile.ai[0] == (int)BulletAIs.GravityWheel)
+            {
+                return false;
+            }
+            return base.CanCutTiles();
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             Color color = Color.White;

@@ -19,7 +19,7 @@ namespace lenen.Content.Items.Weapons
 
         public override void SetDefaults()
         {
-            Item.damage = 80;
+            Item.damage = 120;
             Item.shoot = ModContent.ProjectileType<FriendlyBullet>();
             Item.shootSpeed = 6f;
             Item.knockBack = 6f;
@@ -32,8 +32,8 @@ namespace lenen.Content.Items.Weapons
             Item.rare = ItemRarityID.Yellow;
             
 
-            Item.useTime = 60;
-            Item.useAnimation = 60;
+            Item.useTime = 75;
+            Item.useAnimation = 75;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.autoReuse = true;
             Item.noMelee = true;
@@ -47,12 +47,12 @@ namespace lenen.Content.Items.Weapons
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 10; i++)
             {
                 int spriteType = Main.rand.Next((int)BulletSprites.Simple, (int)BulletSprites.Pellet + 1);
                 int color = Main.rand.Next((int)BulletColors.White, (int)BulletColors.DarkBlue + 1);
-                Projectile.NewProjectile(Item.GetSource_FromThis(), position, 
-                    velocity.RotatedBy(MathHelper.TwoPi*i / 15), type, damage, knockback, player.whoAmI, 
+                Projectile.NewProjectile(source, position, 
+                    velocity.RotatedBy(MathHelper.TwoPi*i / 10), type, damage, knockback, player.whoAmI, 
                     (int)BulletAIs.Simple, color, spriteType);
             }
             return false;

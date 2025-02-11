@@ -22,6 +22,9 @@ namespace lenen.Content.Items
             Item.height = 0;
             Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 60, 0);
+
+            ItemID.Sets.OverflowProtectionTimeOffset[Item.type] = 1;
+            ItemID.Sets.ItemSpawnDecaySpeed[Item.type] = 5;
             Item.rare = ItemRarityID.Master;
         }
 

@@ -1,5 +1,6 @@
 ﻿using Terraria.GameContent.ItemDropRules;
 using Terraria;
+using lenen.Content.NPCs.Fairy;
 
 namespace lenen.Common
 {
@@ -68,6 +69,32 @@ namespace lenen.Common
         public string GetConditionDescription()
         {
             return "";
+        }
+    }
+
+    public class FairyTypeCondition : IItemDropRuleCondition, IProvideItemConditionDescription
+    {
+        FairyType type;
+
+        public FairyTypeCondition(FairyType typeToCheck)
+        {
+            type = typeToCheck;
+        }
+
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            // Check other fairy sizes when they get added
+            if (info.npc.ModNPC is SmallFairy fairy)
+            {
+                return fairy.fairyType == type;
+            }
+            return false;
+        }
+        public bool CanShowItemDropInUI() => true;
+
+        public string GetConditionDescription()
+        {
+            return $"Droped by a {type.ToString()} fairy.";
         }
     }
 }

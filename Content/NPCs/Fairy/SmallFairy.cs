@@ -11,6 +11,7 @@ using System.IO;
 using System;
 using Terraria.Localization;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent;
 
 namespace lenen.Content.NPCs.Fairy
 {
@@ -30,12 +31,16 @@ namespace lenen.Content.NPCs.Fairy
         Vector2 targetPosition = Vector2.Zero;
         float speed = 2.25f;
         float accuracy = 0.06f;
+        int counter = 0;
 
         int powerLevel = 0;
         int attackTimer = 0;
+        int maxAttackTimer = 0;
         Pattern attackPattern;
+        public bool distracted = false;
+        public Vector2 distractionPosition = new Vector2(-1);
 
-        FairyType fairyType = FairyType.Mono;
+        public FairyType fairyType = FairyType.Mono;
         bool closing = false;
         int blinking = 0;
         int blinkTimer = 0;
@@ -54,6 +59,10 @@ namespace lenen.Content.NPCs.Fairy
         int bodyYFrame = 0;
         int eyeYFrame = 0;
 
+        Vector2 itemPosition = new Vector2();
+        float itemRotation = 0;
+        int itemUtilityTimer = 0;
+
         public override void SetStaticDefaults()
         {
             NPCID.Sets.ShimmerTownTransform[NPC.type] = false;
@@ -66,16 +75,14 @@ namespace lenen.Content.NPCs.Fairy
             NPCID.Sets.SpawnsWithCustomName[Type] = false;
 
             var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers()
-            { // Influences how the NPC looks in the Bestiary
-                CustomTexturePath = "lenen/Content/NPCs/Fairy/SmallFairy", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
+            { 
+                CustomTexturePath = "lenen/Content/NPCs/Fairy/SmallFairy", 
                 Position = new Vector2(0f, 0f),
                 PortraitPositionXOverride = 0f,
                 PortraitPositionYOverride = 12f,
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
         }
-
-        //public override string Texture => "lenen/Assets/Textures/Empty";
 
         public override void SetDefaults()
         {
@@ -98,7 +105,10 @@ namespace lenen.Content.NPCs.Fairy
             NPC.GravityIgnoresSpace = true;
             NPC.shimmering = false;
             NPC.noGravity = true;
+
+            itemUtilityTimer = 0;
             attackTimer = 300;
+            maxAttackTimer = 300;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -124,13 +134,17 @@ namespace lenen.Content.NPCs.Fairy
         {
             if (spawnInfo.Player.ZoneNormalSpace)
             {
-                return SpawnCondition.Sky.Chance * 0.25f;
+                return SpawnCondition.Sky.Chance * 0.275f;
             }
             if (spawnInfo.Player.ZoneOverworldHeight)
             {
-                return SpawnCondition.Overworld.Chance * 0.125f;
+                return SpawnCondition.Overworld.Chance * 0.15f;
             }
             return 0f;
+        }
+
+        public override void ResetEffects()
+        {
         }
 
         public override void ModifyTypeName(ref string typeName)
@@ -157,9 +171,72 @@ namespace lenen.Content.NPCs.Fairy
             base.ModifyHitNPC(target, ref modifiers);
         }
 
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            if (NPC.life <= 0)
+            {
+                // No gore because kids don't die in Terraria 
+                for (int i = 0; i < 20; i++)
+                {
+                    Dust.NewDust(NPC.position, 30, 52, DustID.Smoke);
+                }
+            }
+        }
+
+        public int GetMinLevel()
+        {
+            int finalModifier = 0;
+            if (NPC.downedSlimeKing || NPC.downedGoblins) finalModifier++;
+            if (NPC.downedDeerclops) finalModifier++;
+            if (NPC.downedQueenBee) finalModifier++;
+            if (Main.hardMode) finalModifier += 2;
+            if (NPC.downedPirates) finalModifier++;
+            if (NPC.downedQueenSlime) finalModifier++;
+            if (NPC.downedMechBossAny) finalModifier++;
+            if (NPC.downedGolemBoss) finalModifier++;
+            if (NPC.downedMartians) finalModifier++;
+            if (NPC.downedFishron) finalModifier += 2;
+            if (NPC.downedEmpressOfLight) finalModifier += 2;
+            if (NPC.downedMoonlord) finalModifier += 5;
+            return finalModifier;
+        }
+
+        public int GetMaxLevel()
+        {
+            int finalModifier = 2;
+            if (NPC.downedSlimeKing || NPC.downedBoss1) finalModifier++;
+            if (NPC.downedBoss1) finalModifier++;
+            if (NPC.downedBoss2) finalModifier++;
+            if (NPC.downedBoss3) finalModifier++;
+            if (Main.hardMode) finalModifier += 2;
+            if (NPC.downedMechBossAny) finalModifier++;
+            if (NPC.downedMechBoss1 && NPC.downedMechBoss1 && NPC.downedMechBoss1) finalModifier++;
+            if (NPC.downedPlantBoss) finalModifier += 2;
+            if (NPC.downedGolemBoss) finalModifier++;
+            if (NPC.downedFishron) finalModifier++;
+            if (NPC.downedTowerNebula || NPC.downedTowerSolar ||
+                NPC.downedTowerStardust || NPC.downedTowerVortex) finalModifier++;
+            if (NPC.downedMoonlord)
+            {
+                finalModifier += 5;
+            }
+            return finalModifier;
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.lenen.Bestiary.SmallFairy")),
+
+            });
+        }
+
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ItemID.Sake, 60, 1, 5));
+            //
         }
 
         public override bool? CanFallThroughPlatforms()
@@ -171,6 +248,8 @@ namespace lenen.Content.NPCs.Fairy
         {
             writer.Write7BitEncodedInt((int)fairyType);
             writer.Write7BitEncodedInt(powerLevel);
+            writer.Write(distracted);
+            writer.WriteVector2(distractionPosition);
             base.SendExtraAI(writer);
         }
 
@@ -178,6 +257,8 @@ namespace lenen.Content.NPCs.Fairy
         {
             fairyType = (FairyType)reader.Read7BitEncodedInt();
             powerLevel = reader.Read7BitEncodedInt();
+            distracted = reader.ReadBoolean();
+            distractionPosition = reader.ReadVector2();
             base.ReceiveExtraAI(reader);
         }
 
@@ -189,19 +270,23 @@ namespace lenen.Content.NPCs.Fairy
                 
                 if (attackTimer <= 0)
                 {
-                    attackTimer = attackPattern.Shoot(0, powerLevel, NPC, fairyType);
+                    maxAttackTimer = attackTimer = attackPattern.Shoot(0, powerLevel, NPC, fairyType, 
+                        distractionPosition, distracted);
                 }
             } else
             {
                 MoveAimlessly();
             }
+            
+            /*Main.NewText($"Target position: {targetPosition}");
+            Main.NewText($"Distracted: {distracted}");
+            Main.NewText($"Distracted position: {distractionPosition}");*/
             NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.DirectionTo(targetPosition) * speed, accuracy);
 
             // From Calamity's public github
             float recoilSpeed = 0.7f;
             if (NPC.collideX)
             {
-                NPC.netUpdate = true;
                 NPC.velocity.X = NPC.velocity.X * -recoilSpeed;
                 if (NPC.direction == -1 && NPC.velocity.X > 0f && NPC.velocity.X < 2f)
                 {
@@ -214,7 +299,6 @@ namespace lenen.Content.NPCs.Fairy
             }
             if (NPC.collideY)
             {
-                NPC.netUpdate = true;
                 NPC.velocity.Y = NPC.oldVelocity.Y * -recoilSpeed;
                 if (NPC.velocity.Y > 0f && NPC.velocity.Y < 1.5f)
                 {
@@ -229,20 +313,30 @@ namespace lenen.Content.NPCs.Fairy
             ControlEyes();
             ControlBody();
             ControlWings();
+            ControlItem();
             attackTimer--;
+            counter++;
+            distracted = false;
+
             NPC.netUpdate = true;
             base.AI();
         }
 
         private bool CheckTarget()
         {
-            NPC.TargetClosest(true);
+            NPC.TargetClosest(false);
             if (NPC.HasValidTarget)
             {
                 if (NPC.HasPlayerTarget)
                 {
                     Player target = Main.player[NPC.target];
-                    return ((target.Distance(NPC.Center)-target.aggro) <= 700);
+                    if (distracted)
+                    {
+                        return ((distractionPosition.Distance(NPC.Center) - target.aggro) <= 700);
+                    } else
+                    {
+                        return ((target.Distance(NPC.Center) - target.aggro) <= 700);
+                    }
                 } else
                 {
                     return false;
@@ -262,14 +356,26 @@ namespace lenen.Content.NPCs.Fairy
 
         private void MoveToTarget()
         {
-            NPC.FaceTarget();
+            if (distracted)
+            {
+                NPC.direction = NPC.position.X >= distractionPosition.X ? -1 : 1;
+            } else
+            {
+                NPC.FaceTarget();
+            }
             // Slash type fairies like to get in close
             if (fairyType == FairyType.Slash)
             {
                 if (NPC.HasPlayerTarget)
                 {
-                    Player player = Main.player[NPC.target];
-                    targetPosition = player.Center;
+                    if (distracted)
+                    {
+                        targetPosition = distractionPosition;
+                    } else
+                    {
+                        Player player = Main.player[NPC.target];
+                        targetPosition = player.Center;
+                    }
                     speed = 3;
                 }
                 if (NPC.HasNPCTarget)
@@ -286,13 +392,25 @@ namespace lenen.Content.NPCs.Fairy
                 if (fairyType == FairyType.Shot) preferedDistance = 400;
                 if (NPC.HasPlayerTarget)
                 {
-                    Player player = Main.player[NPC.target];
-                    if (player.Distance(NPC.Center) > preferedDistance)
+                    if (distracted)
                     {
-                        targetPosition = player.Center;
+                        if (distractionPosition.Distance(NPC.Center) > preferedDistance)
+                        {
+                            targetPosition = distractionPosition;
+                        } else
+                        {
+                            targetPosition = NPC.Center + NPC.Center.DirectionFrom(distractionPosition);
+                        }
                     } else
                     {
-                        targetPosition = NPC.Center + NPC.Center.DirectionFrom(player.Center);
+                        Player player = Main.player[NPC.target];
+                        if (player.Distance(NPC.Center) > preferedDistance)
+                        {
+                            targetPosition = player.Center;
+                        } else
+                        {
+                            targetPosition = NPC.Center + NPC.Center.DirectionFrom(player.Center);
+                        }
                     }
                     speed = 3;
                 }
@@ -312,16 +430,7 @@ namespace lenen.Content.NPCs.Fairy
             }
             speed = 3f;
             accuracy = 0.04f;
-        }
-
-        private Vector2 CheckTerrain()
-        {
-            // Preventive measures
-            Vector2 nextTarget = new Vector2(NPC.direction, 0);
-
-            //Main.NewText("Next target: " + nextTarget);
-            return nextTarget;
-        }
+        }   
 
         private void ControlEyes()
         {
@@ -429,73 +538,186 @@ namespace lenen.Content.NPCs.Fairy
             }
         }
 
-        public override void HitEffect(NPC.HitInfo hit)
+        private void ControlItem()
         {
-            if (NPC.life <= 0)
+            Vector2 targetPosition = Vector2.Zero;
+            if (NPC.HasValidTarget)
             {
-                // No gore because kids don't die in Terraria 
-                for (int i = 0; i < 20; i++)
+                if (distracted)
                 {
-                    Dust.NewDust(NPC.position, 30, 52, DustID.Smoke);
+                    targetPosition = distractionPosition;
+                }
+                else
+                {
+                    targetPosition = Main.player[NPC.target].Center + (Main.player[NPC.target].velocity * 30);
                 }
             }
-        }
 
-        public int GetMinLevel()
-        {
-            int finalModifier = 0;
-            if (NPC.downedSlimeKing || NPC.downedGoblins) finalModifier++;
-            if (NPC.downedDeerclops) finalModifier++;
-            if (NPC.downedQueenBee) finalModifier++;
-            if (Main.hardMode) finalModifier += 2;
-            if (NPC.downedPirates) finalModifier++;
-            if (NPC.downedQueenSlime) finalModifier++;
-            if (NPC.downedMechBossAny) finalModifier++;
-            if (NPC.downedGolemBoss) finalModifier++;
-            if (NPC.downedMartians) finalModifier++;
-            if (NPC.downedFishron) finalModifier += 2;
-            if (NPC.downedEmpressOfLight) finalModifier += 2;
-            if (NPC.downedMoonlord) finalModifier += 5;
-            return finalModifier;
-        }
+            Vector2 preferredPositionOffset = itemPosition;
+            float preferredRotation = itemRotation;
 
-        public int GetMaxLevel()
-        {
-            int finalModifier = 2;
-            if (NPC.downedSlimeKing || NPC.downedBoss1) finalModifier++;
-            if (NPC.downedBoss1) finalModifier++;
-            if (NPC.downedBoss2) finalModifier++;
-            if (NPC.downedBoss3) finalModifier++;
-            if (Main.hardMode) finalModifier += 2;
-            if (NPC.downedMechBossAny) finalModifier++;
-            if (NPC.downedMechBoss1 && NPC.downedMechBoss1 && NPC.downedMechBoss1) finalModifier++;
-            if (NPC.downedPlantBoss) finalModifier += 2;
-            if (NPC.downedGolemBoss) finalModifier++;
-            if (NPC.downedFishron) finalModifier++;
-            if (NPC.downedTowerNebula || NPC.downedTowerSolar ||
-                NPC.downedTowerStardust || NPC.downedTowerVortex) finalModifier++;
-            if (NPC.downedMoonlord)
+            float rotationPotency = 0.05f;
+            float movementPotency = 0.0125f;
+
+            switch (fairyType)
             {
-                finalModifier += 5;
+                case FairyType.Slash:
+                    movementPotency = 0.005f;
+                    if (turning)
+                    {
+                        movementPotency = 0.05f;
+                    }
+                    if (NPC.direction == -1)
+                    {
+                        if (attackTimer <= 10 || attackTimer >= maxAttackTimer-20)
+                        {
+                            rotationPotency = 0.5f;
+                            movementPotency = 0.25f;
+                            preferredPositionOffset = new Vector2(2, -48);
+                            preferredRotation = -MathHelper.PiOver2 - MathHelper.PiOver4 + 0.01f;
+                        } else if (attackTimer <= 120)
+                        {
+                            movementPotency = 0.025f;
+                            preferredPositionOffset = new Vector2(-14, 6);
+                            preferredRotation = MathHelper.PiOver4 - 0.01f;
+                        } else
+                        {
+                            preferredPositionOffset = new Vector2(-32, -8 + (float)(Math.Sin(counter*0.01f) * 6f));
+                            preferredRotation = MathHelper.Pi + 0.2f;
+                        }
+                    }
+                    else
+                    {
+                        if (attackTimer <= 10 || attackTimer >= maxAttackTimer - 20)
+                        {
+                            rotationPotency = 0.5f;
+                            movementPotency = 0.25f;
+                            preferredPositionOffset = new Vector2(-32, -48);
+                            preferredRotation = MathHelper.PiOver2 + MathHelper.PiOver4 - 0.01f;
+                        } else if (attackTimer <= 120)
+                        {
+                            movementPotency = 0.025f;
+                            preferredPositionOffset = new Vector2(-16, 6);
+                            preferredRotation = -MathHelper.PiOver4 + 0.01f;
+                        } else
+                        {
+                            preferredPositionOffset = new Vector2(2, -8 + (float)(Math.Sin(counter * 0.01f) * 6f));
+                            preferredRotation = MathHelper.Pi - 0.2f;
+                        }
+                    }
+                    break;
+                case FairyType.Magic:
+                    if (NPC.direction == -1)
+                    {
+                        if (attackTimer <= 120)
+                        {
+                            preferredPositionOffset = new Vector2(23 + ((float)Math.Cos(counter * 0.01f) * 2),
+                                -33 + (float)Math.Sin(counter * 0.02f) * 4);
+                            preferredRotation = 0;
+                            if (Main.rand.NextBool(3))
+                            {
+                                for (int i = 0; i < Main.rand.Next(0, 8); i++)
+                                {
+                                    Dust.NewDust(NPC.position - itemPosition - 
+                                        new Vector2(21 * NPC.scale, 21 * NPC.scale).RotatedBy(itemRotation), 
+                                        (int)(16*NPC.scale), (int)(16 * NPC.scale), DustID.Enchanted_Pink);
+                                }
+                            }
+                        } else
+                        {
+                            preferredPositionOffset = new Vector2(-49 + ((float)Math.Cos(counter * 0.01f) * 8), 
+                                -25 + (float)Math.Sin(counter * 0.02f) * 10);
+                            preferredRotation = MathHelper.PiOver2; 
+                        }
+                    }
+                    else
+                    {
+                        if (attackTimer <= 120)
+                        {
+                            preferredPositionOffset = new Vector2(-53 + ((float)Math.Cos(counter * 0.01f) * 2),
+                                -33 + (float)Math.Sin(counter * 0.02f) * 4);
+                            preferredRotation = 0;
+                            if (Main.rand.NextBool(3))
+                            {
+                                for (int i = 0; i < Main.rand.Next(0, 8); i++)
+                                {
+                                    Dust.NewDust(NPC.position - itemPosition -
+                                        new Vector2(-4 * NPC.scale, 20 * NPC.scale).RotatedBy(itemRotation), 
+                                        (int)(16 * NPC.scale), (int)(16 * NPC.scale), DustID.Enchanted_Pink);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            preferredPositionOffset = new Vector2(19 + ((float)Math.Cos(counter * 0.01f) * 8),
+                                -25 + (float)Math.Sin(counter * 0.02f) * 10);
+                            preferredRotation = -MathHelper.PiOver2;
+                        }
+                    }
+                    break;
+                case FairyType.Shot:
+                    if (NPC.direction == -1)
+                    {
+                        if (attackTimer <= 60)
+                        {
+                            preferredPositionOffset = new Vector2(9, -39);
+                            preferredRotation = (NPC.Center - itemPosition).DirectionTo(targetPosition).
+                                ToRotation() + MathHelper.Pi;
+                            movementPotency = 0.025f;
+                        }
+                        else
+                        {
+                            preferredPositionOffset = new Vector2(-45, -21);
+                            preferredRotation = MathHelper.PiOver2;
+                        }
+                    }
+                    else
+                    {
+                        if (attackTimer <= 60)
+                        {
+                            preferredPositionOffset = new Vector2(-39, -39);
+                            preferredRotation = (NPC.Center - itemPosition).DirectionTo(targetPosition).
+                                ToRotation();
+                            movementPotency = 0.5f;
+                        }
+                        else
+                        {
+                            preferredPositionOffset = new Vector2(15, -21);
+                            preferredRotation = -MathHelper.PiOver2;
+                        }
+
+                    }
+                    break;
             }
-            return finalModifier;
-        }
 
-        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
-        {
-            // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				// Sets the spawning conditions of this NPC that is listed in the bestiary.
-				//BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
-				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+            // Parts from https://gist.github.com/RonenNess/8b04d8d99ab5d18a24a26d9244b1615b
+            while (preferredRotation < 0) { preferredRotation += MathHelper.TwoPi; }
+            while (preferredRotation > MathHelper.TwoPi) { preferredRotation -= MathHelper.TwoPi; }
 
-				// Sets the description of this NPC that is listed in the bestiary.
-				new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.lenen.Bestiary.SmallFairy")),
+            // Guarantees it takes the shortest possible rotation to the target, only works because it's wraped 
+            // around 0 to 2Pi
+            if (preferredRotation > MathHelper.Pi)
+            {
+                preferredRotation -= MathHelper.TwoPi;
+            }
 
-				// By default the last added IBestiaryBackgroundImagePathAndColorProvider will be used to show the background image.
-				// The ExampleSurfaceBiome ModBiomeBestiaryInfoElement is automatically populated into bestiaryEntry.Info prior to this method being called
-				// so we use this line to tell the game to prioritize a specific InfoElement for sourcing the background image.
-            });
+            if (preferredPositionOffset.Distance(itemPosition) <= 0.1f)
+            {
+                itemPosition = preferredPositionOffset;
+            }
+            else
+            {
+                itemPosition = Vector2.Lerp(itemPosition, preferredPositionOffset, movementPotency);
+            }
+
+            if (Math.Abs(preferredRotation - itemRotation) <= 0.02f)
+            {
+                itemRotation = preferredRotation;
+            }
+            else
+            {
+                itemRotation = float.Lerp(itemRotation, preferredRotation, rotationPotency);
+            }
         }
 
         public override void DrawEffects(ref Color drawColor)
@@ -504,6 +726,11 @@ namespace lenen.Content.NPCs.Fairy
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            return false;
+        }
+
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             string typeString = fairyType.ToString();
             Texture2D backWings = ModContent.Request<Texture2D>(
@@ -516,6 +743,12 @@ namespace lenen.Content.NPCs.Fairy
                 $"lenen/Content/NPCs/Fairy/{typeString}FairyEye").Value;
             Texture2D frontWings = ModContent.Request<Texture2D>(
                 $"lenen/Content/NPCs/Fairy/{typeString}FairyWings").Value;
+            Texture2D item = null;
+            if (fairyType != FairyType.Mono)
+            {
+                item = ModContent.Request<Texture2D>($"lenen/Content/NPCs/Fairy/{typeString}FairyItem")
+                .Value;
+            }
 
             SpriteEffects effects = SpriteEffects.None;
             if (NPC.direction != 1)
@@ -533,9 +766,9 @@ namespace lenen.Content.NPCs.Fairy
                     backWingOffset.X = -16;
                 }
                 Main.EntitySpriteDraw(new DrawData(backWings,
-                        NPC.position - Main.screenPosition - (backWingOffset * NPC.scale),
+                        NPC.position - screenPos - (backWingOffset * NPC.scale),
                         backWingBounds,
-                        drawColor,
+                        NPC.GetAlpha(drawColor),
                         0f,
                         Vector2.Zero,
                         NPC.scale,
@@ -553,9 +786,9 @@ namespace lenen.Content.NPCs.Fairy
                     turningWingOffset.X = 38;
                 }
                 Main.EntitySpriteDraw(new DrawData(turningWings,
-                        NPC.position - Main.screenPosition - (turningWingOffset * NPC.scale),
+                        NPC.position - screenPos - (turningWingOffset * NPC.scale),
                         turningWingBounds,
-                        drawColor,
+                        NPC.GetAlpha(drawColor),
                         0f,
                         Vector2.Zero,
                         NPC.scale,
@@ -566,9 +799,9 @@ namespace lenen.Content.NPCs.Fairy
             // Draw main body
             Rectangle bodyBounds = new Rectangle(2 + (34 * bodyXFrame), 2 + (64 * bodyYFrame), 30, 60);
             Main.EntitySpriteDraw(new DrawData(body,
-                    NPC.position - Main.screenPosition,
+                    NPC.position - screenPos,
                     bodyBounds,
-                    drawColor,
+                    NPC.GetAlpha(drawColor),
                     0f,
                     Vector2.Zero,
                     NPC.scale,
@@ -578,9 +811,9 @@ namespace lenen.Content.NPCs.Fairy
             // Draw eyes
             Rectangle eyeBounds = new Rectangle(2 + (34 * bodyXFrame), 2 + (64 * eyeYFrame), 30, 60);
             Main.EntitySpriteDraw(new DrawData(eyes,
-                    NPC.position - Main.screenPosition,
+                    NPC.position - screenPos,
                     eyeBounds,
-                    drawColor,
+                    NPC.GetAlpha(drawColor),
                     0f,
                     Vector2.Zero,
                     NPC.scale,
@@ -597,16 +830,41 @@ namespace lenen.Content.NPCs.Fairy
                     frontWingOffset.X = -24;
                 }
                 Main.EntitySpriteDraw(new DrawData(frontWings,
-                        NPC.position - Main.screenPosition - (frontWingOffset * NPC.scale),
+                        NPC.position - screenPos - (frontWingOffset * NPC.scale),
                         frontWingBounds,
-                        drawColor,
+                        NPC.GetAlpha(drawColor),
                         0f,
                         Vector2.Zero,
                         NPC.scale,
                         effects)
                     );
             }
-            return false;
+            
+            // Draw the item if possible (a.k.a not a Mono Fairy)
+            if (item != null)
+            {
+                Vector2 origin = Vector2.Zero;
+                switch (fairyType)
+                {
+                    case FairyType.Slash:
+                        origin = new Vector2(0, item.Height);
+                        if (NPC.direction == -1) origin.X = item.Width;
+                        break;
+                    default:
+                        origin = item.Size() / 2;
+                        break;
+                }
+
+                Main.EntitySpriteDraw(new DrawData(item,
+                    NPC.position - screenPos - (itemPosition * NPC.scale),
+                    item.Bounds,
+                    Color.White,
+                    itemRotation,
+                    origin,
+                    NPC.scale,
+                    effects)
+                );
+            }
         }
     }
 }

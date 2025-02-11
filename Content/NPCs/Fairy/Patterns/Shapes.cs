@@ -16,16 +16,24 @@ namespace lenen.Content.NPCs.Fairy.Patterns
             shape = Main.rand.Next(maxType);
         }
 
-        public override int Shoot(int size, int level, NPC npc, FairyType type)
+        public override int Shoot(int size, int level, NPC npc, FairyType type, Vector2 distraction, 
+            bool distracted)
         {
             if (npc.target <= -1 || npc.target >= 500)
             {
                 return 0;
             }
             Player target = Main.player[npc.target];
+            Vector2 targetPosition = target.position;
+            Vector2 targetCenter = target.Center;
+            if (distracted)
+            {
+                targetCenter = distraction;
+                targetPosition = distraction - target.Size;
+            }
 
             if (!Collision.CanHitLine(npc.position, npc.width, npc.height,
-                        target.position, target.width, target.height)) return 120;
+                        targetPosition, target.width, target.height)) return 120;
 
             int speed = size * 90;
             int damage = 15 + (5 * size);
@@ -36,7 +44,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
 
             float baseDistance = 50f;
             Vector2 offset = new Vector2(baseDistance, 0);
-            Vector2 direction = npc.Center.DirectionTo(target.Center);
+            Vector2 direction = npc.Center.DirectionTo(targetCenter);
             int ai0 = 0;
             int ai2 = 0;
 
@@ -47,7 +55,13 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                     ai2 = 1 + (level / 5);
                     break;
                 case FairyType.Shot:
-                    direction = npc.Center.DirectionTo(target.Center + (target.velocity*20));
+                    if (distracted)
+                    {
+                        direction = npc.Center.DirectionTo(targetCenter);
+                    } else
+                    {
+                        direction = npc.Center.DirectionTo(targetCenter + (target.velocity * 20));
+                    }
                     bulletSpeed = 12.5f;
                     baseDistance = 30f;
                     offset = new Vector2(baseDistance, 0);

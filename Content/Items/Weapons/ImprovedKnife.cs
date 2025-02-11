@@ -66,7 +66,7 @@ namespace lenen.Content.Items.Weapons
             for (int i = 0; i < 5; i++)
             {
                 Vector2 vel = velocity.RotatedByRandom(MathHelper.PiOver4);
-                Projectile.NewProjectile(player.GetSource_FromThis(), position, vel, 
+                Projectile.NewProjectile(source, position, vel, 
                     types[Main.rand.Next(0, types.Length)], damage, knockback, player.whoAmI);
             }
             return false;
@@ -104,7 +104,7 @@ namespace lenen.Content.Items.Weapons
 
             for (int i = desperation; i > 0; i--)
             {
-                Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center, vel,
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item, "Spellcard"), player.Center, vel,
                 ModContent.ProjectileType<ConcealedKnife>(), dmg, Item.knockBack, player.whoAmI, i, direction, 
                 desperation);
             }

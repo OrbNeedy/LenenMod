@@ -35,7 +35,7 @@ namespace lenen.Common.Players
             if (Main.rand.NextBool(40))
             {
                 damageSource = PlayerDeathReason.ByCustomReason(
-                    Language.GetTextValue("Mods.lenen.Death.BigMistake", Player.name));//$"{Player.name} Made a big mistake");
+                    Language.GetTextValue("Mods.lenen.Death.BigMistake", Player.name));
             }
             return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genDust, ref damageSource);
         }

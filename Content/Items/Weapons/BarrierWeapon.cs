@@ -85,21 +85,25 @@ namespace lenen.Content.Items.Weapons
                 manager.spellCardTimer = spellCardTimer + 1200;
 
                 Vector2 baseOffset = new Vector2(Main.rand.Next(-400, 400), Main.rand.Next(-250, 250));
-                Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center + baseOffset, Vector2.Zero,
-                    ModContent.ProjectileType<BlackGridedSquare>(), dmg, Item.knockBack, player.whoAmI, 1, 0, 10);
-                Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center + baseOffset, Vector2.Zero,
-                    ModContent.ProjectileType<BlackGridedSquare>(), dmg, Item.knockBack, player.whoAmI, 1, 1, 10);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item, "Spellcard"), 
+                    player.Center + baseOffset, Vector2.Zero, ModContent.ProjectileType<BlackGridedSquare>(), 
+                    dmg, Item.knockBack, player.whoAmI, 1, 0, 10);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item, "Spellcard"), 
+                    player.Center + baseOffset, Vector2.Zero, ModContent.ProjectileType<BlackGridedSquare>(), 
+                    dmg, Item.knockBack, player.whoAmI, 1, 1, 10);
                 return;
             }
 
             for (int i = 1; i < 21; i++)
             {
                 Vector2 baseOffset = new Vector2(-880 + (80 * i), -500);
-                Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center + baseOffset, Vector2.Zero,
-                    ModContent.ProjectileType<BlackGridedSquare>(), dmg, Item.knockBack, player.whoAmI, 0, 2 * i, 0);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item, "Spellcard"), 
+                    player.Center + baseOffset, Vector2.Zero, ModContent.ProjectileType<BlackGridedSquare>(), 
+                    dmg, Item.knockBack, player.whoAmI, 0, 2 * i, 0);
                 Vector2 baseOffset2 = new Vector2(-880 + (80 * i), 500);
-                Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center + baseOffset2, Vector2.Zero, 
-                    ModContent.ProjectileType<BlackGridedSquare>(), dmg, Item.knockBack, player.whoAmI, 0, 2 * i, 1);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item, "Spellcard"), 
+                    player.Center + baseOffset2, Vector2.Zero, ModContent.ProjectileType<BlackGridedSquare>(), 
+                    dmg, Item.knockBack, player.whoAmI, 0, 2 * i, 1);
             }
         }
 

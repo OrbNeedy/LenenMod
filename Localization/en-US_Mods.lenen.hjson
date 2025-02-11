@@ -34,15 +34,6 @@ Items: {
 			'''
 	}
 
-	DesperateBarrier: {
-		Tooltip:
-			'''
-			This item is deprecated, please use it to craft the new item with updated references.
-			Sorry for the inconvenience.
-			'''
-		DisplayName: Deprecated barrier item
-	}
-
 	BottleOpener: {
 		DisplayName: Bottle Opener
 		Tooltip: A simple bottle opener with no notable qualities to it.
@@ -376,6 +367,46 @@ Items: {
 			Adds {1} Spell Card cooldown to the player.
 			'''
 	}
+
+	ThrillEngine: {
+		DisplayName: Thrill Engine
+		Tooltip:
+			'''
+			A strange machine that allows the use of flashbombs.
+			Charge a flashbomb by passing near a projectile and obtaining thrill.
+			Lose all thrill once the flashbomb is used.
+			Some items may have a different type of flashbomb.
+			'''
+	}
+
+	FireTray: {
+		DisplayName: Fire Tray
+		Tooltip:
+			'''
+			Increases all damage by {0}%.
+			Uses 16 spirits to power up attacks.
+			Powered up attacks are always critical with additional critical damage and 
+			inflict shadowflame.
+			Projectiles will release spirit flames upon collision, while swinging weapons 
+			will release spirits when swung.
+			Cooldown of 3 seconds if a swinging weapon is powered up, 6 seconds if a 
+			projectile is powered up.
+			'''
+	}
+
+	LumenDisc: {
+		DisplayName: Light Shell
+		Tooltip:
+			'''
+			A hard shell made of some unknown material.
+			Summons a disco ball that shoots light at nearby enemies.
+			'''
+	}
+
+	LumenDiscFragment: {
+		DisplayName: Shell Fragment
+		Tooltip: A piece of a round object that warps light around it.
+	}
 }
 
 NPCs: {
@@ -412,6 +443,12 @@ Projectiles: {
 	Bullet.DisplayName: Bullet
 	EnemyBullet.DisplayName: Enemy Bullet
 	FriendlyBullet.DisplayName: Bullet
+	FlashbombProjectile.DisplayName: Flashbomb
+	SpiritFlame.DisplayName: Spirit Flame
+	LumenBall.DisplayName: Light Ball
+	LumenLaser.DisplayName: Light Laser
+	BoneColumn.DisplayName: Bone Spike
+	ThinLaser.DisplayName: Laser
 }
 
 Dialogue: {
@@ -495,6 +532,15 @@ Buffs: {
 			{$BarrierStats.Recovery}
 			'''
 	}
+
+	LumenBallBuff: {
+		DisplayName: Lumen Ball
+		Description:
+			'''
+			A disco ball protects you.
+			There might be something inside of it.
+			'''
+	}
 }
 
 BarrierStats: {
@@ -527,6 +573,7 @@ Keybinds: {
 	Revival.DisplayName: Revival
 	HideJar.DisplayName: Hide Jar
 	Gravity.DisplayName: Adjust Gravity
+	Flashbomb.DisplayName: Use Flashbomb
 }
 
 UI.Spirits: Spirits: {0}

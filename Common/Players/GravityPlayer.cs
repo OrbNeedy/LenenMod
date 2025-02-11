@@ -7,6 +7,7 @@ using lenen.Common.Systems;
 using System;
 using lenen.Content.Projectiles;
 using Terraria.Audio;
+using Terraria.DataStructures;
 
 namespace lenen.Common.Players
 {
@@ -48,8 +49,17 @@ namespace lenen.Common.Players
             base.PreUpdate();
         }
 
-        public void SpawnExplosion(bool christmas = false)
+        public void SpawnExplosion(bool christmas = false, IEntitySource? source = null)
         {
+            IEntitySource useSource;
+            if (source == null)
+            {
+                useSource = Player.GetSource_FromThis();
+            } else
+            {
+                useSource = source;
+            }
+
             SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/burst_01") with
             {
                 Volume = 0.7f
@@ -61,7 +71,7 @@ namespace lenen.Common.Players
                 damage = (int)(Player.GetWeaponDamage(Player.HeldItem) * 2.25f);
             }
             float knockback = (int)(Player.GetWeaponKnockback(Player.HeldItem) * 0.75f);
-            for (int i = 0; i < 65; i++)
+            for (int i = 0; i < 50; i++)
             {
                 int spriteType = Main.rand.Next((int)BulletSprites.Simple, (int)BulletSprites.Pellet + 1);
                 int color = (int)BulletColors.White;
@@ -72,7 +82,7 @@ namespace lenen.Common.Players
                 {
                     color = Main.rand.Next((int)BulletColors.White, (int)BulletColors.DarkBlue + 1);
                 }
-                Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, 
+                Projectile.NewProjectile(source, Player.Center, 
                     new Vector2(Main.rand.NextFloat(4, 22), 0).RotatedByRandom(MathHelper.TwoPi), 
                     ModContent.ProjectileType<FriendlyBullet>(), damage, knockback, Player.whoAmI, 
                     (int)BulletAIs.Slowing, color, spriteType);

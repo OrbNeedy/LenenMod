@@ -1,17 +1,22 @@
 ﻿using lenen.Common.Players;
 using lenen.Content.Projectiles;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace lenen.Content.Items.Weapons
 {
     public class Tasouken : ModItem
     {
         private int spellCardTimer = 720;
+        private bool powerProved = false;
+        private string owner = "";
+
         public override void SetDefaults()
         {
             Item.damage = 60;
@@ -36,6 +41,65 @@ namespace lenen.Content.Items.Weapons
 
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(spellCardTimer);
 
+        public override void LoadData(TagCompound tag)
+        {
+            if (tag.ContainsKey("TasoukenOwner"))
+            {
+                owner = tag.GetString("TasoukenOwner");
+            }
+            if (tag.ContainsKey("PowerProved"))
+            {
+                powerProved = tag.GetBool("PowerProved");
+            }
+        }
+
+        public override void SaveData(TagCompound tag)
+        {
+            tag["TasoukenOwner"] = owner;
+            tag["PowerProved"] = powerProved;
+        }
+
+        public override void OnCreated(ItemCreationContext context)
+        {
+            owner = "";
+            powerProved = false;
+            base.OnCreated(context);
+        }
+
+        public override bool OnPickup(Player player)
+        {
+            return base.OnPickup(player);
+        }
+
+        public override bool? UseItem(Player player)
+        {
+            return base.UseItem(player);
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            // Modify only when the Tasouken boss is added fully
+            return;
+            if (!powerProved && NPC.downedGolemBoss)
+            {
+                int index = tooltips.FindLastIndex((x) => x.Name.StartsWith("Tooltip") && x.Mod == "Terraria");
+                if (index != -1)
+                {
+                    tooltips.Insert(index + 1, new TooltipLine(Mod, "TasoukenState",
+                        "This weapon awaits to be awakened."));
+                }
+            }
+            if (powerProved)
+            {
+                int index = tooltips.FindLastIndex((x) => x.Name.StartsWith("Tooltip") && x.Mod == "Terraria");
+                if (index != -1)
+                {
+                    tooltips.Insert(index + 1, new TooltipLine(Mod, "TasoukenState",
+                        "The weapon accepts it's owner as worthy of using it's power."));
+                }
+            }
+        }
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (player.altFunctionUse == 2)
@@ -57,6 +121,27 @@ namespace lenen.Content.Items.Weapons
 
         public override bool AltFunctionUse(Player player)
         {
+            // This opens the Tasouken fight if available
+            /*if (!powerProved && NPC.downedGolemBoss)
+            {
+                if (owner == "")
+                {
+                    Main.NewText("Having no previous owner before, the sword thinks you are worthy enough.");
+                    powerProved = true;
+                } else
+                {
+                    if (player.name != owner)
+                    {
+                        Main.NewText("The sword refuses to lend you it's power.");
+                    } else
+                    {
+                        Main.NewText("The sword acknowledges you as worthy of it's power.");
+                        powerProved = true;
+                    }
+                }
+                return true;
+            }*/
+
             SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
             if (manager.spellCardTimer <= 0)
             {
@@ -68,6 +153,14 @@ namespace lenen.Content.Items.Weapons
 
         private void SpellCard(Player player)
         {
+            if (Main.myPlayer == player.whoAmI && !Main.dedServ)
+            {
+                if (owner == "")
+                {
+                    owner = player.name;
+                }
+            }
+
             SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
             manager.spellCardTimer = spellCardTimer;
 
@@ -87,8 +180,8 @@ namespace lenen.Content.Items.Weapons
             Vector2 vel = new Vector2(-1, 0);
             Vector2 offset = new Vector2(0, -100 * scale);//new Vector2(-117 * 5 * direction, 70 * 5);
 
-            Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center + offset, vel,
-                ModContent.ProjectileType<InfiniteLaser>(), dmg, Item.knockBack, player.whoAmI, 8,
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item, "Spellcard"), player.Center + offset, 
+                vel, ModContent.ProjectileType<InfiniteLaser>(), dmg, Item.knockBack, player.whoAmI, 8,
                 desperation * direction, scale);
         }
 

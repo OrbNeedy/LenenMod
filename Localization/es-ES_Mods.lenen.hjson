@@ -38,16 +38,6 @@ Items: {
 			'''
 	}
 
-	DesperateBarrier: {
-		Tooltip:
-			'''
-			Este objeto es obsoleto, por facor uselo para crear el nuevo objeto con referencias 
-			actualizadas.
-			Lamento la inconveniencia.
-			'''
-		DisplayName: Objeto de barrera obsoleto
-	}
-
 	BottleOpener: {
 		DisplayName: Destapador
 		Tooltip: Un simple destapador de botellas sin cualidades notables.
@@ -377,7 +367,7 @@ Items: {
 	}
 
 	ChristmasGlobe: {
-		DisplayName: Christmas Globe
+		DisplayName: Globo de navidad
 		Tooltip:
 			'''
 			Un globo lleno de tanta alegría y felicidad que permite controlar la 
@@ -385,6 +375,46 @@ Items: {
 			Click derecho para usar Paquete "Super Regalo", gastando {0} mana.
 			Añade {1} enfriamiento de Spell Card al jugador.
 			'''
+	}
+
+	ThrillEngine: {
+		DisplayName: Motor de entuciasmo
+		Tooltip:
+			'''
+			Una extraña maquina que permite el uso de bombas flash.
+			Carga una bomba flash pasando cerca de un proyectil y obteniendo emoción.
+			Pierde toda la emoción al usar una bomba flash.
+			Algunos objetos pueden tener diferentes tipos de bombas flash.
+			'''
+	}
+
+	FireTray: {
+		DisplayName: Platillo de fuego
+		Tooltip:
+			'''
+			Aumenta todo el daño en {0}%
+			Usa 16 espiritus para potenciar ataques.
+			Los ataques potenciados siempre son criticos con daño adicional e inflingen 
+			Llamas Oscuras.
+			Los proyectiles liberarán llamas espirituales al colisionar, mientras que 
+			armas cuerpo a cuerpo liberan espiritus al atacar.
+			Enfriamiento de 3 segundos si un arma de cuerpo a cuerpo es potenciada, 6 
+			segundos si un proyectil se potencia.
+			'''
+	}
+
+	LumenDisc: {
+		DisplayName: Caparazón de luz
+		Tooltip:
+			'''
+			Un caparazón duro hecho de algún material desconocido.
+			Invoca una bola de disco que dispara luz a enemigos cercanos.
+			'''
+	}
+
+	LumenDiscFragment: {
+		DisplayName: Fragmento de caparazón
+		Tooltip: Un pedazo de objeto redondo que altera la luz alrededor.
 	}
 }
 
@@ -422,6 +452,12 @@ Projectiles: {
 	Bullet.DisplayName: Bala
 	EnemyBullet.DisplayName: Bala
 	FriendlyBullet.DisplayName: Bala
+	FlashbombProjectile.DisplayName: Bomba flash
+	SpiritFlame.DisplayName: Llama Espiritual
+	LumenBall.DisplayName: Bola de luz
+	LumenLaser.DisplayName: Laser de luz
+	BoneColumn.DisplayName: Espina de hueso
+	ThinLaser.DisplayName: Laser
 }
 
 Dialogue: {
@@ -506,6 +542,15 @@ Buffs: {
 			{$BarrierStats.Recovery}
 			'''
 	}
+
+	LumenBallBuff: {
+		DisplayName: Bola Lumen
+		Description:
+			'''
+			Una bola disco te proteje.
+			Puede que haya algo adentro de ella.
+			'''
+	}
 }
 
 BarrierStats: {
@@ -542,6 +587,7 @@ Keybinds: {
 	Revival.DisplayName: Revitalización
 	HideJar.DisplayName: Esconder jarra
 	Gravity.DisplayName: Ajustar gravedad
+	Flashbomb.DisplayName: Usar la bomba flash
 }
 
 UI.Spirits: Espiritus: {0}

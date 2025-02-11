@@ -14,13 +14,9 @@ namespace lenen.Common.GlobalNPCs
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.ByCondition(new DropGravity(), ModContent.ItemType<GravitationalAnomaly>(), 
-                30));
+                60));
             npcLoot.Add(ItemDropRule.ByCondition(new DropGravity2(), ModContent.ItemType<GravitationalAnomaly>(),
-                100));
-            /*ItemDropRule.ByCondition(new SimpleItemDropRuleCondition(
-            Language.GetText("Condition.Localization.Here"), () => Main.LocalPlayer.zone,
-            ShowItemDropInUI.WhenConditionSatisfied),
-            ModContent.ItemType<GravitationalAnomaly>()));*/
+                200));
 
             // Skeleton clause
             if (NPCID.Sets.Skeletons[npc.type])
@@ -38,6 +34,8 @@ namespace lenen.Common.GlobalNPCs
                 case NPCID.WallofFlesh:
                     npcLoot.Add(ItemDropRule.ByCondition(new DropInNormal(), 
                         ModContent.ItemType<DimensionalFragment>(), 6));
+                    npcLoot.Add(new DropPerPlayerOnThePlayer(ModContent.ItemType<ThrillEngine>(), 1, 1, 1,
+                        null));
                     break;
                 case NPCID.MoonLordCore:
                     npcLoot.Add(ItemDropRule.ByCondition(new DropInNormal(),

@@ -59,16 +59,11 @@ namespace lenen.Content.Items.Weapons
                     stateDescription = Language.GetTextValue("Mods.lenen.MemoryDescriptions.Override");
                     break;
             }
-            int index = -1;
-            for (int i = 0; i < tooltips.Count; i++)
+            int index = tooltips.FindLastIndex((x) => x.Name.StartsWith("Tooltip") && x.Mod == "Terraria");
+            if (index != -1)
             {
-                if (tooltips[i].Name == "Tooltip1")
-                {
-                    index = i;
-                    break;
-                }
+                tooltips.Insert(index + 1, new TooltipLine(Mod, "MemoryDescriptions", stateDescription));
             }
-            tooltips.Insert(index + 1, new TooltipLine(Mod, "MemoryDescriptions", stateDescription));
             base.ModifyTooltips(tooltips);
         }
 
@@ -103,7 +98,7 @@ namespace lenen.Content.Items.Weapons
             for (int i = -1; i < 2; i++)
             {
                 Vector2 vel = velocity.RotatedBy(MathHelper.PiOver2*i/5);
-                Projectile.NewProjectile(player.GetSource_FromThis(), player.MountedCenter + offset, vel, type,
+                Projectile.NewProjectile(source, player.MountedCenter + offset, vel, type,
                 damage, knockback, player.whoAmI, state);
             }
             return false;

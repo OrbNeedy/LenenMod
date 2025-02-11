@@ -186,7 +186,7 @@ namespace lenen.Content.Items.Accessories
 
         private void TakeAwaySouls(Recipe recipe, Item item, List<Item> list, Item item2)
         {
-            Main.LocalPlayer.GetModPlayer<SoulAbsorptionPlayer>().soulsCollected -= 1400;
+            Main.LocalPlayer.GetModPlayer<SoulAbsorptionPlayer>().soulsCollected -= 1500;
         }
     }
 }

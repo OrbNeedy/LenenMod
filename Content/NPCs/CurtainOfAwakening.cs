@@ -138,7 +138,6 @@ namespace lenen.Content.NPCs
             {
                 // It needs to be during runtime because on spawn, lists haven't been loaded
                 // Probably
-                //Dictionary<int, List<int>> items = GetItems();
                 for (int i = 0; i < Main.LocalPlayer.inventory.Length; i++)
                 {
                     List<int> results = SpawnItem(Main.LocalPlayer.inventory[i].type);
@@ -441,14 +440,14 @@ namespace lenen.Content.NPCs
                     new Vector2(1f, 1f),
                     flip);
 
-            // Thanks to Tyfyter for FastFieldInfo and SpriteBatchMethods
+            // Credits to Tyfyter for FastFieldInfo and SpriteBatchMethods
             SpriteBatchState state = SpriteBatchExt.GetState(spriteBatch);
 
             data.Draw(spriteBatch);
 
             SpriteBatchExt.Restart(spriteBatch, state, SpriteSortMode.Immediate);
 
-            MiscShaderData shader = GameShaders.Misc["Rift"];
+            MiscShaderData shader = GameShaders.Misc["Rift"].UseColor(0, 1, 0);
             DrawData data2 = new DrawData(overlay,
                     NPC.position - Main.screenPosition - new Vector2(2, 2),
                     bounds,

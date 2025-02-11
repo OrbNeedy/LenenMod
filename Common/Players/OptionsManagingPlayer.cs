@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace lenen.Common.Players
@@ -184,12 +185,14 @@ namespace lenen.Common.Players
         {
             if (shooting)
             {
-                HaniwaFists[fistIndex] = Projectile.NewProjectile(Player.GetSource_FromThis(),
+                HaniwaFists[fistIndex] = Projectile.NewProjectile(
+                    new EntitySource_ItemUse(Player, Player.HeldItem),
                     Player.Center, Vector2.Zero, ModContent.ProjectileType<HaniwaFist>(), 0, 10,
                     Player.whoAmI, fistIndex, 1);
             } else
             {
-                HaniwaFists[fistIndex] = Projectile.NewProjectile(Player.GetSource_FromThis(),
+                HaniwaFists[fistIndex] = Projectile.NewProjectile(
+                    new EntitySource_ItemUse(Player, Player.HeldItem),
                     Player.Center, Vector2.Zero, ModContent.ProjectileType<HaniwaFist>(), 0, 10,
                     Player.whoAmI, fistIndex);
             }

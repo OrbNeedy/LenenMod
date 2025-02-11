@@ -56,7 +56,7 @@ namespace lenen.Content.Items.Weapons
                 {
                     Vector2 vel = velocity
                         .RotatedBy((MathHelper.PiOver4 * i * 0.5f) - MathHelper.PiOver2 + (MathHelper.PiOver4));
-                    Projectile.NewProjectile(player.GetSource_FromThis(), position, vel, type,
+                    Projectile.NewProjectile(source, position, vel, type,
                     damage, knockback, player.whoAmI);
                 }
             }

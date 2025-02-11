@@ -11,6 +11,7 @@ namespace lenen.Common
         public override void PostWorldGen()
         {
             int[] woodChests = { ModContent.ItemType<BottleOpener>(), ModContent.ItemType<RustedKnife>() };
+            int[] lumenItems = { ModContent.ItemType<LumenDiscFragment>() };
             //int[] goldChestItems;
             int[] lockedGoldChestItems = { ModContent.ItemType<BottleOpener>() };
             int[] shadowChestItems = { ModContent.ItemType<BottleOpener>() };
@@ -25,17 +26,21 @@ namespace lenen.Common
                     {
                         // Wood chest
                         case 0:
+                            PutInChest(chest, ref chestItemsChoice, lumenItems, !Main.rand.NextBool(40));
                             PutInChest(chest, ref chestItemsChoice, woodChests, !Main.rand.NextBool(12));
                             break;
                         // Gold chest
                         case 1 * 36:
+                            PutInChest(chest, ref chestItemsChoice, lumenItems, !Main.rand.NextBool(40));
                             break;
                         // Locked gold chest
                         case 2 * 36:
+                            PutInChest(chest, ref chestItemsChoice, lumenItems, !Main.rand.NextBool(3));
                             PutInChest(chest, ref chestItemsChoice, lockedGoldChestItems, !Main.rand.NextBool(6));
                             break;
                         // Shadow chest
                         case 3 * 36:
+                            PutInChest(chest, ref chestItemsChoice, lumenItems, !Main.rand.NextBool(40));
                             break;
                         // Locked Shadow chest
                         case 4 * 36:
@@ -43,6 +48,7 @@ namespace lenen.Common
                             break;
                         // Vine chest
                         case 12 * 36:
+                            PutInChest(chest, ref chestItemsChoice, lumenItems, !Main.rand.NextBool(40));
                             PutInChest(chest, ref chestItemsChoice, spiderChestItems, !Main.rand.NextBool(12));
                             break;
                         // Spider chest

@@ -1,8 +1,6 @@
 ﻿using lenen.Content.Projectiles;
 using Microsoft.Xna.Framework;
-using System.Text.RegularExpressions;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;

@@ -28,7 +28,7 @@ namespace lenen.Content.Items.Weapons
             Item.width = 30;
             Item.height = 30;
             Item.value = 0;
-            Item.rare = ItemRarityID.LightRed;
+            Item.rare = ItemRarityID.Lime;
 
             Item.useTime = 5;
             Item.useAnimation = 60;
@@ -110,9 +110,8 @@ namespace lenen.Content.Items.Weapons
                 Vector2 vel = new Vector2(10, 0).RotatedBy(
                     -Main.rand.NextFloat((int)Math.PI));
                 int c = player.GetWeaponCrit(Item);
-                Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center,
-                    vel * Main.rand.NextFloat(0.75f, 1.25f),
-                    ModContent.ProjectileType<LaserStarter>(), dmg,
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item, "Spellcard"), player.Center,
+                    vel * Main.rand.NextFloat(0.75f, 1.25f), ModContent.ProjectileType<LaserStarter>(), dmg,
                     Item.knockBack, player.whoAmI, desperation);
             }
             return false;

@@ -1,5 +1,7 @@
 ﻿using lenen.Common.Systems;
 using lenen.Content.Buffs;
+using lenen.Content.Projectiles;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameInput;
@@ -15,6 +17,7 @@ namespace lenen.Common.Players
         public bool revivedState = false;
         public bool seeSpirits = false;
         public float harujionPotency = 0f;
+        public int queuedReduction = -1;
 
         public override void Initialize()
         {
@@ -67,27 +70,38 @@ namespace lenen.Common.Players
             base.UpdateBadLifeRegen();
         }
 
-        public override void PostUpdateEquips()
+        public override void PostUpdate()
         {
-            //Main.NewText($"Player location: {Player.Center}");
-            //Main.NewText("Current souls: " + soulsCollected);
-            base.PostUpdateEquips();
+            // Purely recreational, never add
+            /*if (Main.rand.NextBool(48))
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center + 
+                        new Vector2(Main.rand.Next(-1000, 1000), Main.rand.Next(-850, -750)),
+                        new Vector2(Main.rand.Next(2, 11), 0).RotatedByRandom(MathHelper.TwoPi),
+                        ModContent.ProjectileType<SpiritFlame>(), 2, 6, Player.whoAmI, 1);
+                }
+            }*/
+
+            if (queuedReduction != -1)
+            {
+                soulsCollected -= queuedReduction;
+                queuedReduction = -1;
+            }
         }
 
         public void AddSouls(int souls)
         {
             soulsCollected += souls;
-            //Main.NewText("Added " + souls + " to the player");
-            //Main.NewText("Current souls: " + soulsCollected);
-            // Reserved for Harujion
-            /*
-            for (int i = 0; i < Player.inventory.Length; i++)
+        }
+
+        public void QueueDeduction(int souls)
+        {
+            if (souls > queuedReduction)
             {
-                Item item = Player.inventory[i];
-                if (item.ModItem != null)
-                {
-                }
-            }*/
+                queuedReduction = souls;
+            }
         }
     }
 }

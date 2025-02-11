@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace lenen.Content.Projectiles
@@ -21,6 +22,12 @@ namespace lenen.Content.Projectiles
 
         Vector2 targetPosition = Vector2.Zero;
         bool hasTarget = false;
+
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.NeedsUUID[Projectile.type] = true;
+        }
+
         public override void SetDefaults()
         {
             Projectile.width = 26;

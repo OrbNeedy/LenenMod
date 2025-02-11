@@ -11,9 +11,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
         bool stackType = false;
         int maxStack = 1;
         int stack = 1;
-        // Returns the cooldown for the next attack
-        // Size: Size of the fairy (Small(0), Shikigami(1), Big(2))
-        // Type: The type of fairy (Mono, Slash, Shot, Magic)
+
         public virtual void SetDefaults(int size, int level, NPC npc, FairyType type)
         {
             maxStack = 1;
@@ -41,16 +39,23 @@ namespace lenen.Content.NPCs.Fairy.Patterns
             stack = maxStack;
         }
 
-        public virtual int Shoot(int size, int level, NPC npc, FairyType type)
+        public virtual int Shoot(int size, int level, NPC npc, FairyType type, Vector2 distraction, bool distracted)
         {
             if (npc.target <= -1 || npc.target >= 500)
             {
                 return 0;
             }
             Player target = Main.player[npc.target];
+            Vector2 targetPosition = target.position;
+            Vector2 targetCenter = target.Center;
+            if (distracted)
+            {
+                targetCenter = distraction;
+                targetPosition = distraction - target.Size/2;
+            }
 
             if (!Collision.CanHitLine(npc.position, npc.width, npc.height,
-                        target.position, target.width, target.height)) return 120;
+                        targetPosition, target.width, target.height)) return 120;
 
             int speed = size * 60;
             int damage = 15 + (5 * size);
@@ -86,7 +91,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                                 color = Main.rand.NextFromList<int>(3, 4);
                             }
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
-                                npc.Center.DirectionTo(target.Center) * (12 - (difference * i)),
+                                npc.Center.DirectionTo(targetCenter) * (12 - (difference * i)),
                                 ModContent.ProjectileType<EnemyBullet>(), damage, 2.5f, ai1: color);
                         }
                     }
@@ -94,7 +99,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                     {
                         for (int i = -1; i < 2; i++)
                         {
-                            Vector2 direction = npc.Center.DirectionTo(target.Center).RotatedBy(i * MathHelper.Pi / 5);
+                            Vector2 direction = npc.Center.DirectionTo(targetCenter).RotatedBy(i * MathHelper.Pi / 5);
                             for (int k = 0; k < maxStack; k++)
                             {
                                 color = Main.rand.NextFromList<int>(0, 1);
@@ -133,7 +138,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                             {
                                 color = Main.rand.NextFromList<int>(3, 4);
                             }
-                            Vector2 direction = npc.Center.DirectionTo(target.Center).RotatedBy(
+                            Vector2 direction = npc.Center.DirectionTo(targetCenter).RotatedBy(
                                 i * MathHelper.Pi / 18);
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
                                 direction * 10, ModContent.ProjectileType<EnemyBullet>(),
@@ -152,7 +157,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                             color = Main.rand.NextFromList<int>(3, 4);
                         }
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
-                            npc.Center.DirectionTo(target.Center) * 10, ModContent.ProjectileType<EnemyBullet>(),
+                            npc.Center.DirectionTo(targetCenter) * 10, ModContent.ProjectileType<EnemyBullet>(),
                             damage, 2.5f, ai0: 1, ai1: color, ai2: bounces);
                     }
                     if (stack > 0)
@@ -173,7 +178,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                         for (int i = -3; i < 4; i += 2)
                         {
                             color = Main.rand.NextFromList<int>(5, 6);
-                            Vector2 direction = npc.Center.DirectionTo(target.Center).RotatedBy(
+                            Vector2 direction = npc.Center.DirectionTo(targetCenter).RotatedBy(
                                 i * MathHelper.Pi / 18);
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
                                 direction * 10, ModContent.ProjectileType<EnemyBullet>(),
@@ -184,7 +189,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                     {
                         color = Main.rand.NextFromList<int>(5, 6);
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
-                            npc.Center.DirectionTo(target.Center) * 10, ModContent.ProjectileType<EnemyBullet>(),
+                            npc.Center.DirectionTo(targetCenter) * 10, ModContent.ProjectileType<EnemyBullet>(),
                             damage, 2.5f, ai1: color);
                     }
                     if (stack > 0)
@@ -212,7 +217,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                             {
                                 color = Main.rand.NextFromList<int>(3, 4);
                             }
-                            Vector2 direction = npc.Center.DirectionTo(target.Center).RotatedBy(
+                            Vector2 direction = npc.Center.DirectionTo(targetCenter).RotatedBy(
                                 i * MathHelper.Pi / 18);
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
                                 direction * 10, ModContent.ProjectileType<EnemyBullet>(),
@@ -231,7 +236,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                             color = Main.rand.NextFromList<int>(3, 4);
                         }
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
-                            npc.Center.DirectionTo(target.Center) * 10, ModContent.ProjectileType<EnemyBullet>(),
+                            npc.Center.DirectionTo(targetCenter) * 10, ModContent.ProjectileType<EnemyBullet>(),
                             damage, 2.5f, ai1: color);
                     }
                     if (stack > 0)
