@@ -28,7 +28,7 @@ namespace lenen.Common.Players
                     if (npc.CanBeChasedBy() && npc.Center.Distance(Main.MouseWorld) <= range)
                     {
                         // Weight the npc's state to get a value from 0 to 1 and add them to a dictionary
-                        float finalWeight = (WeighDistance(npc) * 0.5f) + (WeighLife(npc) * 0.3f) +
+                        float finalWeight = (WeighDistance(npc) * 0.7f) + (WeighLife(npc) * 0.1f) +
                             (WeighPlayerDistance(npc) * 0.2f);
                         targetWeights.Add(npc, finalWeight);
                     }

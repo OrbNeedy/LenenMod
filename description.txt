@@ -3,24 +3,7 @@ It adds 13 accessories, 16 weapons, two NPCs and a special tile.
 Please report any bugs or suggestions in this mod's workshop page comment section or make a new Discussion.
 I'm looking for a person to help with making a wiki for this mod.
 
-Ver 0.2.8.8
-+ Added Light Shell, Thrill Engine, and Fire Tray accessories.
-+ Added Shell Fragments item.
-+ Increased Gravitational Anomaly's damage from 80 to 120.
-+ Increased Controlled Anomaly's damage from 120 to 165.
-+ Increased Christmas Globe's damage from 120 to 165.
-- Decreased Gravitational Anomaly's projectiles from 15 to 10.
-- Decreased Gravitational Anomaly's shoot speed.
-- Decreased Controlled Anomaly's projectiles from 25 to 18.
-- Decreased Controlled Anomaly's shoot speed.
-- Decreased Christmas Globe's projectiles from 25 to 18.
-- Decreased Christmas Globe's shoot speed.
-- Reduced Spawn rate for the Gravitational Anomaly.
-* Changed the Fairy's sprite and animations.
-* Fixed the gravity wheel from the Gravitational Anomaly, Controlled Anomaly, and Christmas Globe cutting grass.
-* Fixed the Spanish translation for the Christmas Globe.
-* Fixed the recipe for the Revitalized Gashadokuro Skull having the incorrect number of spirits listed in its conditions.
-* Fixed typos in the description.
+Ver 0.2.9
 
 Due to steam workshop's character limit, the full changelog has been moved to Google docs.
 Full Changelog: 

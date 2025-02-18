@@ -12,6 +12,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -67,7 +68,7 @@ namespace lenen.Common.GlobalNPCs
         {
             if (harujionPotency > 0f)
             {
-                npc.lifeRegen -= (int)(40*harujionPotency);
+                npc.lifeRegen -= (int)(30*harujionPotency);
             }
         }
 
@@ -101,8 +102,9 @@ namespace lenen.Common.GlobalNPCs
                         Color.White * 0.588235f
                     );
 
-                    spriteBatch.DrawString(FontAssets.MouseText.Value, "Aprox. Spirits: " + aproxSpirits, 
-                        npc.Center + new Vector2(0, -texture.Height *0.7f) - screenPos, 
+                    spriteBatch.DrawString(FontAssets.MouseText.Value, 
+                        Language.GetTextValue("Mods.lenen.UI.Spirits", aproxSpirits), 
+                        npc.Center + new Vector2(0, -texture.Height * 0.7f) - screenPos, 
                         new Color(202, 159, 224));
                 }
             }
@@ -129,11 +131,12 @@ namespace lenen.Common.GlobalNPCs
 
             int souls = 1;
             int volume = 1;
-            souls *= (1 + npc.rarity);
+            souls += (5 * npc.rarity);
+            volume *= (int)(1 + (npc.rarity * 0.475f));
 
-            volume += npc.life / 900;
+            volume += npc.life / 800;
 
-            souls += npc.defense / 20;
+            souls += npc.defense / 15;
 
             if (Main.hardMode) volume *= 2;
 
@@ -152,7 +155,6 @@ namespace lenen.Common.GlobalNPCs
 
             for (int i = 0; i < souls; i++)
             {
-                //npc.width, npc.height), ModContent.ItemType<SoulItem>(), Main.rand.Next(1, 1 + volume));
                 aproxSpirits += 1 + volume / 2;
             }
         }

@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "1LQFlgV3vrs=",
+  "dgSpecHash": "if23brzv0LU=",
   "success": true,
-  "projectFilePath": "C:\\Users\\USUARIO\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\lenen.csproj",
+  "projectFilePath": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\lenen\\lenen.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\USUARIO\\.nuget\\packages\\tmodloader.codeassist\\0.1.5\\tmodloader.codeassist.0.1.5.nupkg.sha512"
+    "C:\\Users\\Reboot\\.nuget\\packages\\tmodloader.codeassist\\0.1.5\\tmodloader.codeassist.0.1.5.nupkg.sha512"
   ],
   "logs": []
 }

@@ -52,15 +52,6 @@ namespace lenen.Content.Items.Weapons
             OptionsManagingPlayer fistManagerPlayer = player.GetModPlayer<OptionsManagingPlayer>();
 
             fistManagerPlayer.ShootFists(player.altFunctionUse);
-
-            /*Point16 pos = Main.MouseWorld.ToTileCoordinates16();
-            WorldGen.PlaceTile(pos.X, pos.Y, 
-                ModContent.TileType<HarujionSapling>(), false);
-            bool success = Main.tile[pos.X, pos.Y].TileType == ModContent.TileType<HarujionSapling>();
-            ModContent.GetInstance<HarujionLocations>().UpdateHarujion();
-            Main.NewText("Harujion's final location: " + ModContent.GetInstance<HarujionLocations>().harujionLocation);
-            Main.NewText("Current player location: " + player.Center.ToTileCoordinates16());
-            Main.NewText("Was the placing successful? " + success);*/
             return false;
         }
 

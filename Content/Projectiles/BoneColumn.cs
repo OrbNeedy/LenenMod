@@ -55,9 +55,8 @@ namespace lenen.Content.Projectiles
             }
             Vector2 normalizedVelocity = Vector2.Normalize(Projectile.velocity);
 
-            initialPosition = Projectile.Center - (normalizedVelocity * 8);
+            initialPosition = Projectile.Center - (normalizedVelocity * 10);
 
-            // Adjust position if needed
             Projectile.Center += normalizedVelocity * growthSpeed;
         }
 

@@ -110,7 +110,7 @@ namespace lenen.Common.Systems
             if (Main.rand.NextFloat() < 0.06f)
             {
                 Tile tile = Framing.GetTileSafely(harujionLocation.X, harujionLocation.Y);
-                if (tile.TileType == ModContent.TileType<HarujionSapling>())
+                if (tile.TileType == ModContent.TileType<HarujionSapling>() || tile.TileType == ModContent.TileType<HarujionMultitile>())
                 {
                     DeleteLife();
                 }
@@ -151,7 +151,8 @@ namespace lenen.Common.Systems
             if (harujionLocation == Point16.Zero) return;
 
             Tile harujion = Framing.GetTileSafely(harujionLocation);
-            if (harujion == null || !harujion.HasTile || harujion.TileType != ModContent.TileType<HarujionSapling>())
+            if (harujion == null || !harujion.HasTile || harujion.TileType != ModContent.TileType<HarujionSapling>() ||
+                harujion.TileType == ModContent.TileType<HarujionMultitile>())
             {
                 return;
             }
@@ -224,6 +225,8 @@ namespace lenen.Common.Systems
             float radius = GetRadius();
             foreach (NPC npc in Main.ActiveNPCs)
             {
+                //Main.NewText($"{npc.FullName}: {SoulExceptions.instance.soulessNPCs.Contains(npc.type)}");
+                if (SoulExceptions.instance.soulessNPCs.Contains(npc.type)) return;
                 if (npc.type == NPCID.TargetDummy) return;
                 if (npc.DistanceSQ(location) <= radius)
                 {
@@ -231,6 +234,32 @@ namespace lenen.Common.Systems
                 }
             }
             base.PreUpdateNPCs();
+        }
+
+        public void GrowTree()
+        {
+            Point16 treePoint = new Point16(harujionLocation.X - 2, harujionLocation.Y - 10);
+            for (int x = treePoint.X; x < treePoint.X + 5; x++)
+            {
+                for (int y = treePoint.Y; y < treePoint.Y + 11; y++)
+                {
+                    if (Framing.GetTileSafely(x, y).HasTile)
+                    {
+                        WorldGen.KillTile(x, y, false, false, true);
+                    }
+                }
+            }
+            WorldGen.PlaceObject(harujionLocation.X - 2, harujionLocation.Y - 10, ModContent.TileType<HarujionMultitile>(), true);
+            if (Framing.GetTileSafely(harujionLocation.X - 2, harujionLocation.Y - 10).TileType == 
+                ModContent.TileType<HarujionMultitile>())
+            {
+                Main.NewText("Placing tree was successful.");
+                harujionLocation = harujionLocation + new Point16(-2, -10);
+            } else
+            {
+
+                Main.NewText("Placing tree failed.");
+            }
         }
 
         public float GetRadius()
@@ -254,7 +283,8 @@ namespace lenen.Common.Systems
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
                     Tile tile = Main.tile[i, j];
-                    if (tile.TileType == ModContent.TileType<HarujionSapling>())
+                    if (tile.TileType == ModContent.TileType<HarujionSapling>() || 
+                        tile.TileType == ModContent.TileType<HarujionMultitile>())
                     {
                         //Main.NewText($"Found Harujion at X: {i} and Y: {j}");
                         return new Point16(i, j);
@@ -295,7 +325,7 @@ namespace lenen.Common.Systems
             {
                 //Main.NewText("It is supposed to exist");
                 Tile tile = Framing.GetTileSafely(harujionLocation.X, harujionLocation.Y);
-                if (tile.TileType != ModContent.TileType<HarujionSapling>())
+                if (tile.TileType != ModContent.TileType<HarujionSapling>() || tile.TileType != ModContent.TileType<HarujionMultitile>())
                 {
                     var response = WorldHasHarujion();
                     if (response != null)
@@ -367,7 +397,14 @@ namespace lenen.Common.Systems
                 }
 
                 int x = Main.rand.Next(0, Main.maxTilesX);
-                int y = Main.rand.Next((int)(Main.maxTilesY * 0.15), (int)Main.worldSurface);
+                if (x <= Main.maxTilesX / 2)
+                {
+                    x = int.Clamp(x, 0, (Main.maxTilesX / 2) - 125);
+                } else
+                {
+                    x = int.Clamp(x, (Main.maxTilesX / 2) + 125, Main.maxTilesX);
+                }
+                int y = Main.rand.Next((int)(Main.maxTilesY * 0.15f), (int)Main.worldSurface);
 
                 Tile tile = Framing.GetTileSafely(x, y);
 
@@ -402,7 +439,7 @@ namespace lenen.Common.Systems
         private void DeleteLife()
         {
             //(25f + soulsAbsorbed) / 25f, 3/4
-            Point16 range = new Point16((int)Math.Sqrt(200f * Math.Pow((30f + soulsAbsorbed) / 30f, 0.8)));
+            Point16 range = new Point16((int)Math.Sqrt(200f * Math.Pow((30f + soulsAbsorbed) / 30f, 0.75)));
             float rangeSquared = (float)range.X;
             Point16 searchStart = harujionLocation - range;
             Point16 searchEnd = harujionLocation + range;
@@ -410,10 +447,10 @@ namespace lenen.Common.Systems
             //Main.NewText($"Referenced Harujion position: {harujion}");
             //Main.NewText($"Range of search: {rangeSquared}");
             //Main.NewText($"That means from {searchStart} to {searchEnd}");
-            int amount = (int)MathHelper.Clamp(30 + (soulsAbsorbed / 60), 30, 100);
-            if (Main.rand.NextBool())
+            int amount = (int)MathHelper.Clamp(soulsAbsorbed / 100, 0, 100);
+            if (Main.rand.NextBool(1800))
             {
-                amount += Main.rand.Next(0, (int)MathHelper.Clamp((soulsAbsorbed / 100), 0, 100));
+                amount += Main.rand.Next(0, (int)MathHelper.Clamp(soulsAbsorbed / 50, 0, 101));
             }
             //Main.NewText("Souls collected: " + soulsAbsorbed);
             //Main.NewText("Tiles to check: " + amount);
@@ -438,6 +475,8 @@ namespace lenen.Common.Systems
                 if (circlePoint < rangeSquared)
                 {
                     Tile tile = Framing.GetTileSafely(randTileSelect.X, randTileSelect.Y);
+                    if (tile.TileType == ModContent.TileType<HarujionSapling>() || 
+                        tile.TileType == ModContent.TileType<HarujionMultitile>()) continue;
                     if (tile.HasTile || tile.WallType != WallID.None)
                     {
                         //Main.NewText($"Trying to eliminate tile {tile.TileType}");
@@ -457,7 +496,7 @@ namespace lenen.Common.Systems
                             {
                                 //Main.NewText($"Did not work");
                             }
-                            if (success && Main.rand.NextBool())
+                            if (success)
                             {
                                 soulsAbsorbed += 1;
                             }
@@ -584,12 +623,6 @@ namespace lenen.Common.Systems
             if (WallID.Sets.Conversion.Dirt[tile.WallType] && tile.WallType != WallID.Dirt)
             {
                 tile.WallType = WallID.Dirt;
-                return true;
-            }
-
-            if (WallID.Sets.Conversion.Snow[tile.WallType] && tile.WallType != WallID.SnowBrick)
-            {
-                tile.WallType = WallID.SnowBrick;
                 return true;
             }
 

@@ -407,6 +407,11 @@ Items: {
 		DisplayName: Shell Fragment
 		Tooltip: A piece of a round object that warps light around it.
 	}
+
+	HarujionDebugTool: {
+		DisplayName: Harujion Debug Tool
+		Tooltip: ""
+	}
 }
 
 NPCs: {
@@ -576,7 +581,7 @@ Keybinds: {
 	Flashbomb.DisplayName: Use Flashbomb
 }
 
-UI.Spirits: Spirits: {0}
+UI.Spirits: "{0} Spirits"
 
 Conditions: {
 	HasEnoughSouls: Collected 1500 spirits
@@ -585,5 +590,11 @@ Conditions: {
 }
 
 DamageClasses.MeleeRangedHybrid.DisplayName: Melee/Ranged
-Tiles.HarujionSapling.MapEntry: Harujion
+
+Tiles: {
+	HarujionSapling.MapEntry: Harujion
+	HarujionTree.MapEntry: Harujion Tree
+	HarujionMultitile.MapEntry: Harujion Multitile
+}
+
 WorldGen.Harujion: A dangerous youkai plant has appeared in the world.

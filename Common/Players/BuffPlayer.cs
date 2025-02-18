@@ -1,7 +1,9 @@
 ﻿using lenen.Common.Systems;
 using lenen.Content.Projectiles;
+using lenen.Content.Tiles.Plants;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -16,6 +18,9 @@ namespace lenen.Common.Players
         public int barrierBuff { get; set; }
         public bool lumenBuff { get; set; }
 
+        private bool beingAbsorbed { get; set; }
+        private int absorptionTimer = 0;
+
         public override void ResetEffects()
         {
             lumenBuff = false;
@@ -26,7 +31,6 @@ namespace lenen.Common.Players
 
         public override void PostUpdate()
         {
-
             if (lumenBuff && Player.ownedProjectileCounts[ModContent.ProjectileType<LumenBall>()] < 1)
             {
                 EntitySource_Parent source = new EntitySource_Parent(Player);
@@ -39,6 +43,43 @@ namespace lenen.Common.Players
             if (harujionTimer > 0)
             {
                 harujionTimer--;
+            }
+
+            if (beingAbsorbed)
+            {
+                //Main.NewText("Collecting SOULS " + absorptionTimer);
+                //Main.NewText("Collecting SOULS " + beingAbsorbed);
+                if (absorptionTimer <= 0)
+                {
+                    beingAbsorbed = false;
+                    return;
+                }
+                SoulAbsorptionPlayer soulManager = Player.GetModPlayer<SoulAbsorptionPlayer>();
+                if (soulManager.soulsCollected <= 0)
+                {
+                    beingAbsorbed = false;
+                    absorptionTimer = 0;
+                    return;
+                }
+                if (absorptionTimer % 2 == 0)
+                {
+                    soulManager.soulsCollected -= 1;
+                    ModContent.GetInstance<HarujionLocations>().soulsAbsorbed += 1;
+                }
+                absorptionTimer--;
+            }
+        }
+
+        public override void PostHurt(Player.HurtInfo info)
+        {
+            if (Main.dedServ) return;
+            //Main.NewText("Absorbed: " + beingAbsorbed);
+            //Main.NewText("Timer: " + absorptionTimer);
+            if (harujionDebuff > 0 && !beingAbsorbed)
+            {
+                SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/rei_drain_00"), Player.Center);
+                beingAbsorbed = true;
+                absorptionTimer = 120;
             }
         }
 
@@ -66,16 +107,16 @@ namespace lenen.Common.Players
                 SoulAbsorptionPlayer soulManager = Player.GetModPlayer<SoulAbsorptionPlayer>();
                 if (soulManager.soulsCollected <= 0)
                 {
-                    Player.lifeRegen -= (int)(16 * harujionDebuff) - 8;
+                    Player.lifeRegen -= (int)(12 * harujionDebuff) - 6;
                 } else
                 {
                     if (harujionTimer <= 0)
                     {
-                        soulManager.soulsCollected -= (int)harujionDebuff;
-                        HarujionLocations.instance.soulsAbsorbed += (int)harujionDebuff;
-                        harujionTimer = 30;
+                        soulManager.soulsCollected -= 1;
+                        ModContent.GetInstance<HarujionLocations>().soulsAbsorbed += (int)harujionDebuff;
+                        harujionTimer = 15;
                     }
-                    Player.lifeRegen -= (int)(4 * harujionDebuff) - 2;
+                    Player.lifeRegen -= (int)(harujionDebuff) - 2;
                     //Main.NewText("Souls: " + harujionLocations.soulsAbsorbed);
                     //Main.NewText("Player souls: " + soulManager.soulsCollected);
                 }

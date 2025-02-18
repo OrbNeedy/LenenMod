@@ -416,6 +416,11 @@ Items: {
 		DisplayName: Fragmento de caparazón
 		Tooltip: Un pedazo de objeto redondo que altera la luz alrededor.
 	}
+
+	HarujionDebugTool: {
+		// DisplayName: Harujion Debug Tool
+		// Tooltip: ""
+	}
 }
 
 NPCs: {
@@ -599,5 +604,11 @@ Conditions: {
 }
 
 DamageClasses.MeleeRangedHybrid.DisplayName: Cuerpo a cuerpo/Rango
-Tiles.HarujionSapling.MapEntry: Harujion
+
+Tiles: {
+	HarujionSapling.MapEntry: Harujion
+	// HarujionTree.MapEntry: Harujion Tree
+	// HarujionMultitile.MapEntry: Harujion Multitile
+}
+
 WorldGen.Harujion: Un youkai planta peligroso ha aparecido en el mundo.

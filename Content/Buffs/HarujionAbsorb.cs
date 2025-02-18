@@ -2,6 +2,7 @@
 using lenen.Common.Players;
 using lenen.Common.Systems;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace lenen.Content.Buffs

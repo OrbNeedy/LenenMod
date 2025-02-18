@@ -30,11 +30,11 @@ namespace lenen.Common.GlobalPlayers
                 {
                     drawInfo.DrawDataCache.Add(new DrawData(
                         texture,
-                        drawInfo.Position + offset - Main.screenPosition,
+                        drawInfo.Center + offset - Main.screenPosition,
                         null,
                         new Color(1f, 1f, 1f),
                         0f,
-                        Vector2.Zero,
+                        texture.Size() * 0.5f,
                         1f,
                         SpriteEffects.None
                     ));
@@ -51,7 +51,7 @@ namespace lenen.Common.GlobalPlayers
                     null,
                     new Color(1f, 1f, 1f),
                     rotationToHarujion,
-                    Vector2.Zero,
+                    texture.Size() * 0.5f,
                     1f,
                     SpriteEffects.None
                 ));

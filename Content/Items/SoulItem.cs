@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using lenen.Common.Players;
 using Terraria.DataStructures;
 using Terraria.Audio;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace lenen.Content.Items
 {
@@ -56,6 +57,27 @@ namespace lenen.Content.Items
         public override void PostUpdate()
         {
             Lighting.AddLight(Item.Center, Color.Beige.ToVector3() * 0.8f * Main.essScale);
+        }
+
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
+            Texture2D spirit = ModContent.Request<Texture2D>(Texture).Value;
+            spriteBatch.Draw(
+                spirit,
+                new Vector2
+                (
+                    Item.position.X - Main.screenPosition.X,
+                    Item.position.Y - Main.screenPosition.Y
+                ),
+                new Rectangle(0, 0, spirit.Width, spirit.Height),
+                Lighting.GetColor(Item.Center.ToTileCoordinates(), Color.White),
+                rotation,
+                spirit.Size() * 0.5f,
+                scale,
+                SpriteEffects.None,
+                0f
+            );
+            return false;
         }
 
         public override bool CanPickup(Player player)

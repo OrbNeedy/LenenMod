@@ -41,7 +41,9 @@ namespace lenen.Content.Tiles.Plants
             TileID.Sets.ReplaceTileBreakUp[Type] = true;
             TileID.Sets.IgnoredInHouseScore[Type] = false;
             TileID.Sets.IgnoredByGrowingSaplings[Type] = false;
-            TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
+            TileID.Sets.AvoidedByNPCs[Type] = true;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
+            TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); 
 
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(64, 19, 110), name);
@@ -166,9 +168,10 @@ namespace lenen.Content.Tiles.Plants
                 {
                     NetMessage.SendTileSquare(-1, i, j, 1);
                 }
-            } else if (stage == PlantStage.Growing && HarujionLocations.instance.soulsAbsorbed >= 6000)
+            } else if (stage == PlantStage.Grown && HarujionLocations.instance.soulsAbsorbed >= 6000)
             {
-                // Transform the Harujion into a tree
+                ModContent.GetInstance<HarujionLocations>().GrowTree();
+                return;
             }
 
         }
@@ -221,7 +224,7 @@ namespace lenen.Content.Tiles.Plants
             return false;
         }
 
-        private static PlantStage GetStage(int i, int j)
+        public static PlantStage GetStage(int i, int j)
         {
             Tile tile = Framing.GetTileSafely(i, j);
             return (PlantStage)(tile.TileFrameX / FrameWidth);
