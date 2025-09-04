@@ -1,5 +1,6 @@
 ﻿using lenen.Content.Items.Weapons;
 using lenen.Content.Projectiles;
+using lenen.Content.Projectiles.BulletHellProjectiles;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace lenen.Common.Players
         };
         public bool fistShootState = false;
 
-        public int GravityAnomaly = -1;
+        public bool GravityAnomaly = false;
 
         public int UpdateCount = 0;
 
@@ -62,13 +63,28 @@ namespace lenen.Common.Players
             }
         }
 
+        public override void ResetEffects()
+        {
+            GravityAnomaly = false;
+        }
+
+        public override void PreUpdate()
+        {
+            int selectedItem = Player.inventory[Player.selectedItem].type;
+            CheckGravityAnomaly(selectedItem);
+            if (GravityAnomaly)
+            {
+                SuperNovaBullet.SuckInProjectiles(Main.MouseWorld, 200, 12);
+                SuperNovaBullet.SuckInNPCs(Main.MouseWorld, 200, 12);
+            }
+        }
+
         public override void PostUpdate()
         {
             // The following only applies if the player is holding a certain item
             int selectedItem = Player.inventory[Player.selectedItem].type;
             CheckDrone(selectedItem);
             CheckHaniwaFists(selectedItem);
-            CheckGravityAnomaly(selectedItem);
             UpdateCount++;
             if (UpdateCount >= int.MaxValue)
             {
@@ -152,25 +168,8 @@ namespace lenen.Common.Players
             if (selectedItem == ModContent.ItemType<GravitationalAnomaly>() || 
                 selectedItem == ModContent.ItemType<GravityGlobe>() || 
                 selectedItem == ModContent.ItemType<ChristmasGlobe>())
-            { 
-                if (GravityAnomaly == -1)
-                {
-                    //Main.NewText("Spawning anomaly (No anomaly)");
-                    SpawnAnomaly();
-                    return;
-                }
-                Projectile anomaly = Main.projectile[GravityAnomaly];
-                bool anomalyExists = anomaly.active && anomaly.owner == Player.whoAmI &&
-                    anomaly.ModProjectile is FriendlyBullet && anomaly.ai[0] == (int)BulletAIs.GravityWheel;
-                if (anomalyExists)
-                {
-                    //Main.NewText("Keeping the anomaly alive");
-                    anomaly.timeLeft = 3;
-                } else
-                {
-                    //Main.NewText("Spawning anomaly (Nonexistant anomaly)");
-                    SpawnAnomaly();
-                }
+            {
+                GravityAnomaly = true;
             }
         }
 
@@ -196,13 +195,6 @@ namespace lenen.Common.Players
                     Player.Center, Vector2.Zero, ModContent.ProjectileType<HaniwaFist>(), 0, 10,
                     Player.whoAmI, fistIndex);
             }
-        }
-
-        private void SpawnAnomaly()
-        {
-            GravityAnomaly = Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld, Vector2.Zero, 
-                ModContent.ProjectileType<FriendlyBullet>(), 0, 0, Player.whoAmI, (int)BulletAIs.GravityWheel, 
-                (int)BulletColors.White, (int)BulletSprites.Gravity);
         }
 
         public void ShootFists(int altUse)

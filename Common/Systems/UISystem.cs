@@ -69,7 +69,7 @@ namespace lenen.Common.Systems
             if (resourceBarIndex != -1)
             {
                 layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
-                    "Len'en Mod: Spirit Jar",
+                    "Lenen Mod: Spirit Jar",
                     delegate {
                         SpiritsJarUserInterface.Draw(Main.spriteBatch, new GameTime());
                         return true;
@@ -81,7 +81,7 @@ namespace lenen.Common.Systems
             if (resourceBarIndex != -1)
             {
                 layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
-                    "Len'en Mod: Spell Card Bar",
+                    "Lenen Mod: Spell Card Bar",
                     delegate {
                         SpellCardBarUserInterface.Draw(Main.spriteBatch, new GameTime());
                         return true;
@@ -93,7 +93,7 @@ namespace lenen.Common.Systems
             if (resourceBarIndex != -1)
             {
                 layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
-                    "Len'en Mod: Barrier Bar",
+                    "Lenen Mod: Barrier Bar",
                     delegate {
                         BarrierBarUserInterface.Draw(Main.spriteBatch, new GameTime());
                         return true;

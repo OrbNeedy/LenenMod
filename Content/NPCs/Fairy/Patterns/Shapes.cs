@@ -1,11 +1,17 @@
 ﻿using lenen.Content.Projectiles;
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace lenen.Content.NPCs.Fairy.Patterns
 {
+    public enum BulletShapes
+    {
+        Circle, 
+        Cross, 
+        U
+    }
+
     public class Shapes : Pattern
     {
         int shape = 0;
@@ -36,11 +42,10 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                         targetPosition, target.width, target.height)) return 120;
 
             int speed = size * 90;
-            int damage = 15 + (5 * size);
+            int damage = 10 + (5 * size);
             float bulletSpeed = 10f;
-            int color;
-            color = Main.rand.NextFromList<int>(0, 1);
-            damage += (level * (1 + size));
+            int color = GetRandColor();
+            damage += level;
 
             float baseDistance = 50f;
             Vector2 offset = new Vector2(baseDistance, 0);
@@ -70,23 +75,10 @@ namespace lenen.Content.NPCs.Fairy.Patterns
 
             switch (shape)
             {
-                case 0:
+                case (int)BulletShapes.Circle:
                     for (int i = 0; i < 20; i++)
                     {
-                        if (type == FairyType.Mono)
-                        {
-                            color = Main.rand.NextFromList<int>(5, 6);
-                        } else
-                        {
-                            if (Main.expertMode)
-                            {
-                                color = Main.rand.NextFromList<int>(2, 3);
-                            }
-                            if (Main.masterMode)
-                            {
-                                color = Main.rand.NextFromList<int>(3, 4);
-                            }
-                        }
+                        color = GetRandColor(type is FairyType.Mono);
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + offset,
                             direction * bulletSpeed, ModContent.ProjectileType<EnemyBullet>(), damage, 2.5f,
                             ai0: ai0, ai1: color, ai2: ai2);
@@ -94,25 +86,11 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                         offset = offset.RotatedBy(MathHelper.TwoPi / 20);
                     }
                     break;
-                case 1:
+                case (int)BulletShapes.Cross:
                     offset = direction.RotatedBy(MathHelper.PiOver4) * baseDistance;
                     for (int i = -5; i < 6; i++)
                     {
-                        if (type == FairyType.Mono)
-                        {
-                            color = Main.rand.NextFromList<int>(5, 6);
-                        }
-                        else
-                        {
-                            if (Main.expertMode)
-                            {
-                                color = Main.rand.NextFromList<int>(2, 3);
-                            }
-                            if (Main.masterMode)
-                            {
-                                color = Main.rand.NextFromList<int>(3, 4);
-                            }
-                        }
+                        color = GetRandColor(type is FairyType.Mono);
                         float distance = (float)i / 5f;
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + (offset * distance),
                             direction * bulletSpeed, ModContent.ProjectileType<EnemyBullet>(), damage, 2.5f,
@@ -122,47 +100,19 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                     offset = offset.RotatedBy(MathHelper.PiOver2);
                     for (int i = -5; i < 6; i++)
                     {
-                        if (type == FairyType.Mono)
-                        {
-                            color = Main.rand.NextFromList<int>(5, 6);
-                        }
-                        else
-                        {
-                            if (Main.expertMode)
-                            {
-                                color = Main.rand.NextFromList<int>(2, 3);
-                            }
-                            if (Main.masterMode)
-                            {
-                                color = Main.rand.NextFromList<int>(3, 4);
-                            }
-                        }
+                        color = GetRandColor(type is FairyType.Mono);
                         float distance = (float)i / 5f;
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + (offset * distance),
                             direction * bulletSpeed, ModContent.ProjectileType<EnemyBullet>(), damage, 2.5f, 
                             ai0: ai0, ai1: color, ai2: ai2);
                     }
                     break;
-                case 2:
+                case (int)BulletShapes.U:
                     Vector2 positionMovement = direction;
                     offset = direction.RotatedBy(MathHelper.PiOver4 * 3) * baseDistance;
                     for (int i = 0; i < 21; i++)
                     {
-                        if (type == FairyType.Mono)
-                        {
-                            color = Main.rand.NextFromList<int>(5, 6);
-                        }
-                        else
-                        {
-                            if (Main.expertMode)
-                            {
-                                color = Main.rand.NextFromList<int>(2, 3);
-                            }
-                            if (Main.masterMode)
-                            {
-                                color = Main.rand.NextFromList<int>(3, 4);
-                            }
-                        }
+                        color = GetRandColor(type is FairyType.Mono);
                         if (i > 5 && i < 15)
                         {
                             positionMovement = positionMovement.RotatedBy(-MathHelper.Pi / 9);

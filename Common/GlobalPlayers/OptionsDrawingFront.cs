@@ -1,4 +1,5 @@
-﻿using lenen.Content.Items.Weapons;
+﻿using lenen.Common.Players;
+using lenen.Content.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -61,15 +62,31 @@ namespace lenen.Common.GlobalPlayers
                     Rectangle bounds = new Rectangle(0, spriteIndex * height, texture.Bounds.Width, height);
 
                     drawInfo.DrawDataCache.Add(new DrawData(
-                            texture,
-                            drawInfo.Position + offset - Main.screenPosition,
-                            bounds,
-                            new Color(darkening, darkening, darkening),
-                            0f,//Main.GameUpdateCount * 0.5f,
-                            Vector2.Zero,
-                            1f,
-                            SpriteEffects.None
-                        ));
+                        texture,
+                        drawInfo.Position + offset - Main.screenPosition,
+                        bounds,
+                        new Color(darkening, darkening, darkening),
+                        Main.GameUpdateCount * 0.5f,
+                        bounds.Size() * 0.5f,
+                        1f,
+                        SpriteEffects.None
+                    ));
+                }
+
+                if (player.GetModPlayer<OptionsManagingPlayer>().GravityAnomaly)
+                {
+                    Asset<Texture2D> well = ModContent.Request<Texture2D>("lenen/Content/Projectiles/GravityPullBulletWithAura");
+
+                    drawInfo.DrawDataCache.Add(new DrawData(
+                        well.Value,
+                        Main.MouseWorld - Main.screenPosition,
+                        well.Value.Bounds,
+                        Color.White * 0.7f,
+                        Main.GameUpdateCount * 0.5f,
+                        well.Value.Bounds.Size() * 0.5f,
+                        1f,
+                        SpriteEffects.None
+                    ));
                 }
             }
         }

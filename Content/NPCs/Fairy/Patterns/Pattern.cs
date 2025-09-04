@@ -1,4 +1,5 @@
 ﻿using lenen.Content.Projectiles;
+using lenen.Content.Projectiles.BulletHellProjectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -39,6 +40,25 @@ namespace lenen.Content.NPCs.Fairy.Patterns
             stack = maxStack;
         }
 
+        public virtual bool CanShoot(int size, int level, NPC npc, FairyType type, Vector2 distraction, bool distracted)
+        {
+            if (npc.target <= -1 || npc.target >= 500)
+            {
+                return false;
+            }
+            Player target = Main.player[npc.target];
+            Vector2 targetPosition = target.position;
+            Vector2 targetCenter = target.Center;
+            if (distracted)
+            {
+                targetCenter = distraction;
+                targetPosition = distraction - target.Size / 2;
+            }
+
+            return Collision.CanHitLine(npc.position, npc.width, npc.height,
+                        targetPosition, target.width, target.height);
+        }
+
         public virtual int Shoot(int size, int level, NPC npc, FairyType type, Vector2 distraction, bool distracted)
         {
             if (npc.target <= -1 || npc.target >= 500)
@@ -58,20 +78,18 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                         targetPosition, target.width, target.height)) return 120;
 
             int speed = size * 60;
-            int damage = 15 + (5 * size);
+            int damage = 10 + (5 * size);
             int color;
-            color = Main.rand.NextFromList<int>(0, 1);
+            color = GetRandColor();
             if (Main.expertMode)
             {
-                color = Main.rand.NextFromList<int>(2, 3);
                 speed += 60;
             }
             if (Main.masterMode)
             {
-                color = Main.rand.NextFromList<int>(3, 4);
                 speed += 60;
             }
-            damage += (level * (1 + size));
+            damage += level;
 
             switch (type)
             {
@@ -81,15 +99,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                     {
                         for (int i = 0; i < maxStack; i++)
                         {
-                            color = Main.rand.NextFromList<int>(0, 1);
-                            if (Main.expertMode)
-                            {
-                                color = Main.rand.NextFromList<int>(2, 3);
-                            }
-                            if (Main.masterMode)
-                            {
-                                color = Main.rand.NextFromList<int>(3, 4);
-                            }
+                            color = GetRandColor();
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
                                 npc.Center.DirectionTo(targetCenter) * (12 - (difference * i)),
                                 ModContent.ProjectileType<EnemyBullet>(), damage, 2.5f, ai1: color);
@@ -102,15 +112,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                             Vector2 direction = npc.Center.DirectionTo(targetCenter).RotatedBy(i * MathHelper.Pi / 5);
                             for (int k = 0; k < maxStack; k++)
                             {
-                                color = Main.rand.NextFromList<int>(0, 1);
-                                if (Main.expertMode)
-                                {
-                                    color = Main.rand.NextFromList<int>(2, 3);
-                                }
-                                if (Main.masterMode)
-                                {
-                                    color = Main.rand.NextFromList<int>(3, 4);
-                                }
+                                color = GetRandColor();
                                 Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
                                     direction * (12 - (difference * k)),
                                     ModContent.ProjectileType<EnemyBullet>(), damage, 2.5f, ai1: color);
@@ -129,15 +131,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                     {
                         for (int i = -3; i < 4; i += 2)
                         {
-                            color = Main.rand.NextFromList<int>(0, 1);
-                            if (Main.expertMode)
-                            {
-                                color = Main.rand.NextFromList<int>(2, 3);
-                            }
-                            if (Main.masterMode)
-                            {
-                                color = Main.rand.NextFromList<int>(3, 4);
-                            }
+                            color = GetRandColor();
                             Vector2 direction = npc.Center.DirectionTo(targetCenter).RotatedBy(
                                 i * MathHelper.Pi / 18);
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
@@ -147,15 +141,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                     }
                     else
                     {
-                        color = Main.rand.NextFromList<int>(0, 1);
-                        if (Main.expertMode)
-                        {
-                            color = Main.rand.NextFromList<int>(2, 3);
-                        }
-                        if (Main.masterMode)
-                        {
-                            color = Main.rand.NextFromList<int>(3, 4);
-                        }
+                        color = GetRandColor();
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
                             npc.Center.DirectionTo(targetCenter) * 10, ModContent.ProjectileType<EnemyBullet>(),
                             damage, 2.5f, ai0: 1, ai1: color, ai2: bounces);
@@ -177,7 +163,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                     {
                         for (int i = -3; i < 4; i += 2)
                         {
-                            color = Main.rand.NextFromList<int>(5, 6);
+                            color = GetRandColor(true);
                             Vector2 direction = npc.Center.DirectionTo(targetCenter).RotatedBy(
                                 i * MathHelper.Pi / 18);
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
@@ -187,7 +173,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                     }
                     else
                     {
-                        color = Main.rand.NextFromList<int>(5, 6);
+                        color = GetRandColor(true);
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
                             npc.Center.DirectionTo(targetCenter) * 10, ModContent.ProjectileType<EnemyBullet>(),
                             damage, 2.5f, ai1: color);
@@ -208,15 +194,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                     {
                         for (int i = -3; i < 4; i += 2)
                         {
-                            color = Main.rand.NextFromList<int>(0, 1);
-                            if (Main.expertMode)
-                            {
-                                color = Main.rand.NextFromList<int>(2, 3);
-                            }
-                            if (Main.masterMode)
-                            {
-                                color = Main.rand.NextFromList<int>(3, 4);
-                            }
+                            color = GetRandColor(type is FairyType.Mono);
                             Vector2 direction = npc.Center.DirectionTo(targetCenter).RotatedBy(
                                 i * MathHelper.Pi / 18);
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
@@ -226,15 +204,7 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                     }
                     else
                     {
-                        color = Main.rand.NextFromList<int>(0, 1);
-                        if (Main.expertMode)
-                        {
-                            color = Main.rand.NextFromList<int>(2, 3);
-                        }
-                        if (Main.masterMode)
-                        {
-                            color = Main.rand.NextFromList<int>(3, 4);
-                        }
+                        color = GetRandColor(type is FairyType.Mono);
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
                             npc.Center.DirectionTo(targetCenter) * 10, ModContent.ProjectileType<EnemyBullet>(),
                             damage, 2.5f, ai1: color);
@@ -247,6 +217,25 @@ namespace lenen.Content.NPCs.Fairy.Patterns
                     break;
             }
             return 600 - speed;
+        }
+
+        public int GetRandColor(bool monochrome = false)
+        {
+            if (monochrome) return (int)Main.rand.NextFromList(SheetFrame.White, SheetFrame.Black);
+
+            SheetFrame color = Main.rand.NextFromList(SheetFrame.Blue, SheetFrame.Cyan, SheetFrame.Green);
+            switch (Main.GameMode)
+            {
+                case GameModeID.Creative: 
+                    return (int)Main.rand.NextFromList(SheetFrame.Blue, SheetFrame.Cyan);
+                default:
+                case GameModeID.Normal:
+                    return (int)Main.rand.NextFromList(SheetFrame.Blue, SheetFrame.Cyan, SheetFrame.Green);
+                case GameModeID.Expert:
+                    return (int)Main.rand.NextFromList(SheetFrame.Green, SheetFrame.Yellow, SheetFrame.Red);
+                case GameModeID.Master:
+                    return (int)Main.rand.NextFromList(SheetFrame.Pink, SheetFrame.Red);
+            }
         }
     }
 }

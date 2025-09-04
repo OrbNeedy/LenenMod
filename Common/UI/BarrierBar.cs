@@ -21,8 +21,8 @@ namespace lenen.Common.UI
         public override void OnInitialize()
         {
             area = new UIElement();
-            area.Left.Set(-Main.ScreenSize.X + 10, 1f);
-            area.Top.Set(Main.ScreenSize.Y - 140, 0f);
+            area.Left.Set(10, 0f);
+            area.Top.Set(-140, 1f);
             area.Width.Set(Main.ScreenSize.X, 0f);
             area.Height.Set(130, 0f);
 

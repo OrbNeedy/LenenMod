@@ -11,7 +11,6 @@ using System.IO;
 using System;
 using Terraria.Localization;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent;
 
 namespace lenen.Content.NPCs.Fairy
 {
@@ -314,7 +313,7 @@ namespace lenen.Content.NPCs.Fairy
             ControlBody();
             ControlWings();
             ControlItem();
-            attackTimer--;
+            if (attackPattern.CanShoot(0, powerLevel, NPC, fairyType, distractionPosition, distracted)) attackTimer--;
             counter++;
             distracted = false;
 

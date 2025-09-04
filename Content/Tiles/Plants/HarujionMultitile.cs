@@ -1,16 +1,9 @@
 ﻿using lenen.Common.Systems;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -20,16 +13,11 @@ namespace lenen.Content.Tiles.Plants
 {
     public class HarujionMultitile : ModTile
     {
-        public static List<Point16> partsWithoutTile = new List<Point16>();
+        public static List<Point16> partsWithTile = new List<Point16>();
 
         public override void SetStaticDefaults()
         {
-            partsWithoutTile = [new Point16(0, 0), new Point16(4, 0), new Point16(0, 3), new Point16(0, 4),
-                new Point16(1, 4), new Point16(4, 4), new Point16(0, 5), new Point16(1, 5), new Point16(4, 5), 
-                new Point16(0, 6), new Point16(1, 6), new Point16(4, 6), new Point16(0, 7), new Point16(1, 7), 
-                new Point16(4, 7), new Point16(0, 8), new Point16(1, 8), new Point16(4, 8), new Point16(0, 9), 
-                new Point16(1, 9), new Point16(4, 9), new Point16(0, 10), new Point16(1, 10), 
-                new Point16(4, 10)];
+            partsWithTile = [new Point16(2, 10), new Point16(3, 10)];
 
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -37,7 +25,7 @@ namespace lenen.Content.Tiles.Plants
             Main.tileSolid[Type] = false;
 
             TileID.Sets.ReplaceTileBreakUp[Type] = false;
-            TileID.Sets.IgnoredInHouseScore[Type] = false;
+            TileID.Sets.IgnoredInHouseScore[Type] = true;
             TileID.Sets.IgnoredByGrowingSaplings[Type] = false;
             TileID.Sets.AvoidedByNPCs[Type] = true;
             TileID.Sets.AvoidedByMeteorLanding[Type] = true;
@@ -46,20 +34,26 @@ namespace lenen.Content.Tiles.Plants
             TileID.Sets.DoesntGetReplacedWithTileReplacement[Type] = true; 
 
             AdjTiles = [TileID.Tombstones]; 
-            HitSound = SoundID.Grass;
+            HitSound = SoundID.Dig;
             DustType = DustID.CorruptPlants;
             MinPick = 210;
+            MineResist = 4f;
 
             // Names
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(64, 19, 110), name);
 
             // Placement
+            TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.GrandfatherClocks, 0));
+            TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(CustomPlaceFunction, -1, 0, true);
+            TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.Height = 11;
             TileObjectData.newTile.Width = 5;
             TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16];
             TileObjectData.newTile.CoordinatePaddingFix = new Point16(2, 2);
             TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, 2, 3);
+            TileObjectData.newTile.FlattenAnchors = true;
             TileObjectData.newTile.AnchorValidTiles = new int[] { (int)TileID.Dirt, (int)TileID.Grass,
                 (int)TileID.CorruptGrass, (int)TileID.CorruptJungleGrass, (int)TileID.CrimsonGrass,
                 (int)TileID.CrimsonJungleGrass, (int)TileID.JungleGrass, (int)TileID.MushroomGrass,
@@ -72,37 +66,58 @@ namespace lenen.Content.Tiles.Plants
             TileObjectData.addTile(Type);
         }
 
+        private int CustomPlaceFunction(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6)
+        {
+            if (HarujionLocations.instance.harujionLocation != Point16.Zero)
+            {
+                return -1;
+            }
+            return 1;
+        }
+
+        public override void PlaceInWorld(int i, int j, Item item)
+        {
+            HarujionLocations.instance.harujionLocation = new Point16(i, j);
+            base.PlaceInWorld(i, j, item);
+        }
+
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            for (int y = frameY; y > j; y--)
+        }
+
+        public override bool CanExplode(int i, int j)
+        {
+            return false;
+        }
+
+        public override bool KillSound(int i, int j, bool fail)
+        {
+            Point16 topLeft = HarujionLocations.instance.harujionLocation;
+            if (partsWithTile.Contains(new Point16(i, j) - topLeft))
             {
-                for (int x = i; x < i+5; x++)
-                {
-                    Tile tile = Framing.GetTileSafely(x, y);
-                    if (tile.HasTile)
-                    {
-                        if (tile.TileType == ModContent.TileType<HarujionMultitile>())
-                        {
-                            WorldGen.KillTile(x, y);
-                        }
-                    }
-                }
+                return false;
             }
-            base.KillMultiTile(i, j, frameX, frameY);
+            return base.KillSound(i, j, fail);
         }
 
         public override bool CanKillTile(int i, int j, ref bool blockDamaged)
         {
             Tile tile = Framing.GetTileSafely(i, j);
-            Main.NewText("HarujionX: " + ModContent.GetInstance<HarujionLocations>().harujionLocation.X);
-            Main.NewText("FrameX: " + tile.TileFrameX);
-            Main.NewText("FrameY: " + tile.TileFrameY);
+            /*Main.NewText("HarujionX: " + HarujionLocations.instance.harujionLocation.X);
+            Main.NewText("FrameX: " + tile.TileFrameX/18);
+            Main.NewText("FrameY: " + tile.TileFrameY/18);
             Main.NewText("PosX: " + i);
-            if (partsWithoutTile.Contains(new Point16(tile.TileFrameX/18, tile.TileFrameY/18)))
+            Main.NewText("Can be killed: " + !partsWithTile.Contains(new Point16(tile.TileFrameX / 18, tile.TileFrameY / 18)));
+            Main.NewText("List: ");
+            foreach (var thing in partsWithTile)
+            {
+                Main.NewText(thing);
+            }*/
+            if (!partsWithTile.Contains(new Point16(tile.TileFrameX/18, tile.TileFrameY/18)))
             {
                 return false;
             }
-            return true;
+            return false;
         }
 
         public override bool IsTileDangerous(int i, int j, Player player)
@@ -120,8 +135,13 @@ namespace lenen.Content.Tiles.Plants
 
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
-            Point16 topLeft = ModContent.GetInstance<HarujionLocations>().harujionLocation;
-            if (!partsWithoutTile.Contains(new Point16(i, j) - topLeft)) return;
+            // Will not work until the 
+            Point16 topLeft = HarujionLocations.instance.harujionLocation;
+            if (partsWithTile.Contains(new Point16(i, j) - topLeft))
+            {
+                num = 0;
+                return;
+            }
             num = fail ? 5 : 15;
         }
     }

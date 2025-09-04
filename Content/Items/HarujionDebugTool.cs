@@ -25,6 +25,7 @@ namespace lenen.Content.Items
         }
 
         private ToolMode mode = ToolMode.Create;
+        // This might not work, I'll put it on hold until I fix and improve everything else
         public override void SetDefaults()
         {
             Item.damage = 80;
@@ -96,6 +97,7 @@ namespace lenen.Content.Items
                 switch (mode)
                 {
                     case ToolMode.Create:
+                        WorldGen.KillTile(pos.X, pos.Y);
                         WorldGen.PlaceTile(pos.X, pos.Y,
                             ModContent.TileType<HarujionSapling>(), false);
                         bool success = Main.tile[pos.X, pos.Y].TileType == ModContent.TileType<HarujionSapling>();
@@ -116,7 +118,9 @@ namespace lenen.Content.Items
                                     tile.TileFrameX = 18 * 2;
                                     break;
                                 case PlantStage.Grown:
-                                    ModContent.GetInstance<HarujionLocations>().GrowTree();
+                                    HarujionLocations.instance.queuedBigHarujion = true;
+                                    WorldGen.KillTile(pos.X, pos.Y);
+                                    //ModContent.GetInstance<HarujionLocations>().GrowTree();
                                     break;
                             }
                         }
@@ -134,17 +138,8 @@ namespace lenen.Content.Items
                         }
                         break;
                     case ToolMode.ForceUpdate:
-                        //ModContent.GetInstance<HarujionLocations>().UpdateHarujion();
-
-                        WorldGen.PlaceTile(pos.X, pos.Y, ModContent.TileType<HarujionMultitile>(), true);
-                        if (Main.tile[pos.X, pos.Y].TileType == ModContent.TileType<HarujionMultitile>())
-                        {
-                            Main.NewText("Sucess");
-                        } else
-                        {
-                            Main.NewText("Failed");
-                        }
-                         break;
+                        ModContent.GetInstance<HarujionLocations>().UpdateHarujion();
+                        break;
                 }
             }
             return false;

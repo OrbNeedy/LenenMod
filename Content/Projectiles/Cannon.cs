@@ -1,4 +1,5 @@
 ﻿using lenen.Common.Players;
+using lenen.Content.Projectiles.BulletHellProjectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -13,7 +14,9 @@ namespace lenen.Content.Projectiles
     {
         Asset<Texture2D> body = ModContent.Request<Texture2D>("lenen/Content/Projectiles/Cannon");
         public float CannonType { get => Projectile.ai[1]; set => Projectile.ai[1] = value; }
-        
+
+        HaniwaMaterial material = HaniwaMaterial.Clay;
+
         int shootTimer = 0;
         int barrageTimer = 0;
         int barrageLeft = 6;
@@ -48,7 +51,17 @@ namespace lenen.Content.Projectiles
 
         public override void OnSpawn(IEntitySource source)
         {
-            // Make it change types with the environment
+            switch (source.Context)
+            {
+                case "IceHaniwa":
+                    body = ModContent.Request<Texture2D>("lenen/Content/Projectiles/IceCannon");
+                    material = HaniwaMaterial.Ice;
+                    break;
+                case "StoneHaniwa":
+                    body = ModContent.Request<Texture2D>("lenen/Content/Projectiles/StoneCannon");
+                    material = HaniwaMaterial.Stone;
+                    break;
+            }
         }
 
         public override void AI()
@@ -68,26 +81,6 @@ namespace lenen.Content.Projectiles
                     Projectile.rotation = Projectile.Center.DirectionTo(targetPosition).ToRotation() + 
                         MathHelper.PiOver2;
                 }
-            }
-
-            if (Projectile.ai[2] == 0)
-            {
-                return;
-            }
-            if (owner.ZoneSnow)
-            {
-                body = ModContent.Request<Texture2D>("lenen/Content/Projectiles/IceCannon");
-                return;
-            }
-            else if (owner.ZoneRockLayerHeight)
-            {
-                body = ModContent.Request<Texture2D>("lenen/Content/Projectiles/StoneCannon");
-                return;
-            }
-            else
-            {
-                body = ModContent.Request<Texture2D>("lenen/Content/Projectiles/Cannon");
-                return;
             }
         }
 
@@ -150,6 +143,20 @@ namespace lenen.Content.Projectiles
 
         private void Shooting()
         {
+            string? sourceString = null;
+            switch (material)
+            {
+                case HaniwaMaterial.Ice:
+                    sourceString = "IceHaniwa";
+                    break;
+                case HaniwaMaterial.Stone:
+                    sourceString = "StoneHaniwa";
+                    break;
+                default:
+                    sourceString = "ClayHaniwa";
+                    break;
+            }
+
             switch (CannonType)
             {
                 case -2:
@@ -161,15 +168,11 @@ namespace lenen.Content.Projectiles
                             Vector2 direction = Projectile.Center.DirectionTo(targetPosition);
                             for (int i = 0; i < 6; i++)
                             {
-                                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center,
+                                // All colored
+                                Projectile.NewProjectile(Projectile.GetSource_FromThis(sourceString), Projectile.Center,
                                     direction.RotatedBy((i * MathHelper.Pi / 6) - MathHelper.PiOver2) * 13,
-                                    ModContent.ProjectileType<FriendlyBullet>(), Projectile.damage, 
-                                    Projectile.knockBack, Projectile.owner, 0, (int)BulletColors.White, 
-                                    (int)BulletSprites.AllColored);
-                                /*Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, 
-                                    direction.RotatedBy((i * MathHelper.Pi/6) - MathHelper.PiOver2) * 13, 
-                                    ModContent.ProjectileType<Bullet>(), Projectile.damage, Projectile.knockBack, 
-                                    Projectile.owner, ai2: 0.45f);*/
+                                    ModContent.ProjectileType<BasicBullet>(), Projectile.damage, 
+                                    Projectile.knockBack, Projectile.owner, (int)SheetFrame.White, (int)Sheet.Small);
                             }
                             shootTimer = 60;
                         }
@@ -186,11 +189,11 @@ namespace lenen.Content.Projectiles
                         }
                         if (barrageLeft > 0 && barrageTimer <= 0)
                         {
+                            // All colored
                             Vector2 direction = Projectile.Center.DirectionTo(targetPosition);
-                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center,
-                                direction * 13, ModContent.ProjectileType<FriendlyBullet>(), Projectile.damage,
-                                Projectile.knockBack, Projectile.owner, 0, (int)BulletColors.Yellow,
-                                (int)BulletSprites.AllColored);
+                            Projectile.NewProjectile(Projectile.GetSource_FromThis(sourceString), Projectile.Center,
+                                direction * 13, ModContent.ProjectileType<BasicBullet>(), Projectile.damage,
+                                Projectile.knockBack, Projectile.owner, (int)SheetFrame.Yellow, (int)Sheet.Small);
                             /*Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center,
                                 direction * 13, ModContent.ProjectileType<Bullet>(), Projectile.damage,
                                 Projectile.knockBack, Projectile.owner, ai1: 1, ai2: 0.65f);*/
@@ -206,7 +209,7 @@ namespace lenen.Content.Projectiles
                         if (shootTimer <= 0)
                         {
                             Vector2 direction = Projectile.Center.DirectionTo(targetPosition);
-                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center,
+                            Projectile.NewProjectile(Projectile.GetSource_FromThis(sourceString), Projectile.Center,
                                 direction * 13, ModContent.ProjectileType<Laser>(), Projectile.damage,
                                 Projectile.knockBack, Projectile.owner);
                             shootTimer = 125;
@@ -219,9 +222,6 @@ namespace lenen.Content.Projectiles
 
         public override bool PreDraw(ref Color lightColor)
         {
-            //Main.PlayerRenderer.DrawPlayer(Main.Camera, Main.player[Projectile.owner], 
-            //    Projectile.Center + new Vector2(0, 200), 0, Vector2.Zero);
-
             float alpha = 1;
 
             Main.EntitySpriteDraw(body.Value,

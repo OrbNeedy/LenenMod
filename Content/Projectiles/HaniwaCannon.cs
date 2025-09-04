@@ -15,12 +15,23 @@ namespace lenen.Content.Projectiles
     // Center cannon: Laser
     // Right cannon: Semi circle
     // Right: Switch left cannon and right cannon
+    public enum HaniwaMaterial
+    {
+        Clay, 
+        Stone, 
+        Ice, 
+        Sandstone, 
+        Crimstone, 
+        Ebonstone, 
+        Pearlstone
+    }
+
     public class HaniwaCannon : ModProjectile
     {
         Asset<Texture2D> body = ModContent.Request<Texture2D>("lenen/Assets/Textures/ClayHaniwaFrame");
         Projectile[] cannons = new Projectile[3];
         int baseDamage = 0;
-        int material = 0;
+        HaniwaMaterial material = HaniwaMaterial.Clay;
 
         public override void SetStaticDefaults()
         {
@@ -56,10 +67,30 @@ namespace lenen.Content.Projectiles
         {
             Player player = Main.player[Projectile.owner];
             baseDamage = Projectile.damage;
+            string? sourceString = null;
             SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/haniwa_00") with
             {
                 Volume = 0.35f
             }, Projectile.Center);
+
+            if (player.ZoneSnow)
+            {
+                body = ModContent.Request<Texture2D>("lenen/Assets/Textures/IceHaniwaFrame");
+                material = HaniwaMaterial.Ice;
+                sourceString = "IceHaniwa";
+            }
+            else if (player.ZoneRockLayerHeight)
+            {
+                body = ModContent.Request<Texture2D>("lenen/Assets/Textures/StoneHaniwaFrame");
+                material = HaniwaMaterial.Stone;
+                sourceString = "StoneHaniwa";
+            }
+            else
+            {
+                body = ModContent.Request<Texture2D>("lenen/Assets/Textures/ClayHaniwaFrame");
+                material = HaniwaMaterial.Clay;
+                sourceString = "ClayHaniwa";
+            }
 
             int[] cannonAIs = new int[] { 0, -1, -2 };
             if (Projectile.ai[0] == 1)
@@ -69,35 +100,13 @@ namespace lenen.Content.Projectiles
             }
 
             int index = 0;
+
             foreach (int ai in cannonAIs)
             {
-                cannons[index] = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, 
+                cannons[index] = Projectile.NewProjectileDirect(player.GetSource_FromThis(sourceString), Projectile.Center, 
                     Vector2.Zero, ModContent.ProjectileType<Cannon>(), Projectile.damage, 
                     Projectile.knockBack, Projectile.owner, Projectile.whoAmI, ai);
                 index++;
-            }
-
-            if (Projectile.ai[0] == 0)
-            {
-                body = ModContent.Request<Texture2D>("lenen/Assets/Textures/ClayHaniwaFrame");
-                return;
-            }
-
-            if (player.ZoneSnow)
-            {
-                body = ModContent.Request<Texture2D>("lenen/Assets/Textures/IceHaniwaFrame");
-                material = 1;
-                return;
-            }
-            else if (player.ZoneRockLayerHeight)
-            {
-                body = ModContent.Request<Texture2D>("lenen/Assets/Textures/StoneHaniwaFrame");
-                return;
-            }
-            else
-            {
-                body = ModContent.Request<Texture2D>("lenen/Assets/Textures/ClayHaniwaFrame");
-                return;
             }
         }
 
@@ -202,25 +211,5 @@ namespace lenen.Content.Projectiles
 
             return base.PreDraw(ref lightColor);
         }
-
-        /*
-        private void CheckTarget()
-        {
-            if (Projectile.owner == Main.myPlayer)
-            {
-                targetPosition = Main.MouseWorld;
-                hasTarget = false;
-                NPC target = Main.LocalPlayer.GetModPlayer<TargetPlayer>().target;
-                if (target != null)
-                {
-                    if (Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height,
-                        target.position, target.width, target.height))
-                    {
-                        targetPosition = target.Center;
-                        hasTarget = true;
-                    }
-                }
-            }
-        }*/
     }
 }

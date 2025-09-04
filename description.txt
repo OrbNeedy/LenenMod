@@ -3,7 +3,7 @@ It adds 13 accessories, 16 weapons, two NPCs and a special tile.
 Please report any bugs or suggestions in this mod's workshop page comment section or make a new Discussion.
 I'm looking for a person to help with making a wiki for this mod.
 
-Ver 0.2.9
+Ver 0.2.8.10
 
 Due to steam workshop's character limit, the full changelog has been moved to Google docs.
 Full Changelog: 

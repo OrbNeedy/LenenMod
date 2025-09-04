@@ -5,16 +5,27 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
+using lenen.Content.Projectiles.BulletHellProjectiles;
 
 namespace lenen.Content.Projectiles
 {
+    public enum EnemyBulletEffects
+    {
+        Default,
+        MagicBounce
+    }
+
     public class EnemyBullet : ModProjectile
     {
+        private int BulletEffect { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
+        private int BulletColor { get => (int)Projectile.ai[1]; set => Projectile.ai[1] = value; }
+        private float BulletMisc { get => (int)Projectile.ai[2]; set => Projectile.ai[2] = value; }
+
         private Vector2 origin = Vector2.Zero;
         public override void SetDefaults()
         {
-            Projectile.width = 26;
-            Projectile.height = 26;
+            Projectile.width = 24;
+            Projectile.height = 24;
             Projectile.scale = 1f;
             Projectile.light = 0.35f;
 
@@ -40,36 +51,36 @@ namespace lenen.Content.Projectiles
         public override void AI()
         {
             if (Main.netMode == NetmodeID.MultiplayerClient) return;
-            switch (Projectile.ai[0])
+            switch (BulletEffect)
             {
-                case 1:
+                case (int)EnemyBulletEffects.MagicBounce:
                     int width = 1200;
-                    int height = 850;
-                    if (Projectile.Center.X <= origin.X - width && Projectile.ai[2] > 0)
+                    int height = 900;
+                    if (Projectile.Center.X <= origin.X - width && BulletMisc > 0)
                     {
                         Projectile.velocity.X *= -1;
                         Projectile.Center = new Vector2(origin.X - width + 1, Projectile.Center.Y);
-                        Projectile.ai[2] -= 1;
+                        BulletMisc -= 1;
                     }
-                    if (Projectile.Center.Y <= origin.Y - height && Projectile.ai[2] > 0)
+                    if (Projectile.Center.Y <= origin.Y - height && BulletMisc > 0)
                     {
                         Projectile.velocity.Y *= -1;
                         Projectile.Center = new Vector2(Projectile.Center.X, origin.Y - height + 1);
-                        Projectile.ai[2] -= 1;
+                        BulletMisc -= 1;
                     }
-                    if (Projectile.Center.X >= origin.X + width && Projectile.ai[2] > 0)
+                    if (Projectile.Center.X >= origin.X + width && BulletMisc > 0)
                     {
                         Projectile.velocity.X *= -1;
                         Projectile.Center = new Vector2(origin.X + width - 1,
                             Projectile.Center.Y);
-                        Projectile.ai[2] -= 1;
+                        BulletMisc -= 1;
                     }
-                    if (Projectile.Center.Y >= origin.Y + width && Projectile.ai[2] > 0)
+                    if (Projectile.Center.Y >= origin.Y + width && BulletMisc > 0)
                     {
                         Projectile.velocity.Y *= -1;
                         Projectile.Center = new Vector2(Projectile.Center.X,
                             origin.Y + width - 1);
-                        Projectile.ai[2] -= 1;
+                        BulletMisc -= 1;
                     }
                     break;
             }
@@ -78,49 +89,19 @@ namespace lenen.Content.Projectiles
 
         public override bool PreDraw(ref Color lightColor)
         {
-            // Color changer
-            Color color = Color.White;
-            Texture2D texture = ModContent.Request<Texture2D>("lenen/Content/Projectiles/ColoredEnemyBullet").Value;
-
-            lightColor = Color.White;
-
-            switch (Projectile.ai[1])
-            {
-                case 0:
-                    color = Color.DarkCyan;
-                    break;
-                case 1:
-                    color = Color.GreenYellow;
-                    break;
-                case 2:
-                    color = Color.Yellow;
-                    break;
-                case 3:
-                    color = Color.Red;
-                    break;
-                case 4:
-                    color = Color.Purple;
-                    break;
-                case 5:
-                    color = Color.Black;
-                    lightColor = Color.Black;
-                    break;
-                default:
-                    color = Color.White;
-                    break;
-            }
+            Texture2D texture = ModContent.Request<Texture2D>("lenen/Content/Projectiles/EnemyBullet_Colored").Value;
 
             Main.EntitySpriteDraw(new DrawData(texture,
-                Projectile.Center - Main.screenPosition - (new Vector2(16) * Projectile.scale),
-                null,
-                color,
+                Projectile.Center - Main.screenPosition,
+                new Rectangle(30 * BulletColor, 0, 30, 30),
+                Color.White,
                 0f,
-                Vector2.Zero,
+                new Vector2(15, 15),
                 Projectile.scale,
                 SpriteEffects.None)
             );
 
-            return base.PreDraw(ref lightColor);
+            return false;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

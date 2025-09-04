@@ -68,8 +68,7 @@ namespace lenen.Content.Tiles.Plants
                 (int)TileID.DirtiestBlock };*/
             TileObjectData.newTile.WaterDeath = false;
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
-            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, 
-                TileObjectData.newTile.Width, 0);
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.FlattenAnchors = true;
 
             TileObjectData.newTile.AnchorValidTiles = new int[] { (int)TileID.Dirt, (int)TileID.Grass,
@@ -168,11 +167,11 @@ namespace lenen.Content.Tiles.Plants
                 {
                     NetMessage.SendTileSquare(-1, i, j, 1);
                 }
-            } else if (stage == PlantStage.Grown && HarujionLocations.instance.soulsAbsorbed >= 6000)
+            } /*else if (stage == PlantStage.Grown && HarujionLocations.instance.soulsAbsorbed >= 6000)
             {
-                ModContent.GetInstance<HarujionLocations>().GrowTree();
+                HarujionLocations.instance.queuedBigHarujion = true;
                 return;
-            }
+            }*/
 
         }
 

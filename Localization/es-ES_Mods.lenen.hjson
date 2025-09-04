@@ -421,6 +421,11 @@ Items: {
 		// DisplayName: Harujion Debug Tool
 		// Tooltip: ""
 	}
+
+	HarujionDebugTool2: {
+		// DisplayName: Harujion Debug Tool2
+		// Tooltip: ""
+	}
 }
 
 NPCs: {
@@ -463,6 +468,9 @@ Projectiles: {
 	LumenLaser.DisplayName: Laser de luz
 	BoneColumn.DisplayName: Espina de hueso
 	ThinLaser.DisplayName: Laser
+	// BasicBullet.DisplayName: Basic Bullet
+	// SlowedBullet.DisplayName: Slowed Bullet
+	// SuperNovaBullet.DisplayName: Super Nova Bullet
 }
 
 Dialogue: {

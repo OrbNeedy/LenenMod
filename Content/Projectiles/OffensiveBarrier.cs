@@ -28,7 +28,7 @@ namespace lenen.Content.Projectiles
             Projectile.penetrate = 1;
 
             Projectile.friendly = true;
-            Projectile.DamageType = DamageClass.Generic;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.timeLeft = 300;
             Projectile.ownerHitCheck = false;
             Projectile.tileCollide = false;

@@ -1,5 +1,6 @@
 ﻿using lenen.Common.Players;
 using lenen.Content.Projectiles;
+using lenen.Content.Projectiles.BulletHellProjectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -16,11 +17,11 @@ namespace lenen.Content.Items.Weapons
         public override void SetDefaults()
         {
             Item.damage = 165;
-            Item.shoot = ModContent.ProjectileType<FriendlyBullet>();
+            Item.shoot = ModContent.ProjectileType<BasicBullet>();
             Item.shootSpeed = 6f;
             Item.knockBack = 6f;
             Item.DamageType = DamageClass.Magic;
-            Item.mana = 12;
+            Item.mana = 11;
 
             Item.width = 30;
             Item.height = 38;
@@ -45,13 +46,13 @@ namespace lenen.Content.Items.Weapons
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (player.altFunctionUse == 2) return false;
-            for (int i = 0; i < 18; i++)
+            for (int i = 0; i < 16; i++)
             {
-                int spriteType = Main.rand.Next((int)BulletSprites.Simple, (int)BulletSprites.Pellet + 1);
-                int color = (int)BulletColors.White;
-                if (Main.rand.NextBool()) color = (int)BulletColors.Red;
-                Projectile.NewProjectile(source, position, velocity.RotatedBy(MathHelper.TwoPi * i / 18), type, 
-                    damage, knockback, player.whoAmI, (int)BulletAIs.Simple, color, spriteType);
+                int spriteType = Main.rand.Next((int)Sheet.Default, (int)Sheet.Pellet + 1);
+                int color = (int)SheetFrame.White;
+                if (Main.rand.NextBool()) color = (int)SheetFrame.Red;
+                Projectile.NewProjectile(source, position, velocity.RotatedBy(MathHelper.TwoPi * i / 16), type, 
+                    damage, knockback, player.whoAmI, color, spriteType);
             }
             return false;
         }
@@ -75,11 +76,11 @@ namespace lenen.Content.Items.Weapons
             manager.spellCardTimer = spellCardTimer;
 
             // 90
-            int desperation = (int)BulletAIs.SuperGift;
+            int desperation = 2;
             if (manager.desperateBomb)
             {
                 // 157
-                desperation = (int)BulletAIs.DesperateSuperGift;
+                desperation = 4;
                 manager.spellCardTimer = spellCardTimer + 540;
             }
 
@@ -89,8 +90,7 @@ namespace lenen.Content.Items.Weapons
                 new EntitySource_ItemUse(player, Item, "Spellcard"));
 
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item, "Spellcard"), player.Center, vel,
-                ModContent.ProjectileType<FriendlyBullet>(), 0, 0, player.whoAmI, desperation,
-                (int)BulletColors.White, (int)BulletSprites.SuperPresent);
+                ModContent.ProjectileType<SuperNovaBullet>(), 0, 0, player.whoAmI, desperation, 0);
         }
 
         public override void PostUpdate()

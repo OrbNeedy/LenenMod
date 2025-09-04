@@ -19,12 +19,12 @@ namespace lenen.Common.UI
         public override void OnInitialize()
         {
             area = new UIElement();
+            area.Left.Set(-30, 0.5f);
+            area.Top.Set(34, 0.5f);
             area.Width.Set(60, 0f);
             area.Height.Set(18, 0f);
-            area.Left.Set(-(Main.ScreenSize.X / 2) - (area.Width.Pixels / 2), 1f);
-            area.Top.Set((Main.ScreenSize.Y / 2) + 34, 0f);
 
-            barFrame = new UIImage(ModContent.Request<Texture2D>("lenen/Common/UI/SpellCardFrame")); // Frame of our resource bar
+            barFrame = new UIImage(ModContent.Request<Texture2D>("lenen/Common/UI/SpellCardFrame"));
             barFrame.Left.Set(0, 0f);
             barFrame.Top.Set(0, 0f);
             barFrame.Width.Set(60, 0f);
@@ -39,7 +39,7 @@ namespace lenen.Common.UI
 
         public override void Update(GameTime gameTime)
         {
-            //Recalculate();
+            Recalculate();
         }
 
         public override void Draw(SpriteBatch spriteBatch)

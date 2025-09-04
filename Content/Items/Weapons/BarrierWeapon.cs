@@ -16,21 +16,21 @@ namespace lenen.Content.Items.Weapons
 
         public override void SetDefaults()
         {
-            Item.damage = 28;
+            Item.damage = 58;
             Item.DamageType = DamageClass.Magic;
             Item.knockBack = 2;
             Item.shootSpeed = 20f;
             Item.shoot = ModContent.ProjectileType<OffensiveBarrier>();
             Item.ArmorPenetration = 40;
-            Item.mana = 5;
+            Item.mana = 8;
 
             Item.width = 30;
             Item.height = 30;
             Item.value = 6000;
             Item.rare = ItemRarityID.Red;
 
-            Item.useTime = 5;
-            Item.useAnimation = 5;
+            Item.useTime = 17;
+            Item.useAnimation = 17;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.autoReuse = true;
             Item.noMelee = true;
@@ -77,11 +77,11 @@ namespace lenen.Content.Items.Weapons
             manager.spellCardTimer = spellCardTimer;
 
             //100
-            int dmg = (int)(player.GetWeaponDamage(Item) * 3.57142f);
+            int dmg = (int)(player.GetWeaponDamage(Item) * 1.724137931f);
             if (manager.desperateBomb)
             {
                 //180
-                dmg = (int)(player.GetWeaponDamage(Item) * 6.42857f);
+                dmg = (int)(player.GetWeaponDamage(Item) * 3.103448276f);
                 manager.spellCardTimer = spellCardTimer + 1200;
 
                 Vector2 baseOffset = new Vector2(Main.rand.Next(-400, 400), Main.rand.Next(-250, 250));

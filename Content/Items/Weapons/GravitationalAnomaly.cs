@@ -1,4 +1,5 @@
 ﻿using lenen.Content.Projectiles;
+using lenen.Content.Projectiles.BulletHellProjectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -19,12 +20,12 @@ namespace lenen.Content.Items.Weapons
 
         public override void SetDefaults()
         {
-            Item.damage = 120;
-            Item.shoot = ModContent.ProjectileType<FriendlyBullet>();
+            Item.damage = 130;
+            Item.shoot = ModContent.ProjectileType<BasicBullet>();
             Item.shootSpeed = 6f;
             Item.knockBack = 6f;
             Item.DamageType = DamageClass.Magic;
-            Item.mana = 8;
+            Item.mana = 7;
 
             Item.width = 32;
             Item.height = 36;
@@ -47,13 +48,12 @@ namespace lenen.Content.Items.Weapons
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 8; i++)
             {
-                int spriteType = Main.rand.Next((int)BulletSprites.Simple, (int)BulletSprites.Pellet + 1);
-                int color = Main.rand.Next((int)BulletColors.White, (int)BulletColors.DarkBlue + 1);
-                Projectile.NewProjectile(source, position, 
-                    velocity.RotatedBy(MathHelper.TwoPi*i / 10), type, damage, knockback, player.whoAmI, 
-                    (int)BulletAIs.Simple, color, spriteType);
+                int spriteType = Main.rand.Next((int)Sheet.Default, (int)Sheet.Pellet + 1);
+                int color = Main.rand.Next((int)SheetFrame.White, (int)SheetFrame.Blue + 1);
+                Projectile.NewProjectile(source, position, velocity.RotatedBy(MathHelper.TwoPi*i / 8), type, damage, knockback, 
+                    player.whoAmI, color, spriteType);
             }
             return false;
         }

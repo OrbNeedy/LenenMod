@@ -35,6 +35,7 @@ namespace lenen.Common.Systems
                 (int)TileID.Mud, (int)TileID.Sand, (int)TileID.AshGrass, (int)TileID.Ash, (int)TileID.GolfGrass,
             (int)TileID.GolfGrassHallowed, (int)TileID.HallowedGrass, (int)TileID.SnowBlock,
                 (int)TileID.DirtiestBlock};
+        public bool queuedBigHarujion = false;
 
         public override void Load()
         {
@@ -67,26 +68,10 @@ namespace lenen.Common.Systems
         public override void OnWorldLoad()
         {
             UpdateHarujion();
-            /*if (harujionLocation == Point16.Zero)
-            {
-                ReafirmHarujion();
-            }
-            if (TileEntity.ByPosition.TryGetValue(harujionLocation, out TileEntity tile))
-            {
-                if (TileLoader.GetTile(Main.tile[harujionLocation].TileType) is not HarujionSapling harujion)
-                {
-                    ReafirmHarujion();
-                }
-            }
-            else
-            {
-                ReafirmHarujion();
-            }*/
         }
 
         public override void PreUpdateWorld()
         {
-
             //Main.NewText("Harujion: " + harujionLocation);
             if (Main.hardMode)
             {
@@ -144,6 +129,16 @@ namespace lenen.Common.Systems
             }
 
             base.PreUpdateWorld();
+        }
+
+        public override void PostUpdateWorld()
+        {
+            if (queuedBigHarujion)
+            {
+                // GrowTree();
+                WorldGen.KillTile(harujionLocation.X, harujionLocation.Y);
+                queuedBigHarujion = false;
+            }
         }
 
         public override void PostDrawTiles()
@@ -239,26 +234,15 @@ namespace lenen.Common.Systems
         public void GrowTree()
         {
             Point16 treePoint = new Point16(harujionLocation.X - 2, harujionLocation.Y - 10);
-            for (int x = treePoint.X; x < treePoint.X + 5; x++)
+            WorldGen.KillTile(harujionLocation.X, harujionLocation.Y);
+            WorldGen.PlaceTile(treePoint.X, treePoint.Y, ModContent.TileType<HarujionMultitile>(), true);
+            if (Framing.GetTileSafely(treePoint.X, treePoint.Y).TileType == ModContent.TileType<HarujionMultitile>())
             {
-                for (int y = treePoint.Y; y < treePoint.Y + 11; y++)
-                {
-                    if (Framing.GetTileSafely(x, y).HasTile)
-                    {
-                        WorldGen.KillTile(x, y, false, false, true);
-                    }
-                }
-            }
-            WorldGen.PlaceObject(harujionLocation.X - 2, harujionLocation.Y - 10, ModContent.TileType<HarujionMultitile>(), true);
-            if (Framing.GetTileSafely(harujionLocation.X - 2, harujionLocation.Y - 10).TileType == 
-                ModContent.TileType<HarujionMultitile>())
-            {
-                Main.NewText("Placing tree was successful.");
-                harujionLocation = harujionLocation + new Point16(-2, -10);
+                //Main.NewText("Placing tree was successful.");
+                harujionLocation = treePoint;
             } else
             {
-
-                Main.NewText("Placing tree failed.");
+                //Main.NewText("Placing tree failed.");
             }
         }
 
@@ -272,7 +256,7 @@ namespace lenen.Common.Systems
         public float GetGrowth()
         {
             float growth = 1f;
-            growth += soulsAbsorbed / 1500f;
+            growth += soulsAbsorbed / 2000f;
             return growth;
         }
 

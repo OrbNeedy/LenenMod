@@ -33,7 +33,7 @@ namespace lenen.Common.UI
             area.Width.Set(100, 0f);
             area.Height.Set(100, 0f);
             area.Left.Set(-180, 1f);
-            area.Top.Set(Main.ScreenSize.Y - 120, 0f);
+            area.Top.Set(-120, 1f);
 
             jarFrame = new UIImage(ModContent.Request<Texture2D>("lenen/Common/UI/SpiritsJar"));
             jarFrame.Left.Set(0, 0f);
@@ -66,6 +66,11 @@ namespace lenen.Common.UI
             hidden = false;
             area.Append(jarFrame);
             area.Append(spiritsText);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            Recalculate();
         }
 
         public override void Draw(SpriteBatch spriteBatch)

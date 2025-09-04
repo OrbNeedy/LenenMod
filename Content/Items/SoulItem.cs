@@ -56,7 +56,7 @@ namespace lenen.Content.Items
 
         public override void PostUpdate()
         {
-            Lighting.AddLight(Item.Center, Color.Beige.ToVector3() * 0.8f * Main.essScale);
+            Lighting.AddLight(Item.Center, Color.Beige.ToVector3() * 0.85f * Main.essScale);
         }
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
@@ -82,8 +82,8 @@ namespace lenen.Content.Items
 
         public override bool CanPickup(Player player)
         {
-            return player.GetModPlayer<DeathManagingPlayer>().harujionRevival || 
-                player.Distance(Item.Center) <= 120;
+            return (player.GetModPlayer<DeathManagingPlayer>().harujionRevival && player.Distance(Item.Center) <= 600) || 
+                player.Distance(Item.Center) <= 300;
         }
 
         public override bool OnPickup(Player player)

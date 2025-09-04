@@ -21,17 +21,15 @@ namespace lenen.Content.Items.Accessories
                 return;
 
             // Add equip textures
-            EquipLoader.AddEquipTexture(Mod, $"{Texture}_{EquipType.Head}", EquipType.Head, this);
+            EquipLoader.AddEquipTexture(Mod, $"{Texture}_{EquipType.Head}", EquipType.Head, this, "GashadokuroSkull");
         }
 
         public override void SetStaticDefaults()
         {
             if (Main.netMode == NetmodeID.Server)
                 return;
-            int equipSlotHead = EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head);
+            int equipSlotHead = EquipLoader.GetEquipSlot(Mod, "GashadokuroSkull", EquipType.Head);
             ArmorIDs.Head.Sets.DrawHatHair[equipSlotHead] = true;
-            //ArmorIDs.Face.Sets.OverrideHelmet[Item.faceSlot] = true;
-            ArmorIDs.Face.Sets.PreventHairDraw[Item.faceSlot] = true;
         }
 
         public override void SetDefaults()
