@@ -42,7 +42,7 @@ namespace lenen.Common.Players
         public bool gainThrill = false;
         public float oldPercent = 0;
         public float percent = 0;
-        public float fillRate = 0.025f;
+        public float fillRate = 0.03f;
         public int permanenceTime = 0;
 
         public bool flashbombActive = false;
@@ -181,7 +181,7 @@ namespace lenen.Common.Players
             switch (type)
             {
                 case (int)Flashbomb.Suzumi:
-                    Player.aggro -= 1000;
+                    Player.aggro -= 2000;
                     break;
                 default:
                     break;

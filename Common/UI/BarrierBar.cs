@@ -20,6 +20,8 @@ namespace lenen.Common.UI
 
         public override void OnInitialize()
         {
+            if (Main.dedServ) return;
+
             area = new UIElement();
             area.Left.Set(10, 0f);
             area.Top.Set(-140, 1f);
@@ -29,15 +31,14 @@ namespace lenen.Common.UI
             int index = 0;
             barFrames.Clear();
             barIcons.Clear();
-            foreach (BarrierLookups.Barriers barrierKey in Enum.GetValues(typeof(BarrierLookups.Barriers)))
+            foreach (Barrier barrier in PlayerBarrier.BarrierTemplates)
             {
-                Barrier barrier = BarrierLookups.BarrierDictionary[barrierKey];
                 barFrames.Add(new UIImage(ModContent.Request<Texture2D>("lenen/Common/UI/BarrierBarFrame")));
                 barFrames[index].Top.Set(0, 0f);
                 barFrames[index].Width.Set(26, 0f);
                 barFrames[index].Height.Set(130, 0f);
 
-                barIcons.Add(new UIImage(ModContent.Request<Texture2D>(barrier.IconPath())));
+                barIcons.Add(new UIImage(ModContent.Request<Texture2D>($"lenen/Assets/Icons/{barrier.IconTexturePath}")));
                 barIcons[index].Left.Set(4, 0f);
                 barIcons[index].Top.Set(114, 0f);
                 barIcons[index].Width.Set(12, 0f);
@@ -55,54 +56,40 @@ namespace lenen.Common.UI
 
         public override void Update(GameTime gameTime)
         {
+            if (Main.dedServ) return;
+
             Recalculate();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            if (Main.dedServ) return;
+
             PlayerBarrier manager = Main.LocalPlayer.GetModPlayer<PlayerBarrier>();
 
             int index = 0;
             int barrierCount = 0;
-            foreach (BarrierLookups.Barriers barrierKey in Enum.GetValues(typeof(BarrierLookups.Barriers)))
+            foreach (Barrier barrier in manager.barriers.Values)
             {
-
                 UIImage bar = barFrames[index];
                 UIImage icon = barIcons[index];
-                //Main.NewText("Bar " + index + " Stats:");
-                //Main.NewText("Position X: " + bar.Left.Pixels);
-                //Main.NewText("Position Y: " + bar.Top.Pixels);
-                /*
-                if (index >= manager.barriers.Count)
+
+                if (!barrier.Active)
                 {
-                    Main.NewText("Returning because fuck you that's why");
-                    bar.Remove();
-                    icon.Remove();
-                    return;
-                }*/
-                Barrier barrier = BarrierLookups.BarrierDictionary[barrierKey];
-                // If the player doesn't have this barrier, increase index, remove the bar and icon, and skip
-                if (barrier.State == 0)
-                {
-                    //Main.NewText("Barrier not available");
-                    //Main.NewText("Player doesn't have barrier " + barrier);
                     bar.Remove();
                     icon.Remove();
                     index++;
                     continue;
                 }
-                //Main.NewText("Stats for bar witn index " + index);
-                //Main.NewText("Barrier " + barrier.GetType() + " stats");
 
                 bar.Left.Set(30 * barrierCount, 0);
                 icon.Left.Set(4 + (30 * barrierCount), 0);
 
                 area.Append(bar);
                 area.Append(icon);
-                //Main.NewText("Bar added for barrier " + barrier);
-                //Main.NewText("Icon added: " + IconPath[barrier]);
 
-                // Barrier bar hitbox
+                icon.SetImage(ModContent.Request<Texture2D>($"lenen/Assets/Icons/{barrier.IconTexturePath}"));
+
                 Rectangle hitbox = bar.GetInnerDimensions().ToRectangle();
                 hitbox.X += 6;
                 hitbox.Width = 8;
@@ -111,39 +98,28 @@ namespace lenen.Common.UI
 
                 float percent = (float)barrier.Life / (float)barrier.MaxLife;
                 percent = Utils.Clamp(percent, 0f, 1f);
-                /*Main.NewText("Life: " + barrier.Life);
-                Main.NewText("Max life: " + barrier.MaxLife);
-                Main.NewText("Life percent: " + percent);*/
 
-                // Recovery hitbox
                 Rectangle hitbox2 = bar.GetInnerDimensions().ToRectangle();
                 hitbox2.X += 20;
                 hitbox2.Width = 2;
                 hitbox2.Y += 12;
                 hitbox2.Height = 88;
 
-                float percent2;
+                float percent2 = (float)(barrier.MaxRecovery - barrier.Recovery) / (float)barrier.MaxRecovery;
                 Color gradiantA;
                 Color gradiantB;
-                if (barrier.Cooldown > 0)
+                if (barrier.Broken)
                 {
                     gradiantA = new Color(222, 3, 6);
                     gradiantB = new Color(167, 1, 5);
-                    percent2 = (float)(barrier.MaxCooldown - barrier.Cooldown) / (float)barrier.MaxCooldown;
+                    percent2 = (float)(barrier.MaxFullRecovery - barrier.Recovery) / (float)barrier.MaxFullRecovery;
                 } else
                 {
                     gradiantA = new Color(3, 217, 213);
                     gradiantB = new Color(3, 217, 213);
-                    percent2 = (float)(barrier.MaxRecovery - barrier.Recovery) / (float)barrier.MaxRecovery;
                 }
                 percent2 = Utils.Clamp(percent2, 0f, 1f);
                 if (barrier.Life >= barrier.MaxLife) percent2 = 0;
-                /*Main.NewText("Cooldown: " + barrier.Cooldown);
-                Main.NewText("Recovery: " + barrier.Recovery;
-                Main.NewText("Max cooldown: " + barrier.MaxCooldown);
-                Main.NewText("Max Recovery: " + barrier.MaxRecovery);
-                Main.NewText("Current recovery percent: " + percent2);
-                Main.NewText("Max recovery - recovery: " + (barrier.MaxRecovery - barrier.Recovery));*/
 
                 int bottom = hitbox.Bottom;
                 int top = hitbox.Top;
@@ -154,7 +130,7 @@ namespace lenen.Common.UI
                     float gradient = (float)i / (bottom - top);
                     spriteBatch.Draw(TextureAssets.MagicPixel.Value,
                         new Rectangle(hitbox.X, bottom - i, hitbox.Width, 1),
-                        Color.Lerp(barrier.Colors[0], barrier.Colors[2], gradient));
+                        Color.Lerp(barrier.BottomColor, barrier.TopColor, gradient));
                 }
 
                 bottom = hitbox2.Bottom;
@@ -177,33 +153,9 @@ namespace lenen.Common.UI
             base.Draw(spriteBatch);
         }
 
-        // Here we draw our UI
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             base.DrawSelf(spriteBatch);
         }
-
-        /*public void InitializeBarrierAssets()
-        {
-            PlayerBarrier player = Main.LocalPlayer.GetModPlayer<PlayerBarrier>();
-            int index = 0;
-            barFrames.Clear();
-            barIcons.Clear();
-            foreach (var barrier in player.barriers)
-            {
-                barFrames.Add(new UIImage(ModContent.Request<Texture2D>("lenen/Common/UI/BarrierBarFrame")));
-                barFrames[index].Top.Set(0, 0f);
-                barFrames[index].Width.Set(26, 0f);
-                barFrames[index].Height.Set(130, 0f);
-
-                barIcons.Add(new UIImage(ModContent.Request<Texture2D>(barrier.IconPath)));
-                barIcons[index].Left.Set(4, 0f);
-                barIcons[index].Top.Set(114, 0f);
-                barIcons[index].Width.Set(12, 0f);
-                barIcons[index].Height.Set(12, 0f);
-
-                index++;
-            }
-        }*/
     }
 }

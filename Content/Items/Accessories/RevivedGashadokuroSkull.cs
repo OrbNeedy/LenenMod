@@ -22,7 +22,6 @@ namespace lenen.Content.Items.Accessories
         private int maxTransformedTime = 3600;
         private bool revivedMode = false;
         private string soulsDescription;
-        private Barrier barrier = BarrierLookups.BarrierDictionary[BarrierLookups.Barriers.BetterSkullBarrier];
 
         private int multiplicativeDamageIncrease = 20;
         private int baseDamageIncrease = 30;
@@ -59,9 +58,9 @@ namespace lenen.Content.Items.Accessories
             Item.hasVanityEffects = true;
         }
 
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(
-            barrier.MaxLife, barrier.MaxCooldown / 60, barrier.MaxRecovery / 60, maxTransformedTime / 60, 
-            multiplicativeDamageIncrease / 100f, baseDamageIncrease, defensePenetrationIncrease, damageReductionDecrease / 100f, defenseDecrease);
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(maxTransformedTime / 60, 
+            multiplicativeDamageIncrease / 100f, baseDamageIncrease, defensePenetrationIncrease, damageReductionDecrease / 100f, 
+            defenseDecrease);
 
         public override void OnCreated(ItemCreationContext context)
         {
@@ -87,12 +86,15 @@ namespace lenen.Content.Items.Accessories
 
         public override void UpdateEquip(Player player)
         {
-            barrier.State = 1;
+            Barrier barrier = player.GetModPlayer<PlayerBarrier>().barriers[BarrierTypes.SkullBarrier2];
+            barrier.Active = true;
+            barrier.Variation = 0;
+
             SoulAbsorptionPlayer soulSource = player.GetModPlayer<SoulAbsorptionPlayer>();
 
             if (revivedMode)
             {
-                barrier.State = 2;
+                barrier.Variation = 1;
                 player.GetDamage(DamageClass.Generic) *= 1 + (multiplicativeDamageIncrease / 100f);
                 player.GetDamage(DamageClass.Generic).Base += baseDamageIncrease;
                 player.GetArmorPenetration(DamageClass.Generic) += defensePenetrationIncrease;
@@ -125,21 +127,24 @@ namespace lenen.Content.Items.Accessories
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             soulsDescription = Language.GetTextValue("Mods.lenen.SoulDescriptions.Reserve",
-                soulsCollected);
-            int index = -1;
-            for (int i = 0; i < tooltips.Count; i++)
+                soulsCollected); 
+
+            int index = tooltips.FindIndex((x) => x.Name.StartsWith("Tooltip") && x.Mod == "Terraria");
+
+            if (index != -1)
             {
-                if (tooltips[i].Name == "Tooltip11")
-                {
-                    index = i;/*
-                    Main.NewText("Tooltip0's index: " + index);
-                    Main.NewText("Tooltip0's name: " + tooltips[i].Name);
-                    Main.NewText("Tooltip0's text: " + tooltips[i].Text);*/
-                    break;
-                }
+                tooltips.Insert(index - 1, new TooltipLine(Mod, "SoulDescriptor", soulsDescription));
             }
-            tooltips.Insert(index + 1, new TooltipLine(Mod, "SoulDescriptor", soulsDescription));
-            //tooltips.Add(new TooltipLine(Mod, "SoulDescriptor", soulsDescription));
+            
+            index = tooltips.FindLastIndex((x) => x.Name.StartsWith("Tooltip") && x.Mod == "Terraria");
+
+            if (index != -1)
+            {
+                Barrier barrier = Main.LocalPlayer.GetModPlayer<PlayerBarrier>().barriers[BarrierTypes.SkullBarrier2];
+                tooltips.Insert(index - 1, new TooltipLine(Mod, "BarrierDescriptor",
+                    Language.GetTextValue("Mods.lenen.BarrierStats", barrier.MaxLife, barrier.MaxCooldown / 60,
+                    barrier.MaxRecovery / 60, barrier.MaxFullRecovery / 60)));
+            }
             base.ModifyTooltips(tooltips);
         }
 
@@ -161,8 +166,7 @@ namespace lenen.Content.Items.Accessories
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
-            if (equippedItem.type == ModContent.ItemType<GashadokuroSkull>() || 
-                player.armor[0].type == ModContent.ItemType<GashadokuroSkull>())
+            if (equippedItem.type == ModContent.ItemType<GashadokuroSkull>())
             {
                 return false;
             }
@@ -177,7 +181,7 @@ namespace lenen.Content.Items.Accessories
                 .AddIngredient<GashadokuroSkull>()
                 .AddTile(TileID.DemonAltar)
                 .AddCondition(SoulsCondition.HasEnoughSouls)
-                .AddCondition(new Condition("Mods.lenen.Conditions.DownedPlantera", () => NPC.downedPlantBoss))
+                .AddCondition(Condition.DownedPlantera)
                 .AddOnCraftCallback(callback)
                 .Register();
         }

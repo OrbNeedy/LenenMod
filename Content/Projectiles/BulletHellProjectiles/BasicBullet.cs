@@ -29,10 +29,18 @@ namespace lenen.Content.Projectiles.BulletHellProjectiles
         Black
     }
 
+    public enum BulletBehavior
+    {
+        Default, 
+        Penetrate, 
+        NoGroundPenetrate
+    }
+
     public class BasicBullet : ModProjectile
     {
         public int BulletColor { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
         public int BulletSprite { get => (int)Projectile.ai[1]; set => Projectile.ai[1] = value; }
+        public int Behavior { get => (int)Projectile.ai[2]; set => Projectile.ai[2] = value; }
 
         static string route = "lenen/Content/Projectiles/BulletHellProjectiles/";
         string? sourceContext = null;
@@ -44,7 +52,7 @@ namespace lenen.Content.Projectiles.BulletHellProjectiles
             Projectile.scale = 1f;
             Projectile.light = 0.375f;
 
-            Projectile.DamageType = DamageClass.Magic;
+            Projectile.DamageType = ModContent.GetInstance<UniversalHybrid>();
             Projectile.damage = 0;
             Projectile.knockBack = 0;
             Projectile.penetrate = 1;
@@ -65,6 +73,14 @@ namespace lenen.Content.Projectiles.BulletHellProjectiles
             } else
             {
                 sourceContext = source.Context;
+            }
+            if (Behavior == (int)BulletBehavior.Penetrate)
+            {
+                Projectile.penetrate = -1;
+            }
+            if (Behavior == (int)BulletBehavior.NoGroundPenetrate)
+            {
+                Projectile.tileCollide = true;
             }
             Projectile.netUpdate = true;
         }

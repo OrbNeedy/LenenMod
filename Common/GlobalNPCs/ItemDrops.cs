@@ -1,5 +1,6 @@
 ﻿using lenen.Content.Items.Accessories;
 using lenen.Content.Items.Weapons;
+using lenen.Content.NPCs.Fairy;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -14,9 +15,9 @@ namespace lenen.Common.GlobalNPCs
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.ByCondition(new DropGravity(), ModContent.ItemType<GravitationalAnomaly>(), 
-                60));
+                80));
             npcLoot.Add(ItemDropRule.ByCondition(new DropGravity2(), ModContent.ItemType<GravitationalAnomaly>(),
-                200));
+                240));
 
             // Skeleton clause
             if (NPCID.Sets.Skeletons[npc.type])

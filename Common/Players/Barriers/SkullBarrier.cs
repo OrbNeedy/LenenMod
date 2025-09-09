@@ -1,63 +1,41 @@
 ﻿using Terraria;
 using Microsoft.Xna.Framework;
-using Terraria.ID;
-using Terraria.Audio;
 
 namespace lenen.Common.Players.Barriers
 {
     public class SkullBarrier : Barrier
     {
-        public SkullBarrier() : base()
-        {
-            MaxCooldown = 900;
-            Cooldown = 0;
-            MaxLife = 2;
-            Life = MaxLife;
-            MaxRecovery = 600;
-            Recovery = 0;
-            Colors = [new Color(184, 184, 184), new Color(128, 143, 129), new Color(74, 101, 77)];
-        }
+        public override int MaxCooldown { get; set; } = 600;
+        public override int MaxLife { get; set; } = 2;
+        public override int MaxRecovery { get; set; } = 300;
+        public override int MaxFullRecovery { get; set; } = 600;
+        public override Color TopColor { get; set; } = new Color(74, 101, 77);
+        public override Color MidColor { get; set; } = new Color(128, 143, 129);
+        public override Color BottomColor { get; set; } = new Color(184, 184, 184);
+        public override string IconTexturePath { get; set; } = "SkullIcon";
 
-        public override string IconPath()
-        {
-            return "lenen/Assets/Icons/SkullIcon";
-        }
-
-        public override bool GeneralOnHitLogic(ref Player.HurtModifiers modifiers, Player player, Projectile proj = null, NPC npc = null)
+        public override void PreHit(Player player, ref Player.HurtModifiers modifiers)
         {
             modifiers.FinalDamage.Flat -= 10;
-            return base.GeneralOnHitLogic(ref modifiers, player, proj, npc);
+            base.PreHit(player, ref modifiers);
         }
 
-        public override bool OnHitByProjectileLogic(Projectile proj, ref Player.HurtModifiers modifiers, Player player)
+        public override void PreHitByProjectile(Player player, Projectile proj, ref Player.HurtModifiers modifiers)
         {
             proj.friendly = true;
             proj.velocity *= -1;
             modifiers.FinalDamage *= 0.5f;
-            return true;
         }
 
-        public override bool OnBreakLogic(int source, Player player)
+        public override void OnBreak(Player player, Player.HurtInfo info)
         {
-            bool returnCode = true;
-            if (source == 0)
-            {
-                Recovery = 0;
-                Cooldown = (int)(MaxCooldown * 2.5f);
-                OnBreakEffects(source, player);
-                returnCode = false;
-            }
-            return returnCode;
-        }
+            Entity entity = null;
+            bool success = info.DamageSource.TryGetCausingEntity(out entity);
 
-        public override void OnBreakEffects(int source, Player player)
-        {
-            for (int i = 0; i < 20; i++)
+            if (success && entity is Projectile projectile)
             {
-                Dust.NewDust(player.Center - new Vector2(16, 24f), 32, 48, DustID.Stone,
-                    newColor: Color.White);
+                Cooldown = MaxCooldown * 2;
             }
-            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/j_barrier"), player.Center);
         }
     }
 }

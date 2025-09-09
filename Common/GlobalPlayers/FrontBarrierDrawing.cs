@@ -20,11 +20,14 @@ namespace lenen.Common.GlobalPlayers
         protected override void Draw(ref PlayerDrawSet drawInfo)
         {
             Player player = drawInfo.drawPlayer;
+            PlayerBarrier playerBarrier = player.GetModPlayer<PlayerBarrier>();
             if (player.DeadOrGhost) return;
             if (drawInfo.shadow == 0f)
             {
-                if (BarrierLookups.BarrierDictionary[BarrierLookups.Barriers.SkullBarrier].IsAvailable() ||
-                    BarrierLookups.BarrierDictionary[BarrierLookups.Barriers.BetterSkullBarrier].IsAvailable())//player.GetBarrier(typeof(SkullBarrier)) != null)
+                if ((playerBarrier.barriers[BarrierTypes.SkullBarrier].Active && 
+                    playerBarrier.barriers[BarrierTypes.SkullBarrier].Life > 0) ||
+                    (playerBarrier.barriers[BarrierTypes.SkullBarrier2].Active && 
+                    playerBarrier.barriers[BarrierTypes.SkullBarrier2].Life > 0))
                 {
                     Asset<Texture2D> skullTexture = ModContent.
                         Request<Texture2D>("lenen/Content/Items/Accessories/SkullBarrier");

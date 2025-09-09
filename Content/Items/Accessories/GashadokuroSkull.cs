@@ -1,4 +1,4 @@
-﻿using lenen.Common;
+﻿using lenen.Common.Players;
 using lenen.Common.Players.Barriers;
 using System.Collections.Generic;
 using Terraria;
@@ -12,15 +12,11 @@ namespace lenen.Content.Items.Accessories
     [AutoloadEquip(EquipType.Face)]
     public class GashadokuroSkull : ModItem
     {
-        private Barrier barrier = BarrierLookups.BarrierDictionary[BarrierLookups.Barriers.SkullBarrier];
-
         public override void Load()
         {
-            // The code below runs only if we're not loading on a server
             if (Main.netMode == NetmodeID.Server)
                 return;
 
-            // Add equip textures
             EquipLoader.AddEquipTexture(Mod, $"{Texture}_{EquipType.Head}", EquipType.Head, this, "GashadokuroSkull");
         }
 
@@ -43,21 +39,26 @@ namespace lenen.Content.Items.Accessories
             Item.hasVanityEffects = true;
         }
 
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(
-            barrier.MaxLife, barrier.MaxCooldown/60, barrier.MaxRecovery/60);
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs();
 
-        public override void OnCreated(ItemCreationContext context)
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            base.OnCreated(context);
-        }
+            int index = tooltips.FindLastIndex((x) => x.Name.StartsWith("Tooltip") && x.Mod == "Terraria");
 
-        public override void UpdateAccessory(Player player, bool hideVisual)
-        {
+            if (index != -1)
+            {
+                Barrier barrier = Main.LocalPlayer.GetModPlayer<PlayerBarrier>().barriers[BarrierTypes.SkullBarrier];
+                tooltips.Insert(index - 1, new TooltipLine(Mod, "BarrierDescriptor",
+                    Language.GetTextValue("Mods.lenen.BarrierStats", barrier.MaxLife, barrier.MaxCooldown / 60,
+                    barrier.MaxRecovery / 60, barrier.MaxFullRecovery / 60)));
+            }
+            base.ModifyTooltips(tooltips);
         }
 
         public override void UpdateEquip(Player player)
         {
-            barrier.State = 1;
+            Barrier barrier = player.GetModPlayer<PlayerBarrier>().barriers[BarrierTypes.SkullBarrier];
+            barrier.Active = true;
         }
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
@@ -67,10 +68,6 @@ namespace lenen.Content.Items.Accessories
                 return false;
             }
             return base.CanAccessoryBeEquippedWith(equippedItem, incomingItem, player);
-        }
-
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
-        {
         }
 
         public override void AddRecipes()

@@ -1,6 +1,6 @@
-﻿using lenen.Common;
-using lenen.Common.Players;
+﻿using lenen.Common.Players;
 using lenen.Common.Players.Barriers;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -11,7 +11,6 @@ namespace lenen.Content.Items.Accessories
     public class DesperateBarrierItem : ModItem
     {
         private float dmgReduction = 0.1f;
-        private Barrier barrier = BarrierLookups.BarrierDictionary[BarrierLookups.Barriers.DesperateBarrier];
         public override void SetDefaults()
         {
             Item.width = 42;
@@ -22,19 +21,29 @@ namespace lenen.Content.Items.Accessories
             Item.defense = 10;
         }
 
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(
-            barrier.MaxLife / 60, barrier.MaxCooldown / 60, barrier.MaxRecovery / 60,
-            dmgReduction* 100);
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(dmgReduction * 100);
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            int index = tooltips.FindLastIndex((x) => x.Name.StartsWith("Tooltip") && x.Mod == "Terraria");
+
+            if (index != -1)
+            {
+                Barrier barrier = Main.LocalPlayer.GetModPlayer<PlayerBarrier>().barriers[BarrierTypes.DesperateBarrier];
+                tooltips.Insert(index - 1, new TooltipLine(Mod, "BarrierDescriptor",
+                    Language.GetTextValue("Mods.lenen.BarrierStats", barrier.MaxLife, barrier.MaxCooldown / 60,
+                    barrier.MaxRecovery / 60, barrier.MaxFullRecovery / 60)));
+            }
+            base.ModifyTooltips(tooltips);
+        }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            SpellCardManagement management = player.GetModPlayer<SpellCardManagement>();
-            barrier.State = 1;
-
-            if (player.statLife <= (player.statLifeMax2 / 2))
+            Barrier barrier = player.GetModPlayer<PlayerBarrier>().barriers[BarrierTypes.DesperateBarrier];
+            barrier.Active = true;
+            if (player.statLife <= player.statLifeMax2 / 2)
             {
-                barrier.State = 2;
-                management.desperateBomb = barrier.IsAvailable();
+                player.endurance += dmgReduction;
             }
         }
 

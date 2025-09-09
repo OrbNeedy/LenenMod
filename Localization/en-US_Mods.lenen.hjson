@@ -146,10 +146,7 @@ Items: {
 			'''
 			A strangely large skull that works fine as a helmet.
 			Gives the wearer a Skull Barrier, which reflects projectiles when hit.
-			Cooldown is increased by 150% when the barrier is broken by a projectile.
-			{$BarrierStats.Life}
-			{$BarrierStats.Cooldown}
-			{$BarrierStats.Recovery}
+			Cooldown is increased by 100% when the barrier is broken by a projectile.
 			'''
 	}
 
@@ -186,9 +183,7 @@ Items: {
 			'''
 			Gives the wearer a Desperate Barrier, which becomes more powerful when
 			below 50% health, also increasing the power and cooldown of all Spell Cards.
-			{$BarrierStats.Life}
-			{$BarrierStats.Cooldown}
-			{$BarrierStats.Recovery}
+			Also decreases damage taken under 50% health by {0}%.
 			'''
 	}
 
@@ -199,15 +194,12 @@ Items: {
 			A strangely large skull that works fine as a helmet.
 			It was improved after absorbing the spirits you were carrying.
 			Press the {$Keybinds.Revival.DisplayName} key to consume 
-			spirits and enter an upgraded state that lasts for {3} seconds.
-			The upgraded state increases base damage by {4}, multiplicative 
-			damage by {5} and armor penetration by {6}, but reduces damage 
-			reduction by {7} and defense by {8}.
+			spirits and enter an upgraded state that lasts for {0} seconds.
+			The upgraded state increases base damage by {2}, multiplicative 
+			damage by {1} and armor penetration by {3}, but reduces damage 
+			reduction by {4} and defense by {5}.
 			Gives the wearer an improved Skull Barrier, which resists more 
 			hits and grants knockback resistance.
-			{$BarrierStats.Life}
-			{$BarrierStats.Cooldown}
-			{$BarrierStats.Recovery}
 			'''
 	}
 
@@ -286,9 +278,6 @@ Items: {
 			Consumes 500 spirits to resurrect.
 			Also attracts Spirit items.
 			It will give you a barrier upon resurrection.
-			{$BarrierStats.Life}
-			{$BarrierStats.Cooldown}
-			{$BarrierStats.Recovery}
 			'''
 	}
 
@@ -319,9 +308,6 @@ Items: {
 			The barrier gives infinite flight and allows levitating from the ground.
 			It also slows down falls and pushes enemies away from you.
 			Press the Adjust Gravity key to deactivate levitation.
-			{$BarrierStats.Life}
-			{$BarrierStats.Cooldown}
-			{$BarrierStats.Recovery}
 			'''
 	}
 
@@ -333,9 +319,6 @@ Items: {
 			The barrier gives infinite flight and allows levitating from the ground.
 			It also slows down falls and pushes enemies away from you.
 			Press the Adjust Gravity key to deactivate levitation.
-			{$BarrierStats.Life}
-			{$BarrierStats.Cooldown}
-			{$BarrierStats.Recovery}
 			'''
 	}
 
@@ -417,6 +400,37 @@ Items: {
 		DisplayName: Harujion Debug Tool2
 		Tooltip: ""
 	}
+
+	BarrierSupport: {
+		DisplayName: Tome of barriers Vol.2
+		Tooltip:
+			'''
+			A book that details more complex ways of using barriers 
+			to teleport.
+			Teleports enemy projectiles to the exit barrier.
+			Right click to lock on to an enemy and teleport friendly 
+			projectiles to the exit barrier.
+			'''
+	}
+
+	FairyGun: {
+		DisplayName: Small Gun
+		Tooltip:
+			'''
+			Shoots a burst of three bullets.
+			Why is a fairy carrying this?
+			'''
+	}
+
+	FairySword: {
+		DisplayName: Small Sword
+		Tooltip: ""
+	}
+
+	FairyWand: {
+		DisplayName: Small Wand
+		Tooltip: Shoots bullets in three directions.
+	}
 }
 
 NPCs: {
@@ -459,9 +473,10 @@ Projectiles: {
 	LumenLaser.DisplayName: Light Laser
 	BoneColumn.DisplayName: Bone Spike
 	ThinLaser.DisplayName: Laser
-	BasicBullet.DisplayName: Basic Bullet
+	BasicBullet.DisplayName: Bullet
 	SlowedBullet.DisplayName: Slowed Bullet
-	SuperNovaBullet.DisplayName: Super Nova Bullet
+	SuperNovaBullet.DisplayName: Super Nova
+	TeleportBarrier.DisplayName: Barrier
 }
 
 Dialogue: {
@@ -540,9 +555,6 @@ Buffs: {
 			'''
 			You have been reborn, and can't resurrect again.
 			You are protected by a weak barrier that recovers fast.
-			{$BarrierStats.Life}
-			{$BarrierStats.Cooldown}
-			{$BarrierStats.Recovery}
 			'''
 	}
 
@@ -556,12 +568,12 @@ Buffs: {
 	}
 }
 
-BarrierStats: {
-	Life: This barrier can take up to {0} hits.
-	Cooldown: This barrier needs {1} seconds to be set up.
-	Recovery: This barrier needs {2} seconds to recover from a hit.
-}
-
+BarrierStats:
+	'''
+	This barrier can take up to {0} hits, needs {1} seconds to 
+	begin recovering, {2} seconds to recover from a single hit, and 
+	{3} seconds to fully recover from being broken.
+	'''
 HarujionGeneration: Growing a youkai flower.
 SoulDescriptions.Reserve: It's storing {0} spirits.
 
@@ -597,7 +609,10 @@ Conditions: {
 	DownedPlantera: Defeated plantera
 }
 
-DamageClasses.MeleeRangedHybrid.DisplayName: Melee/Ranged
+DamageClasses: {
+	MeleeRangedHybrid.DisplayName: Melee/Ranged
+	UniversalHybrid.DisplayName: Universal Hybrid
+}
 
 Tiles: {
 	HarujionSapling.MapEntry: Harujion

@@ -1,29 +1,19 @@
 ﻿using Terraria;
 using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using System;
 using Terraria.ID;
-using Terraria.Audio;
 
 namespace lenen.Common.Players.Barriers
 {
     public class ResurrectionBarrier : Barrier
     {
-        public ResurrectionBarrier() : base()
-        {
-            MaxCooldown = 600;
-            Cooldown = 0;
-            MaxLife = 2;
-            Life = MaxLife;
-            MaxRecovery = 3600;
-            Recovery = 0;
-            Colors = [new Color(172, 120, 248), new Color(213, 163, 242), new Color(239, 190, 227)];
-        }
-
-        public override string IconPath()
-        {
-            return "lenen/Assets/Icons/HarujionIcon";
-        }
+        public override int MaxCooldown { get; set; } = 300;
+        public override int MaxLife { get; set; } = 2;
+        public override int MaxRecovery { get; set; } = 300;
+        public override int MaxFullRecovery { get; set; } = 3600;
+        public override Color TopColor { get; set; } = new Color(239, 190, 227);
+        public override Color MidColor { get; set; } = new Color(213, 163, 242);
+        public override Color BottomColor { get; set; } = new Color(172, 120, 248);
+        public override string IconTexturePath { get; set; } = "HarujionIcon";
 
         public override void PassiveEffects(Player player)
         {
@@ -31,10 +21,10 @@ namespace lenen.Common.Players.Barriers
             base.PassiveEffects(player);
         }
 
-        public override bool GeneralOnHitLogic(ref Player.HurtModifiers modifiers, Player player, Projectile proj = null, NPC npc = null)
+        public override void PreHit(Player player, ref Player.HurtModifiers modifiers)
         {
             modifiers.FinalDamage *= 0.9f;
-            return base.GeneralOnHitLogic(ref modifiers, player, proj, npc);
+            base.PreHit(player, ref modifiers);
         }
     }
 }

@@ -1,37 +1,102 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Threading;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ID;
 
 namespace lenen.Common.Players.Barriers
 {
     public abstract class Barrier
     {
-        public Color[] Colors { get; set; } = new Color[3];
-        public int State { get; set; } = 0;
-        public int Cooldown { get; set; } = 1;
-        public int MaxCooldown { get; set; } = 900;
-        public int Life { get; set; } = 1;
-        public int MaxLife { get; set; } = 1;
-        public int Recovery { get; set; } = 0;
-        public int MaxRecovery { get; set; } = 600;
+        // Visuals
+        public virtual Color TopColor { get; set; } = Color.White;
+        public virtual Color MidColor { get; set; } = Color.White;
+        public virtual Color BottomColor { get; set; } = Color.White;
+        public virtual string IconTexturePath { get; set; } = "BarrierIcon";
+        // Current State
+        public bool Active { get; set; } = false;
+        public bool Broken { get; set; } = false;
+        public int Variation { get; set; } = 0; // Accessories that change this also change the behavior of the barrier
+        // Stats
+        public int Cooldown { get; set; } = 0; // Time before recovery can begin, will play a sound upon reaching 0
+        public virtual int MaxCooldown { get; set; } = 0;
+        public int Life { get; set; } = 0;
+        public virtual int MaxLife { get; set; } = 0;
+        public int Recovery { get; set; } = 0; // Timer until one life is recovered or the entire barrier is recovered
+        public virtual int MaxRecovery { get; set; } = 0;
+        public virtual int MaxFullRecovery { get; set; } = 0;
 
-        public Barrier()
+        public virtual void Initialize(Player player)
         {
+            Life = MaxLife;
         }
 
-        public void Reset()
+        /// <summary>
+        /// Called when hit by an NPC.
+        /// If the hit is cancelled, call <see cref="ReduceHealth(Player)"/> manually.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="modifiers"></param>
+        public virtual void PreHitByNPC(Player player, NPC npc, ref Player.HurtModifiers modifiers)
         {
-            State = 0; 
-            Cooldown = 0; 
-            Life = MaxLife; 
-            Recovery = 0;
+
         }
 
-        public virtual string IconPath()
+        /// <summary>
+        /// Called when hit by a projectile.
+        /// If the hit is cancelled, call <see cref="ReduceHealth(Player)"/> manually.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="modifiers"></param>
+        public virtual void PreHitByProjectile(Player player, Projectile proj, ref Player.HurtModifiers modifiers)
         {
-            return "lenen/Assets/Icons/BarrierIcon";
+
+        }
+
+        /// <summary>
+        /// Called when hit by neither a projectile or an NPC, for example, spikes.
+        /// If the hit is cancelled, call <see cref="ReduceHealth(Player)"/> manually.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="modifiers"></param>
+        public virtual void PreHitByMisc(Player player, ref Player.HurtModifiers modifiers)
+        {
+
+        }
+
+        /// <summary>
+        /// Called regardless of hit source.
+        /// If the hit is cancelled, call <see cref="ReduceHealth(Player)"/> manually.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="modifiers"></param>
+        public virtual void PreHit(Player player, ref Player.HurtModifiers modifiers)
+        {
+
+        }
+
+        public virtual void PostHitByNPC(Player player, NPC npc, Player.HurtInfo info)
+        {
+
+        }
+
+        public virtual void PostHitByProjectile(Player player, Projectile proj, Player.HurtInfo info)
+        {
+
+        }
+
+        public virtual void PostHitByMisc(Player player, Player.HurtInfo info)
+        {
+
+        }
+
+        public virtual void PostHit(Player player, Player.HurtInfo info)
+        {
+
+        }
+
+        public virtual void AlwaysOnEffects(Player player)
+        {
+
         }
 
         public virtual void PassiveEffects(Player player)
@@ -39,203 +104,123 @@ namespace lenen.Common.Players.Barriers
 
         }
 
-        public virtual void OnRebuild(Player player)
+        public virtual void OnBarrierHit(Player player, Player.HurtInfo info)
         {
-            //Main.NewText("Rebuilding " + GetType());
-            if (!OnRebuildLogic(player)) return;
-            //Main.NewText("Main logic not overriden");
-            Cooldown = 0;
-            Recovery = 0;
-            Life = MaxLife;
-            OnRebuildEffects(player);
+
         }
 
-        public virtual void OnRebuildEffects(Player player)
+        public virtual void OnBreak(Player player, Player.HurtInfo info)
         {
-            //Main.NewText("Playing rebuild effects");
-            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/j_barrier_on"), player.Center);
-            for (int i = 0; i < 20; i++)
-            {
-                Dust.NewDust(player.Center - new Vector2(16, 24f), 32, 48, DustID.ManaRegeneration);
-            }
-        }
 
-        public virtual bool OnRebuildLogic(Player player)
-        {
-            return true;
-        }
-
-        public virtual void OnHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers, Player player)
-        {
-            if (!OnHitByProjectileLogic(proj, ref modifiers, player)) return;
-            Life -= 1;
-
-            if (Life <= 0)
-            {
-                OnBreak(0, player);
-            } else
-            {
-                Recovery = MaxRecovery;
-                OnHitByProjectileEffects(proj, ref modifiers, player);
-            }
-        }
-
-        public virtual void OnHitByProjectileEffects(Projectile proj, ref Player.HurtModifiers modifiers, Player player)
-        {
-            //Main.NewText("Playing hit effects");
-            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/j_hit"), player.Center);
-            for (int i = 0; i < 20; i++)
-            {
-                Dust.NewDust(player.Center - new Vector2(16, 24f), 32, 48, DustID.ManaRegeneration);
-            }
-        }
-
-        public virtual bool OnHitByProjectileLogic(Projectile proj, ref Player.HurtModifiers modifiers, Player player)
-        {
-            return true;
-        }
-
-        public virtual void OnHitByNPC(NPC npc, ref Player.HurtModifiers modifiers, Player player)
-        {
-            if (!OnHitByNPCLogic(npc, ref modifiers, player)) return;
-            Life -= 1;
-
-            if (Life <= 0)
-            {
-                OnBreak(1, player);
-            }
-            else
-            {
-                Recovery = MaxRecovery;
-                OnHitByNPCEffects(npc, ref modifiers, player);
-            }
-        }
-
-        public virtual void OnHitByNPCEffects(NPC npc, ref Player.HurtModifiers modifiers, Player player)
-        {
-            //Main.NewText("Playing hit effects");
-            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/j_hit"), player.Center);
-            for (int i = 0; i < 20; i++)
-            {
-                Dust.NewDust(player.Center - new Vector2(16, 24f), 32, 48, DustID.ManaRegeneration);
-            }
-        }
-
-        public virtual bool OnHitByNPCLogic(NPC npc, ref Player.HurtModifiers modifiers, Player player)
-        {
-            return true;
-        }
-
-        public virtual void OnHitByMisc(ref Player.HurtModifiers modifiers, Player player)
-        {
-            if (modifiers.DamageSource.SourceOtherIndex == -1) return;
-            if (!OnHitByMiscLogic(ref modifiers, player)) return;
-            Life -= 1;
-
-            if (Life <= 0)
-            {
-                OnBreak(2, player);
-            }
-            else
-            {
-                Recovery = MaxRecovery;
-                OnHitByMiscEffects(ref modifiers, player);
-            }
-        }
-
-        public virtual void OnHitByMiscEffects(ref Player.HurtModifiers modifiers, Player player)
-        {
-            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/j_hit"), player.Center);
-            for (int i = 0; i < 20; i++)
-            {
-                Dust.NewDust(player.Center - new Vector2(16, 24f), 32, 48, DustID.ManaRegeneration);
-            }
-        }
-
-        public virtual bool OnHitByMiscLogic(ref Player.HurtModifiers modifiers, Player player)
-        {
-            return true;
-        }
-
-#nullable enable
-        public virtual bool GeneralOnHitLogic(ref Player.HurtModifiers modifiers, Player player, Projectile? proj = null, 
-            NPC? npc = null)
-        {
-            return true;
-        }
-
-        public virtual void OnBreak(int source, Player player)
-        {
-            if (!OnBreakLogic(source, player)) return;
-            Recovery = 0;
-            Cooldown = MaxCooldown;
-            Life = 0;
-            OnBreakEffects(source, player);
-        }
-
-        public virtual void OnBreakEffects(int source, Player player)
-        {
-            //Main.NewText("Playing break effects");
-            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/j_barrier"), player.Center);
-            for (int i = 0; i < 20; i++)
-            {
-                Dust.NewDust(player.Center - new Vector2(16, 24f), 32, 48, DustID.ManaRegeneration);
-            }
-        }
-
-        public virtual bool OnBreakLogic(int source, Player player)
-        {
-            return true;
         }
 
         public virtual void OnRecovery(Player player)
         {
-            //Main.NewText("Recovering " + GetType() + " Barrier");
-            if (!OnRecoveryLogic(player)) return;
-            //Main.NewText("Main recovery logic not overriden");
-            Life++;
-            if (Life >=  MaxLife)
+
+        }
+
+        public virtual void OnRebuild(Player player)
+        {
+
+        }
+
+        public void ReduceHealth(Player player, Player.HurtInfo info)
+        {
+            Life--;
+            Cooldown = MaxCooldown;
+            if (Life <= 0)
             {
-                // Just in case
-                Life = MaxLife;
-                OnRebuild(player);
+                SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/j_barrier"), player.Center);
+                OnBreak(player, info);
+                Broken = true;
+                Recovery = MaxFullRecovery;
             } else
             {
+                SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/j_hit"), player.Center);
+                OnBarrierHit(player, info);
                 Recovery = MaxRecovery;
-                OnRecoveryEffects(player);
             }
         }
 
-        public virtual void OnRecoveryEffects(Player player)
+        public virtual void UniqueResetEffects(Player player)
         {
-            //Main.NewText("Playing recovery effects");
-            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/j_barrier_on") with
+
+        }
+
+        public void ResetEffects(Player player)
+        {
+            UniqueResetEffects(player);
+            int oldCooldown = Cooldown;
+
+            if (Cooldown > 0) Cooldown--;
+
+            if (Cooldown <= 0 && oldCooldown > 0 && Active)
             {
-                Volume = 0.5f
-            }, player.Center);
-            for (int i = 0; i < 20; i++)
-            {
-                Dust.NewDust(player.Center - new Vector2(16, 24f), 32, 48, DustID.ManaRegeneration);
+                SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/charge_0") with
+                {
+                    Volume = 0.5f
+                }, player.Center);
             }
-        }
 
-        public virtual bool OnRecoveryLogic(Player player)
-        {
-            return true;
-        }
+            if (Cooldown <= 0 && Life < MaxLife)
+            {
+                if (Recovery > 0)
+                {
+                    Recovery--;
 
-        public virtual void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
-        {
-        }
+                    BuffPlayer buffs = player.GetModPlayer<BuffPlayer>();
+                    switch (buffs.barrierBuff)
+                    {
+                        case 1:
+                            if (player.GetModPlayer<OptionsManagingPlayer>().UpdateCount % 2 == 0)
+                            {
+                                Recovery--;
+                            }
+                            break;
+                        case 2:
+                            Recovery--;
+                            break;
+                        case 3:
+                            Recovery--;
+                            if (player.GetModPlayer<OptionsManagingPlayer>().UpdateCount % 2 == 0)
+                            {
+                                Recovery--;
+                            }
+                            break;
+                    }
+                }
+                
+                if (Recovery <= 0)
+                {
+                    int oldLife = Life;
+                    
+                    if (Broken)
+                    {
+                        Life = MaxLife;
+                        Broken = false;
+                        if (Active) OnRebuild(player);
+                    } else
+                    {
+                        Life++;
+                        if (Active) OnRecovery(player);
+                    }
 
-        public bool IsAvailable()
-        {
-            return Life > 0 && State != 0;
-        }
+                    Recovery = MaxRecovery;
 
-        public bool IsFull()
-        {
-            return Life >= MaxLife && State != 0;
+                    // This sound would be very annoying if it played all the time even without barriers, so it only
+                    // plays when the barrier is currently active
+                    if (Active)
+                    {
+                        SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/j_barrier_on") with
+                        {
+                            Volume = Broken ? 1f : 0.5f
+                        }, player.Center);
+                    }
+                }
+            }
+
+            Active = false;
+            Variation = 0;
         }
     }
 }

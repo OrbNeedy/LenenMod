@@ -52,16 +52,16 @@ namespace lenen.Common.Players
         public void SpawnExplosion(bool christmas = false, IEntitySource? source = null)
         {
             // Check source, add one if there is none
-            Main.NewText("Exploding with source: " + source);
+            //Main.NewText("Exploding with source: " + source);
             IEntitySource useSource;
             if (source == null)
             {
                 useSource = Player.GetSource_FromThis("Explosion");
-                Main.NewText("Source changed");
+                //Main.NewText("Source changed");
             } else
             {
                 useSource = source;
-                Main.NewText("Source kept");
+                //Main.NewText("Source kept");
             }
 
             // Play sound effect
@@ -97,42 +97,6 @@ namespace lenen.Common.Players
                     new Vector2(Main.rand.NextFloat(4, 22), 0).RotatedByRandom(MathHelper.TwoPi), 
                     ModContent.ProjectileType<SlowedBullet>(), damage, knockback, Player.whoAmI, 
                     color, spriteType);
-            }
-        }
-
-        public void HaveGravityField(Vector2 position, float strength, float range = 200, bool projectiles = true, int timeDecay = 2)
-        {
-            if (projectiles)
-            {
-                foreach (Projectile projectile in Main.ActiveProjectiles)
-                {
-                    float distance = projectile.Distance(position);
-                    if (distance <= range && projectile.friendly &&
-                        GravityExceptions.Instance.gravityAffectedProjectiles.Contains(projectile.type))
-                    {
-                        projectile.velocity = Vector2.Lerp(projectile.velocity, 
-                            projectile.DirectionTo(position) * strength, 0.06f);
-                        if (timeDecay > 0)
-                        {
-                            if (Main.rand.NextBool(timeDecay)) projectile.timeLeft += 1;
-                        }
-                        projectile.netUpdate = true;
-                    }
-                }
-            } else
-            {
-                foreach (NPC npc in Main.ActiveNPCs)
-                {
-                    float distance = npc.Distance(position);
-                    // Not a boss, not friendly, knockback restist over 0, in range, not a gravity resistant NPC
-                    if (!npc.boss && !npc.friendly && npc.knockBackResist > 0 && distance <= range * 2 &&
-                        !GravityExceptions.Instance.gravityResistantNPCs.Contains(npc.type))
-                    {
-                        npc.velocity = Vector2.Lerp(npc.velocity, 
-                            npc.DirectionTo(position) * strength * npc.knockBackResist, 0.12f);
-                        npc.netUpdate = true;
-                    }
-                }
             }
         }
 

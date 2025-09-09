@@ -1,5 +1,6 @@
-﻿using lenen.Common;
+﻿using lenen.Common.Players;
 using lenen.Common.Players.Barriers;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -9,7 +10,6 @@ namespace lenen.Content.Items.Accessories
 {
     public class AntiGravityCape : ModItem
     {
-        private Barrier barrier = BarrierLookups.BarrierDictionary[BarrierLookups.Barriers.GravityBarrier];
         public override void SetDefaults()
         {
             Item.width = 54;
@@ -19,8 +19,21 @@ namespace lenen.Content.Items.Accessories
             Item.rare = ItemRarityID.Purple;
         }
 
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(
-            barrier.MaxLife / 60, barrier.MaxCooldown / 60, barrier.MaxRecovery / 60);
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs();
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            int index = tooltips.FindLastIndex((x) => x.Name.StartsWith("Tooltip") && x.Mod == "Terraria");
+
+            if (index != -1)
+            {
+                Barrier barrier = Main.LocalPlayer.GetModPlayer<PlayerBarrier>().barriers[BarrierTypes.GravityBarrier];
+                tooltips.Insert(index - 1, new TooltipLine(Mod, "BarrierDescriptor", 
+                    Language.GetTextValue("Mods.lenen.BarrierStats", barrier.MaxLife, barrier.MaxCooldown / 60, 
+                    barrier.MaxRecovery / 60, barrier.MaxFullRecovery / 60)));
+            }
+            base.ModifyTooltips(tooltips);
+        }
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
@@ -29,7 +42,7 @@ namespace lenen.Content.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            barrier.State = 1;
+            player.GetModPlayer<PlayerBarrier>().barriers[BarrierTypes.GravityBarrier].Active = true;
         }
     }
 }

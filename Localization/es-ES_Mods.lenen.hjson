@@ -153,10 +153,7 @@ Items: {
 			'''
 			Un craneo extrañamente grande que funciona bien como casco.
 			Le da al portador una Barrera Calavera, que reflecta proyectiles cuando es golpeado.
-			El enfriamiento se aumenta en 150% cuando la barrera es destruida por un proyectil.
-			{$BarrierStats.Life}
-			{$BarrierStats.Cooldown}
-			{$BarrierStats.Recovery}
+			El enfriamiento se aumenta en 100% cuando la barrera es destruida por un proyectil.
 			'''
 	}
 
@@ -193,9 +190,7 @@ Items: {
 			'''
 			Le da al portador una Barrera Desesperada, que se vuelve más poderosa cuando 
 			la salud baja al 50%, también aumentando el poder de todas las Spell Cards.
-			{$BarrierStats.Life}
-			{$BarrierStats.Cooldown}
-			{$BarrierStats.Recovery}
+			También reduce el daño tomado bajo 50% de la salud en {0}%.
 			'''
 	}
 
@@ -206,15 +201,12 @@ Items: {
 			Un craneo extrañamente grande que funciona bien como casco.
 			Fue mejorado luego de absorber los espiritus que cargabas.
 			Oprime la tecla de {$Keybinds.Revival.DisplayName} para consumir 
-			espiritus y entrar en un estado mejorado que dura {3} segundos.
-			El estado mejorado aumenta el daño base en {4}, daño multiplicativo 
-			en {5} y penetración de armadura en {6}, pero reduce la reducción 
-			de daño en {7} y la defensa en {8}.
+			espiritus y entrar en un estado mejorado que dura {0} segundos.
+			El estado mejorado aumenta el daño base en {2}, daño multiplicativo 
+			en {1} y penetración de armadura en {3}, pero reduce la reducción 
+			de daño en {4} y la defensa en {5}.
 			Le da al portador una Barrera calavera mejorada, la cual resiste 
 			más golpes y otorga resistencia al retroceso.
-			{$BarrierStats.Life}
-			{$BarrierStats.Cooldown}
-			{$BarrierStats.Recovery}
 			'''
 	}
 
@@ -292,10 +284,7 @@ Items: {
 			poder para revivirte, si le das alimento primero.
 			Consume 500 espiritus para revivir.
 			También atrae objetos de espiritu.
-			Da una barrera al revivir.
-			{$BarrierStats.Life}
-			{$BarrierStats.Cooldown}
-			{$BarrierStats.Recovery}
+			Otorga una barrera al revivir.
 			'''
 	}
 
@@ -326,9 +315,6 @@ Items: {
 			La barrera da vuelo infinito y permite levitar desde el suelo.
 			También hace lentas las caidas y empuja enemigos lejos de ti.
 			Oprime la tecla de Ajustar Gravedad para desactivar la levitación.
-			{$BarrierStats.Life}
-			{$BarrierStats.Cooldown}
-			{$BarrierStats.Recovery}
 			'''
 	}
 
@@ -340,9 +326,6 @@ Items: {
 			La barrera da vuelo infinito y permite levitar desde el suelo.
 			También hace lentas las caidas y empuja enemigos lejos de ti.
 			Oprime la tecla de Ajustar Gravedad para desactivar la levitación.
-			{$BarrierStats.Life}
-			{$BarrierStats.Cooldown}
-			{$BarrierStats.Recovery}
 			'''
 	}
 
@@ -426,6 +409,38 @@ Items: {
 		// DisplayName: Harujion Debug Tool2
 		// Tooltip: ""
 	}
+
+	BarrierSupport: {
+		DisplayName: Tomo de barreras Vol.3
+		Tooltip:
+			'''
+			Un libro que detalla formas más complejas de usar 
+			barreras para teletransportarse.
+			Teletransporta proyectiles enemigos a la barrera de 
+			salida.
+			Click derecho para fijar a un enemigo y teletransportar
+			proyectiles propios a la barrera de salida.
+			'''
+	}
+
+	FairyGun: {
+		DisplayName: Pistola pequeña
+		Tooltip:
+			'''
+			Dispara una rafaga de tres balas.
+			¿Porqué un hada está cargando esto?
+			'''
+	}
+
+	FairySword: {
+		DisplayName: Espada pequeña
+		Tooltip: ""
+	}
+
+	FairyWand: {
+		DisplayName: Varita pequeña
+		Tooltip: Dispara proyectiles en tres direcciones.
+	}
 }
 
 NPCs: {
@@ -468,9 +483,10 @@ Projectiles: {
 	LumenLaser.DisplayName: Laser de luz
 	BoneColumn.DisplayName: Espina de hueso
 	ThinLaser.DisplayName: Laser
-	// BasicBullet.DisplayName: Basic Bullet
-	// SlowedBullet.DisplayName: Slowed Bullet
-	// SuperNovaBullet.DisplayName: Super Nova Bullet
+	BasicBullet.DisplayName: Bala
+	SlowedBullet.DisplayName: Bala lenta
+	SuperNovaBullet.DisplayName: Super Nova
+	TeleportBarrier.DisplayName: Barrera
 }
 
 Dialogue: {
@@ -550,9 +566,6 @@ Buffs: {
 			Has renacido, y no puedes resucitar otra vez.
 			Estás siendo protegido por una barrera debil que se recupera 
 			rápido.
-			{$BarrierStats.Life}
-			{$BarrierStats.Cooldown}
-			{$BarrierStats.Recovery}
 			'''
 	}
 
@@ -566,12 +579,13 @@ Buffs: {
 	}
 }
 
-BarrierStats: {
-	Life: Esta barrera puede resistir hasta {0} golpes.
-	Cooldown: Esta barrera necesita {1} segundos para ser colocada.
-	Recovery: Esta barrera necesita {2} segundos para recuperarse de un golpe.
-}
-
+BarrierStats:
+	'''
+	Esta barrera puede tomar hasta {0} golpes, necesita {1} segundo 
+	para iniciar a recuperarse, {2} segundos para recuperarse de 
+	un solo golpe, y {3} segundos para recuperarse totalmente de 
+	ser rota.
+	'''
 HarujionGeneration: Creciendo una flor youkai.
 SoulDescriptions.Reserve: Está guardando {0} espiritus.
 
@@ -611,7 +625,10 @@ Conditions: {
 	DownedPlantera: Derrotar a plantera
 }
 
-DamageClasses.MeleeRangedHybrid.DisplayName: Cuerpo a cuerpo/Rango
+DamageClasses: {
+	MeleeRangedHybrid.DisplayName: Cuerpo a cuerpo/Rango
+	UniversalHybrid.DisplayName: Hibrido universal
+}
 
 Tiles: {
 	HarujionSapling.MapEntry: Harujion

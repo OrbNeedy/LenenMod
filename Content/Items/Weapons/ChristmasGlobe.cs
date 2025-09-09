@@ -76,11 +76,11 @@ namespace lenen.Content.Items.Weapons
             manager.spellCardTimer = spellCardTimer;
 
             // 90
-            int desperation = 2;
+            int desperation = 1;
             if (manager.desperateBomb)
             {
                 // 157
-                desperation = 4;
+                desperation = 2;
                 manager.spellCardTimer = spellCardTimer + 540;
             }
 

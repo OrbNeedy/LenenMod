@@ -11,6 +11,8 @@ using System.IO;
 using System;
 using Terraria.Localization;
 using Terraria.GameContent.Bestiary;
+using lenen.Common;
+using lenen.Content.Items.Weapons;
 
 namespace lenen.Content.NPCs.Fairy
 {
@@ -235,7 +237,12 @@ namespace lenen.Content.NPCs.Fairy
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ItemID.Sake, 60, 1, 5));
-            //
+            npcLoot.Add(ItemDropRule.ByCondition(new FairyTypeCondition(FairyType.Slash), 
+                ModContent.ItemType<FairySword>(), 60));
+            npcLoot.Add(ItemDropRule.ByCondition(new FairyTypeCondition(FairyType.Shot),
+                ModContent.ItemType<FairyGun>(), 60));
+            npcLoot.Add(ItemDropRule.ByCondition(new FairyTypeCondition(FairyType.Magic),
+                ModContent.ItemType<FairyWand>(), 60));
         }
 
         public override bool? CanFallThroughPlatforms()

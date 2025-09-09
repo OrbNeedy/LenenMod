@@ -1,15 +1,10 @@
-﻿using lenen.Common.Graphics;
-using lenen.Common.Players;
+﻿using lenen.Common.Players;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace lenen.Content.Items.Accessories
 {

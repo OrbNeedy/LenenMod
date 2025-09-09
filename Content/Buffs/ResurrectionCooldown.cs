@@ -1,4 +1,4 @@
-﻿using lenen.Common;
+﻿using lenen.Common.Players;
 using lenen.Common.Players.Barriers;
 using Terraria;
 using Terraria.Localization;
@@ -8,7 +8,6 @@ namespace lenen.Content.Buffs
 {
     public class ResurrectionCooldown : ModBuff
     {
-        private Barrier barrier = BarrierLookups.BarrierDictionary[BarrierLookups.Barriers.HarujionBarrier];
         public override void SetStaticDefaults()
         {
             Main.debuff[Type] = true;
@@ -17,12 +16,21 @@ namespace lenen.Content.Buffs
             Main.buffNoTimeDisplay[Type] = false;
         }
 
-        public override LocalizedText Description => base.Description.WithFormatArgs(
-            barrier.MaxLife, barrier.MaxCooldown, barrier.MaxRecovery);
+        public override LocalizedText Description => base.Description.WithFormatArgs();
+
+        public override void ModifyBuffText(ref string buffName, ref string tip, ref int rare)
+        {
+            Barrier barrier = Main.LocalPlayer.GetModPlayer<PlayerBarrier>().barriers[BarrierTypes.ResurrectionBarrier];
+
+            tip = Language.GetTextValue("Mods.lenen.BarrierStats", barrier.MaxLife, barrier.MaxCooldown / 60,
+                    barrier.MaxRecovery / 60, barrier.MaxFullRecovery / 60);
+            base.ModifyBuffText(ref buffName, ref tip, ref rare);
+        }
 
         public override void Update(Player player, ref int buffIndex)
         {
-            barrier.State = 1;
+            Barrier barrier = player.GetModPlayer<PlayerBarrier>().barriers[BarrierTypes.ResurrectionBarrier];
+            barrier.Active = true;
             base.Update(player, ref buffIndex);
         }
     }
