@@ -25,6 +25,10 @@ namespace lenen.Common.GlobalItems
                     itemLoot.Add(ItemDropRule.ByCondition(new DropInExpert(),
                         ModContent.ItemType<AntiGravityCape>(), 4));
                     break;
+                case ItemID.CultistBossBag:
+                    /*itemLoot.Add(ItemDropRule.ByCondition(new DropInExpert(),
+                        ModContent.ItemType<AntiGravityCape>(), 4));*/
+                    break;
             }
         }
     }

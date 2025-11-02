@@ -71,6 +71,26 @@ namespace lenen.Common
             return "";
         }
     }
+    public class BossOnly : IItemDropRuleCondition, IProvideItemConditionDescription
+    {
+        bool excludeBosses;
+
+        public BossOnly(bool excludeBosses = false)
+        {
+            this.excludeBosses = excludeBosses;
+        }
+
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            return info.npc.boss && !excludeBosses;
+        }
+        public bool CanShowItemDropInUI() => true;
+
+        public string GetConditionDescription()
+        {
+            return $"Droped by any boss.";
+        }
+    }
 
     public class FairyTypeCondition : IItemDropRuleCondition, IProvideItemConditionDescription
     {

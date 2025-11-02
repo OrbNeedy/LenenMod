@@ -110,7 +110,12 @@ namespace lenen.Common.Systems
             ]);
             gravityAffectedProjectiles.AddRange([
                 ModContent.ProjectileType<BasicBullet>(), ModContent.ProjectileType<SpiritFlame>(), 
-                ModContent.ProjectileType<SlowedBullet>()
+                ModContent.ProjectileType<SlowedBullet>(), ModContent.ProjectileType<SentryBullet>(), 
+                ModContent.ProjectileType<LaserStarter>(), ModContent.ProjectileType<CthulhuBullet>(),
+                ModContent.ProjectileType<OffensiveBarrier>(), ModContent.ProjectileType<RustyKnife>(),
+                ModContent.ProjectileType<BoneKnife>(), ModContent.ProjectileType<DarkKnife>(),
+                ModContent.ProjectileType<SenriSlimeProjectile>(), 
+                ModContent.ProjectileType<WriglingProjectile>()
             ]);
         }
     }

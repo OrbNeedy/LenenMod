@@ -11,7 +11,8 @@ using Terraria.Graphics.Effects;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using System;
-using lenen.Common.Players;
+using Terraria.DataStructures;
+using Terraria.Audio;
 
 namespace lenen.Content.Projectiles
 {
@@ -49,12 +50,20 @@ namespace lenen.Content.Projectiles
             Projectile.localNPCHitCooldown = 8;
 
             Projectile.friendly = true;
-            Projectile.DamageType = DamageClass.Melee;
+            Projectile.DamageType = DamageClass.Summon;
             Projectile.timeLeft = 70;
             Projectile.light = 1f;
             Projectile.ownerHitCheck = false;
             Projectile.tileCollide = false;
             Projectile.ArmorPenetration = 12;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/laser_3") with
+            {
+                Volume = 0.5f
+            }, Projectile.Center);
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -72,7 +81,7 @@ namespace lenen.Content.Projectiles
             if (Projectile.type != ModContent.ProjectileType<LumenLaser>() || !hostPrism.active ||
                 hostPrism.type != ModContent.ProjectileType<LumenBall>())
             {
-                Main.NewText("Beam dying because of incorrect host or type");
+                // Main.NewText("Beam dying because of incorrect host or type");
                 Projectile.Kill();
                 return;
             }

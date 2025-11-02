@@ -101,6 +101,8 @@ namespace lenen.Content.Projectiles
 
             int index = 0;
 
+            if (Main.myPlayer != Projectile.owner) return;
+            
             foreach (int ai in cannonAIs)
             {
                 cannons[index] = Projectile.NewProjectileDirect(player.GetSource_FromThis(sourceString), Projectile.Center, 

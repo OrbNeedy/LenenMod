@@ -70,6 +70,7 @@ namespace lenen.Content.Projectiles
                 {
                     for (int i = 0; i < 3; i++)
                     {
+                        if (Main.myPlayer != Projectile.owner) break;
                         Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center,
                             new Vector2(1, 0).RotatedByRandom(MathHelper.TwoPi)*2,
                             ModContent.ProjectileType<SmallBullet>(), Projectile.damage, 4f, Projectile.owner, 

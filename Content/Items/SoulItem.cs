@@ -80,10 +80,37 @@ namespace lenen.Content.Items
             return false;
         }
 
-        public override bool CanPickup(Player player)
+        public override void GrabRange(Player player, ref int grabRange)
         {
-            return (player.GetModPlayer<DeathManagingPlayer>().harujionRevival && player.Distance(Item.Center) <= 600) || 
-                player.Distance(Item.Center) <= 300;
+            if (player.GetModPlayer<DeathManagingPlayer>().harujionRevival)
+            {
+                grabRange = 900;
+            } else
+            {
+                grabRange = 450;
+            }
+            base.GrabRange(player, ref grabRange);
+        }
+
+        public override bool ItemSpace(Player player)
+        {
+            return true;
+        }
+
+        public override bool GrabStyle(Player player)
+        {
+            if (Collision.CheckAABBvAABBCollision(Item.position - new Vector2(30), new Vector2(60),
+                player.position, player.Size))
+            {
+                SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/item_00") with
+                {
+                    Volume = 1f,
+                    PitchVariance = 0.25f
+                }, player.Center);
+                player.GetModPlayer<SoulAbsorptionPlayer>().AddSouls(Item.stack);
+                Item.active = false;
+            }
+            return base.GrabStyle(player);
         }
 
         public override bool OnPickup(Player player)

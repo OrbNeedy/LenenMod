@@ -441,6 +441,60 @@ Items: {
 		DisplayName: Varita pequeña
 		Tooltip: Dispara proyectiles en tres direcciones.
 	}
+
+	PowerRodFan: {
+		// DisplayName: Power Rod Bat
+		/* Tooltip:
+			'''
+			A strange bat made of paper.
+			Not great for hitting, but has great magical properties.
+			Right click to switch between a minion mode and a sentry mode.
+			''' */
+	}
+
+	SenriPriestHeadpiece: {
+		// DisplayName: Senri Priest Hat
+		/* Tooltip:
+			'''
+			A hat used by the Senri priest.
+			The use of it's symbol brings fear upon the hearts of 
+			men, though not so much on monsters.
+			Increased damage by {0}%.
+			Using a weapon will shoot an additional projectile 
+			depending on the used boss ofuda.
+			''' */
+	}
+
+	BossOfuda: {
+		// DisplayName: Boss Ofuda
+		/* Tooltip:
+			'''
+			An ofuda obtained by defeating a boss.
+			Used to change the attack of the user when using the 
+			{$SenriPriestHeadpiece.DisplayName}.
+			''' */
+	}
+
+	EyelessTsubaHat: {
+		// DisplayName: Big Hat
+		/* Tooltip:
+			'''
+			A stylish black hat.
+			It could attract something when nearby an opening to 
+			the curtain of awakening.
+			''' */
+	}
+
+	TsubaHat: {
+		// DisplayName: Big Hat
+		/* Tooltip:
+			'''
+			A stylish black hat.
+			This one has an ominous eye in it.
+			It could attract something when nearby an opening to 
+			the curtain of awakening.
+			''' */
+	}
 }
 
 NPCs: {
@@ -487,6 +541,21 @@ Projectiles: {
 	SlowedBullet.DisplayName: Bala lenta
 	SuperNovaBullet.DisplayName: Super Nova
 	TeleportBarrier.DisplayName: Barrera
+	// SentryBullet.DisplayName: Bullet
+	// InkBirdMinion.DisplayName: Ink Bird
+	// InkCore.DisplayName: Ink Core
+	// CthulhuBullet.DisplayName: Bullet
+	// InkBullet.DisplayName: Ink Bullet
+	// SenriSlimeProjectile.DisplayName: Bullet
+	// WriglingProjectile.DisplayName: Ofuda
+	// InkKnife.DisplayName: Ink Knife
+	// DisruptionBullet.DisplayName: Bullet
+	// SkeletronCopyBullet.DisplayName: Bullet
+	// SenriCopyLaser.DisplayName: Monochrome Laser
+	// SenriCopyLaserHoldout.DisplayName: Monochrome Laser
+	// CultistLightningCopy.DisplayName: Ink Blob
+	// EmpressCopyBullet.DisplayName: Monochrome Ofuda
+	// BulletSpawner.DisplayName: Magic Circle
 }
 
 Dialogue: {
@@ -577,6 +646,11 @@ Buffs: {
 			Puede que haya algo adentro de ella.
 			'''
 	}
+
+	InkBirdMinionBuff: {
+		// DisplayName: Ink Bird
+		// Description: A bird made of ink will fight for you.
+	}
 }
 
 BarrierStats:
@@ -623,6 +697,8 @@ Conditions: {
 	HasEnoughSouls: Recolectar 1500 espiritus
 	AnyMechBoss: Derrotar a cualquier jefe mecanico
 	DownedPlantera: Derrotar a plantera
+	// AnyTower: Defeated any of the celestial pillars.
+	// IsSenri: Have the {$SenriPriestHeadpiece.DisplayName} equiped.
 }
 
 DamageClasses: {
@@ -637,3 +713,160 @@ Tiles: {
 }
 
 WorldGen.Harujion: Un youkai planta peligroso ha aparecido en el mundo.
+
+SenriCopy: {
+	Default: {
+		// OfudaName: Senri Ofuda
+		// Description: Shoot a fast ink bullet that leaves trails of bullets.
+	}
+
+	KingSlime: {
+		// OfudaName: King Slime Ofuda
+		// Description: Shoot a bullet that separates when hitting something.
+	}
+
+	EyeOfCthulhu: {
+		// OfudaName: Eye of Cthulhu Ofuda
+		// Description: Shoot two big bullets that dash towards an enemy.
+	}
+
+	EaterOfWorlds: {
+		// OfudaName: Eater of Worlds Ofuda
+		/* Description:
+			'''
+			Shoot a long string of talismans that ondulates 
+			towards an enemy.
+			''' */
+	}
+
+	BrainOfCthulhu: {
+		// OfudaName: Brain of Cthulhu Ofuda
+		// Description: Bullets appear around the target when attacking.
+	}
+
+	QueenBee: {
+		// OfudaName: Queen Bee Ofuda
+		// Description: Shoot small but persistent bullets.
+	}
+
+	Skeletron: {
+		// OfudaName: Skeletron Ofuda
+		// Description: Shoots a fast moving wall of bullets.
+	}
+
+	Deerclops: {
+		// OfudaName: Deerclops Ofuda
+		// Description: Big Bullets appear to interrupt the enemy's path.
+	}
+
+	WallOfFlesh: {
+		// OfudaName: Wall of Flesh Ofuda
+		/* Description:
+			'''
+			Shoots bullets that turn into knives and fly
+			towards the enemy.
+			''' */
+	}
+
+	QueenSlime: {
+		// OfudaName: Queen Slime Ofuda
+		// Description: A bullet appears on top of the enemy and moves downwards.
+	}
+
+	Retinazer: {
+		// OfudaName: Retinazer Ofuda
+		// Description: Rains down bullets on the entire screen.
+	}
+
+	Spazmatism: {
+		// OfudaName: Spazmatism Ofuda
+		// Description: Shoots bullets with cursed flames.
+	}
+
+	Twins: {
+		// OfudaName: Twins Ofuda
+		// Description: ""
+	}
+
+	TheDestroyer: {
+		// OfudaName: Destroyer Ofuda
+		/* Description:
+			'''
+			Shoot a long string of talismans that shoot 
+			bullets at the enemy.
+			''' */
+	}
+
+	SkeletronPrime: {
+		// OfudaName: Skeletron Prime Ofuda
+		// Description: Shoots four slightly delayed projectiles.
+	}
+
+	Plantera: {
+		// OfudaName: Plantera Ofuda
+		// Description: Pollutes the battlefield with static bullets.
+	}
+
+	Golem: {
+		// OfudaName: Golem Ofuda
+		// Description: Shoots bouncing bullets everywhere
+	}
+
+	DukeFishron: {
+		// OfudaName: Fishron Ofuda
+		// Description: Summons oscillating bullets under the mouse.
+	}
+
+	EmpressOfLight: {
+		// OfudaName: Empress of Light Ofuda
+		// Description: Create a whirlpool of bullets that leave trails.
+	}
+
+	LunaticCultist: {
+		// OfudaName: Lunatic Cultist Ofuda
+		// Description: Shoots a lightning fast ink blob.
+	}
+
+	LunarEvent: {
+		// OfudaName: Lunar Pillar Ofuda
+		// Description: ""
+	}
+
+	MoonlordsCore: {
+		// OfudaName: Moonlord Ofuda
+		// Description: Shoot a sweeping laser to desintegrate everything.
+	}
+}
+
+Configs: {
+	GameplayConfig: {
+		// DisplayName: Gameplay Config
+
+		Headers: {
+			// Harujion: Disable Harujion
+			// HarujionHardMode: Harujion Hard mode
+		}
+
+		HarujionAllowed: {
+			// Label: Harujion Allowed
+			/* Tooltip:
+				'''
+				Turn off to disable all gameplay effects related to the Harujion.
+				This will not destroy any existing Harujion tile or disable the 
+				Harujion accessory from dropping.
+				''' */
+		}
+
+		HarujionHardMode: {
+			// Label: Harujion Hard Mode
+			/* Tooltip:
+				'''
+				Turn on to enable the old Harujion absorption.
+				Damage dealt to the player by the Harujion will increase by 400%, 
+				damage dealt to other NPCs will increase by 200%, range and max 
+				range will be doubled, and the amount of tiles it is allowed to 
+				change on every attempt will be doubled.
+				''' */
+		}
+	}
+}

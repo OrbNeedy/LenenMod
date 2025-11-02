@@ -9,6 +9,7 @@ namespace lenen.Common.Players
     public class TargetPlayer : ModPlayer
     {
         public NPC target = null;
+        public float targetDistance = 0;
         private int range = 1000;
 
         public override void PostUpdate()
@@ -27,14 +28,15 @@ namespace lenen.Common.Players
                     if (npc.CanBeChasedBy() && npc.Center.Distance(Main.MouseWorld) <= range)
                     {
                         // Weight the npc's state to get a value from 0 to 1 and add them to a dictionary
-                        float finalWeight = (WeighDistance(npc, range) * 0.7f) + (WeighLife(npc, range) * 0.1f) +
-                            (WeighPlayerDistance(npc, range, Player) * 0.2f);
+                        float finalWeight = (WeighDistance(npc, range) * 0.75f) + (WeighLife(npc, range) * 0.025f) +
+                            (WeighPlayerDistance(npc, range, Player) * 0.225f);
                         targetWeights.Add(npc, finalWeight);
                     }
                 }
                 if (targetWeights.Count > 0)
                 {
                     target = targetWeights.MaxBy(entry => entry.Value).Key;
+                    targetDistance = target.Distance(Player.Center);
                 }
             }
             else
@@ -44,6 +46,13 @@ namespace lenen.Common.Players
                 {
                     target = null;
                 }
+            }
+            if (target == null)
+            {
+                targetDistance = float.PositiveInfinity;
+            } else
+            {
+                targetDistance = target.Distance(Player.Center);
             }
         }
 
@@ -76,6 +85,13 @@ namespace lenen.Common.Players
                 if (weight > 1)
                 {
                     weight = 1;
+                }
+            } else
+            {
+                weight -= 0.3f; 
+                if (weight < 0)
+                {
+                    weight = 0;
                 }
             }
             return weight;

@@ -13,7 +13,7 @@ namespace lenen.Common.GlobalProjectiles
 
         public override void OnSpawn(Projectile projectile, IEntitySource source)
         {
-            grazeAvailable = 1+(projectile.damage/50);
+            grazeAvailable = 1+(projectile.damage/35);
         }
 
         public override void PostAI(Projectile projectile)

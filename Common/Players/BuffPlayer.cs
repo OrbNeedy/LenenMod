@@ -35,9 +35,9 @@ namespace lenen.Common.Players
             {
                 EntitySource_Parent source = new EntitySource_Parent(Player);
                 var projectile = Projectile.NewProjectileDirect(source, Player.Center, Vector2.Zero,
-                ModContent.ProjectileType<LumenBall>(), (int)Player.GetTotalDamage(DamageClass.Summon).ApplyTo(35),
-                0, Main.myPlayer, 0);
-                projectile.damage = 35;
+                    ModContent.ProjectileType<LumenBall>(), (int)Player.GetTotalDamage(DamageClass.Summon).ApplyTo(35),
+                    0, Main.myPlayer, 0);
+                projectile.damage = (int)Player.GetTotalDamage(DamageClass.Summon).ApplyTo(35);
             }
 
             if (harujionTimer > 0)
@@ -61,11 +61,10 @@ namespace lenen.Common.Players
                     absorptionTimer = 0;
                     return;
                 }
-                if (absorptionTimer % 2 == 0)
-                {
-                    soulManager.soulsCollected -= 1;
-                    ModContent.GetInstance<HarujionLocations>().soulsAbsorbed += 1;
-                }
+
+                soulManager.soulsCollected -= 1;
+                ModContent.GetInstance<HarujionLocations>().soulsAbsorbed += 1;
+
                 absorptionTimer--;
             }
         }
@@ -87,14 +86,15 @@ namespace lenen.Common.Players
         {
             if (virusDebuff)
             {
+                //Language.GetTextValue("Mods.lenen.Death.RNA", Player.name)
                 damageSource = PlayerDeathReason.ByCustomReason(
-                    Language.GetTextValue("Mods.lenen.Death.RNA", Player.name));//$"{Player.name}'s DNA was scrambled");
+                    NetworkText.FromKey("Mods.lenen.Death.RNA", Player.name));
             }
 
             if (harujionDebuff > 0f)
             {
                 damageSource = PlayerDeathReason.ByCustomReason(
-                    Language.GetTextValue("Mods.lenen.Death.Harujion", Player.name));//$"{Player.name}'s soul became plant food");
+                    NetworkText.FromKey("Mods.lenen.Death.Harujion", Player.name));
             }
             return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genDust, ref damageSource);
         }

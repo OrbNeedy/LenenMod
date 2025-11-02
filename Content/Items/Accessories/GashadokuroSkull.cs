@@ -1,8 +1,8 @@
 ﻿using lenen.Common.Players;
 using lenen.Common.Players.Barriers;
+using SteelSeries.GameSense.DeviceZone;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -12,6 +12,7 @@ namespace lenen.Content.Items.Accessories
     [AutoloadEquip(EquipType.Face)]
     public class GashadokuroSkull : ModItem
     {
+        int headSlot = -1;
         public override void Load()
         {
             if (Main.netMode == NetmodeID.Server)
@@ -25,6 +26,7 @@ namespace lenen.Content.Items.Accessories
             if (Main.netMode == NetmodeID.Server)
                 return;
             int equipSlotHead = EquipLoader.GetEquipSlot(Mod, "GashadokuroSkull", EquipType.Head);
+            headSlot = equipSlotHead;
             ArmorIDs.Head.Sets.DrawHatHair[equipSlotHead] = true;
         }
 
@@ -59,6 +61,14 @@ namespace lenen.Content.Items.Accessories
         {
             Barrier barrier = player.GetModPlayer<PlayerBarrier>().barriers[BarrierTypes.SkullBarrier];
             barrier.Active = true;
+        }
+
+        public override void UpdateVisibleAccessory(Player player, bool hideVisual)
+        {
+            if (!hideVisual && player.head == -1)
+            {
+                player.head = headSlot;
+            }
         }
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)

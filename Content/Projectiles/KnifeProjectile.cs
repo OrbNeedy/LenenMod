@@ -93,7 +93,7 @@ namespace lenen.Content.Projectiles
                     }
                     break;
                 case 1:
-                    if (Projectile.timeLeft != 360 && Projectile.timeLeft % 30 == 0)
+                    if (Projectile.timeLeft != 360 && Projectile.timeLeft % 30 == 0 && Main.myPlayer == Projectile.owner)
                     {
                         Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center,
                             Projectile.velocity, Projectile.type, Projectile.damage, Projectile.knockBack,

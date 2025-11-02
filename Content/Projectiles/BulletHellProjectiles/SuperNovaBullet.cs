@@ -42,6 +42,8 @@ namespace lenen.Content.Projectiles.BulletHellProjectiles
             player.itemTime = 2;
             player.itemAnimation = 2;
 
+            if (Main.myPlayer != Projectile.owner) return;
+
             if (sucking)
             {
                 // Attracts bullets and modifies the appearence of it
@@ -53,11 +55,9 @@ namespace lenen.Content.Projectiles.BulletHellProjectiles
                 {
                     Projectile.scale -= 0.375f;
                 }
-                if (Main.myPlayer == Projectile.owner)
-                {
-                    Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * 0.5f;
-                    Projectile.netUpdate = true;
-                }
+
+                Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * 0.5f;
+                Projectile.netUpdate = true;
 
                 SuckInProjectiles(Projectile.Center, 1200, 14, true);
                 SuckInNPCs(Projectile.Center, 1200, 14);

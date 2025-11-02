@@ -58,7 +58,7 @@ namespace lenen.Content.Projectiles
             Projectile.Center = origin + offset;
             Projectile.rotation = origin.DirectionTo(Projectile.Center).ToRotation() - MathHelper.PiOver2;
             // Projectile.rotation = origin.DirectionTo(Projectile.Center).ToRotation() - MathHelper.PiOver2;
-            if (Projectile.timeLeft == 108 && Projectile.ai[0] > 0)
+            if (Projectile.timeLeft == 108 && Projectile.ai[0] > 0 && Main.myPlayer == Projectile.owner)
             {
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(-1, 0),
                     ModContent.ProjectileType<InfiniteLaser>(), Projectile.damage, Projectile.knockBack, 

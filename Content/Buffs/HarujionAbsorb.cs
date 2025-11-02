@@ -1,4 +1,5 @@
-﻿using lenen.Common.GlobalNPCs;
+﻿using lenen.Common.Config;
+using lenen.Common.GlobalNPCs;
 using lenen.Common.Players;
 using lenen.Common.Systems;
 using Terraria;
@@ -25,6 +26,8 @@ namespace lenen.Content.Buffs
             float multiplier = HarujionLocations.instance.GetGrowth();
             float potency = (distancePotency * 0.65f) + (multiplier * 0.35f);
 
+            if (!ModContent.GetInstance<GameplayConfig>().HarujionHardMode) potency *= 0.5f;
+
             npc.GetGlobalNPC<SoulDrops>().harujionPotency = potency;
         }
 
@@ -35,6 +38,8 @@ namespace lenen.Content.Buffs
             float distance = player.DistanceSQ(HarujionLocations.instance.harujionLocation.ToWorldCoordinates());
             float distancePotency = (radius - distance)/radius;
             float potency = (distancePotency * 0.9f) + (multiplier* 0.4f);
+
+            if (!ModContent.GetInstance<GameplayConfig>().HarujionHardMode) potency *= 0.25f;
 
             player.GetModPlayer<BuffPlayer>().harujionDebuff = potency;
         }

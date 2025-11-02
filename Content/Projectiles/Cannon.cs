@@ -143,6 +143,8 @@ namespace lenen.Content.Projectiles
 
         private void Shooting()
         {
+            if (Main.myPlayer != Projectile.owner) return;
+
             string? sourceString = null;
             switch (material)
             {

@@ -13,7 +13,7 @@ namespace lenen.Common.GlobalProjectiles
             switch (projectile.type)
             {
                 case ProjectileID.FallingStar:
-                    if (Main.rand.NextBool(40) && Main.hardMode)
+                    if (Main.rand.NextBool(60) && Main.hardMode)
                     {
                         Item.NewItem(projectile.GetSource_DropAsItem(), projectile.getRect(),
                             ModContent.ItemType<DimensionalFragment>());

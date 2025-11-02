@@ -27,6 +27,8 @@ namespace lenen.Content.Projectiles.BulletHellProjectiles
             Projectile.damage = 0;
             Projectile.knockBack = 0;
             Projectile.penetrate = -1;
+            Projectile.ArmorPenetration = 100;
+
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 16;
 
@@ -54,6 +56,9 @@ namespace lenen.Content.Projectiles.BulletHellProjectiles
         public override void AI()
         {
             if (Main.netMode == NetmodeID.Server) return;
+
+            BulletSourceEffects.AI(sourceContext, Projectile);
+
             if (Projectile.velocity.Length() > 0.01f)
             {
                 Projectile.velocity *= 0.985f;
@@ -66,48 +71,24 @@ namespace lenen.Content.Projectiles.BulletHellProjectiles
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            HitEffects.NPCHitEffect(sourceContext, target, ref modifiers);
+            BulletSourceEffects.NPCHitEffect(sourceContext, target, ref modifiers);
         }
 
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
-            HitEffects.PlayerHitEffect(sourceContext, target, ref modifiers);
+            BulletSourceEffects.PlayerHitEffect(sourceContext, target, ref modifiers);
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D Sprite;
-            Vector2 SpriteSize;
-            switch ((Sheet)BulletSprite)
-            {
-                case Sheet.Big:
-                    Sprite = ModContent.Request<Texture2D>(route + "BigBulletSprites").Value;
-                    SpriteSize = new Vector2(68, 68);
-                    break;
-                case Sheet.Double:
-                    Sprite = ModContent.Request<Texture2D>(route + "DoubleBulletSprites").Value;
-                    SpriteSize = new Vector2(34, 36);
-                    break;
-                case Sheet.Pellet:
-                    Sprite = ModContent.Request<Texture2D>(route + "PelletBulletSprites").Value;
-                    SpriteSize = new Vector2(24, 40);
-                    break;
-                case Sheet.Small:
-                    Sprite = ModContent.Request<Texture2D>(route + "SmallBulletSprites").Value;
-                    SpriteSize = new Vector2(28, 28);
-                    break;
-                default:
-                    Sprite = ModContent.Request<Texture2D>(route + "DefaultBulletSprites").Value;
-                    SpriteSize = new Vector2(44, 44);
-                    break;
-            }
+            Rectangle bounds = BasicBullet.GetBulletBounds((Sheet)BulletSprite, (SheetFrame)BulletColor);
 
             Main.EntitySpriteDraw(new DrawData(
-                Sprite,
+                BasicBullet.GetBulletTexture((Sheet)BulletSprite),
                 Projectile.Center - Main.screenPosition,
-                new Rectangle((int)(SpriteSize.X * BulletColor), 0, (int)SpriteSize.X, (int)SpriteSize.Y),
+                bounds,
                 Color.White * Projectile.Opacity,
                 Projectile.rotation,
-                SpriteSize * 0.5f,
+                bounds.Size() * 0.5f,
                 Projectile.scale,
                 SpriteEffects.None)
             );

@@ -28,6 +28,7 @@ namespace lenen.Content.Items.Accessories
         private int defensePenetrationIncrease = 50;
         private int damageReductionDecrease = 25;
         private int defenseDecrease = 25;
+        int headSlot = -1;
 
         public override void Load()
         {
@@ -43,7 +44,9 @@ namespace lenen.Content.Items.Accessories
         {
             if (Main.netMode == NetmodeID.Server)
                 return;
+
             int equipSlotHead = EquipLoader.GetEquipSlot(Mod, "RevivedGashadokuroSkull", EquipType.Head);
+            headSlot = equipSlotHead;
             ArmorIDs.Head.Sets.DrawHatHair[equipSlotHead] = true;
         }
 
@@ -124,6 +127,14 @@ namespace lenen.Content.Items.Accessories
             }
         }
 
+        public override void UpdateVisibleAccessory(Player player, bool hideVisual)
+        {
+            if (!hideVisual && player.head == -1)
+            {
+                player.head = headSlot;
+            }
+        }
+
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             soulsDescription = Language.GetTextValue("Mods.lenen.SoulDescriptions.Reserve",
@@ -180,7 +191,7 @@ namespace lenen.Content.Items.Accessories
             CreateRecipe()
                 .AddIngredient<GashadokuroSkull>()
                 .AddTile(TileID.DemonAltar)
-                .AddCondition(SoulsCondition.HasEnoughSouls)
+                .AddCondition(LenenConditions.HasEnoughSouls)
                 .AddCondition(Condition.DownedPlantera)
                 .AddOnCraftCallback(callback)
                 .Register();

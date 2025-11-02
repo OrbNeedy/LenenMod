@@ -190,6 +190,8 @@ namespace lenen.Content.Projectiles
 
         public void EvaluateAndSpawn(Player player)
         {
+            if (Main.myPlayer != Projectile.owner) return;
+
             if (Projectile.ai[1] == 0 && Projectile.ai[2] > 0)
             {
                 if (Projectile.timeLeft == (400 + ((10 - Projectile.ai[2]) * 20)))

@@ -49,7 +49,7 @@ namespace lenen.Content.Projectiles
         public override void OnSpawn(IEntitySource source)
         {
             string soundPath = "bom_flash_00"; 
-            Main.NewText($"Type: {bombType}");
+            //Main.NewText($"Type: {bombType}");
             switch ((int)bombType)
             {
                 case (int)Flashbomb.MaidenPit:

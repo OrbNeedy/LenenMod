@@ -14,7 +14,7 @@ namespace lenen.Content.Items
             {
                 GameShaders.Armor.BindShader(
                     Item.type,
-                    new ArmorShaderData(Mod.Assets.Request<Effect>("Effects/NoiseEffect"), "NoiseShader").UseColor(0f, 1f, 0f) // Be sure to update the effect path and pass name here.
+                    new ArmorShaderData(Mod.Assets.Request<Effect>("Effects/NoiseEffect"), "NoiseShader").UseColor(0f, 1f, 0f) 
                 );
             }
 

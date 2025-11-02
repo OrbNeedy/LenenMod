@@ -1,12 +1,10 @@
 ﻿using lenen.Content.Items.Accessories;
+using lenen.Content.Items.SenriModes;
 using lenen.Content.Items.Weapons;
-using lenen.Content.NPCs.Fairy;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.UI;
 
 namespace lenen.Common.GlobalNPCs
 {
@@ -25,21 +23,28 @@ namespace lenen.Common.GlobalNPCs
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustedKnife>(), 40));
             }
 
+            // General boss
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.LegacyHack_IsABoss(), 
+                ModContent.ItemType<BossOfuda>())); // Ofuda
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.LegacyHack_IsABoss(), 
+                ModContent.ItemType<SenriPriestHeadpiece>(), 800));
+
             switch (npc.type)
             {
                 // Bosses
                 case NPCID.SkeletronHead:
-                    npcLoot.Add(ItemDropRule.ByCondition(new DropInNormal(),
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(),
                         ModContent.ItemType<AssassinKnife>(), 3));
                     break;
                 case NPCID.WallofFlesh:
-                    npcLoot.Add(ItemDropRule.ByCondition(new DropInNormal(), 
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), 
                         ModContent.ItemType<DimensionalFragment>(), 6));
-                    npcLoot.Add(new DropPerPlayerOnThePlayer(ModContent.ItemType<ThrillEngine>(), 1, 1, 1,
-                        null));
+                    break;
+                case NPCID.CultistBoss:
+                    //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SenriPriestHeadpiece>(), 12));
                     break;
                 case NPCID.MoonLordCore:
-                    npcLoot.Add(ItemDropRule.ByCondition(new DropInNormal(),
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(),
                         ModContent.ItemType<AntiGravityCape>(), 4));
                     break;
 

@@ -11,8 +11,8 @@ namespace lenen.Content.Projectiles
     {
         public override void SetDefaults()
         {
-            Projectile.width = 132;
-            Projectile.height = 22;
+            Projectile.width = 26;
+            Projectile.height = 26;
 
             Projectile.damage = 20;
             Projectile.knockBack = 5;
@@ -39,21 +39,16 @@ namespace lenen.Content.Projectiles
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D laser = ModContent.Request<Texture2D>("lenen/Content/Projectiles/Laser").Value;
-            Rectangle sourceRectangle = new Rectangle(0, 0, laser.Width, laser.Height);
+            Texture2D laser = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
+            Rectangle sourceRectangle = laser.Bounds;
 
             Vector2 origin = sourceRectangle.Size() / 2f;
 
-            float offsetY = 11f;
-            origin.Y = (float)(Projectile.spriteDirection == 1 ? sourceRectangle.Height - offsetY : offsetY);
-
-            Color color = Projectile.GetAlpha(Color.White);
-
             Main.EntitySpriteDraw(
                 laser,
-                Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
+                Projectile.Center - Main.screenPosition,
                 sourceRectangle,
-                color,
+                Color.White,
                 Projectile.rotation,
                 origin,
                 1f,
@@ -67,8 +62,8 @@ namespace lenen.Content.Projectiles
             float collisionPoint = 0f;
             float width = 12f;
 
-            Vector2 start = Projectile.Left.RotatedBy(Projectile.rotation, Projectile.Center);
-            Vector2 end = Projectile.Right.RotatedBy(Projectile.rotation, Projectile.Center);
+            Vector2 start = (Projectile.Center + new Vector2(86, 0)).RotatedBy(Projectile.rotation, Projectile.Center);
+            Vector2 end = (Projectile.Center - new Vector2(86, 0)).RotatedBy(Projectile.rotation, Projectile.Center);
 
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end,
                 width * Projectile.scale, ref collisionPoint);

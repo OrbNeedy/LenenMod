@@ -1,12 +1,6 @@
 ﻿using lenen.Common.Players;
 using lenen.Content.Buffs;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -65,6 +59,8 @@ namespace lenen.Content.Projectiles
 
         public override void AI()
         {
+            if (Main.myPlayer != Projectile.owner) return;
+
             Player player = Main.player[Projectile.owner];
 
             if (Projectile.frameCounter >= 8)

@@ -1,4 +1,5 @@
-﻿using lenen.Common.Graphics;
+﻿using lenen.Common.Config;
+using lenen.Common.Graphics;
 using lenen.Common.Players;
 using lenen.Content.Buffs;
 using lenen.Content.Items;
@@ -62,16 +63,19 @@ namespace lenen.Common.Systems
             {
                 soulsAbsorbed = tag.GetInt("HarujionSouls");
             }
+            if (!ModContent.GetInstance<GameplayConfig>().HarujionAllowed) return;
             UpdateHarujion();
         }
 
         public override void OnWorldLoad()
         {
+            if (!ModContent.GetInstance<GameplayConfig>().HarujionAllowed) return;
             UpdateHarujion();
         }
 
         public override void PreUpdateWorld()
         {
+            if (!ModContent.GetInstance<GameplayConfig>().HarujionAllowed) return;
             //Main.NewText("Harujion: " + harujionLocation);
             if (Main.hardMode)
             {
@@ -143,6 +147,7 @@ namespace lenen.Common.Systems
 
         public override void PostDrawTiles()
         {
+            if (!ModContent.GetInstance<GameplayConfig>().HarujionAllowed) return;
             if (harujionLocation == Point16.Zero) return;
 
             Tile harujion = Framing.GetTileSafely(harujionLocation);
@@ -198,6 +203,8 @@ namespace lenen.Common.Systems
 
         public override void PreUpdatePlayers()
         {
+            if (!ModContent.GetInstance<GameplayConfig>().HarujionAllowed) return;
+
             if (harujionLocation == Point16.Zero) return;
             Point16 point = harujionLocation;
             Vector2 location = point.ToWorldCoordinates();
@@ -214,6 +221,7 @@ namespace lenen.Common.Systems
 
         public override void PreUpdateNPCs()
         {
+            if (!ModContent.GetInstance<GameplayConfig>().HarujionAllowed) return;
             if (harujionLocation == Point16.Zero) return;
             Point16 point = harujionLocation;
             Vector2 location = point.ToWorldCoordinates();
@@ -249,8 +257,16 @@ namespace lenen.Common.Systems
         public float GetRadius()
         {
             float radius = 60000f;
+            float max = 120000f;
             radius *= (float)Math.Pow((60+soulsAbsorbed)/60, 0.7f);
-            return radius;
+
+            if (!ModContent.GetInstance<GameplayConfig>().HarujionHardMode)
+            {
+                radius *= 0.5f;
+                max *= 0.5f;
+            }
+            
+            return Math.Clamp(radius, 0, max);
         }
 
         public float GetGrowth()
@@ -409,6 +425,8 @@ namespace lenen.Common.Systems
 
         public override void ModifyHardmodeTasks(List<GenPass> list)
         {
+            if (!ModContent.GetInstance<GameplayConfig>().HarujionAllowed) return;
+
             int PilesIndex = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Walls"));
 
             if (PilesIndex != -1)
@@ -422,8 +440,14 @@ namespace lenen.Common.Systems
 
         private void DeleteLife()
         {
+            if (!ModContent.GetInstance<GameplayConfig>().HarujionAllowed) return;
             //(25f + soulsAbsorbed) / 25f, 3/4
-            Point16 range = new Point16((int)Math.Sqrt(200f * Math.Pow((30f + soulsAbsorbed) / 30f, 0.75)));
+
+            bool softMode = !ModContent.GetInstance<GameplayConfig>().HarujionHardMode;
+            float rangeRadius = (int)Math.Sqrt(200f * Math.Pow((30f + soulsAbsorbed) / 30f, 0.75));
+            if (softMode) rangeRadius *= 0.5f;
+
+            Point16 range = new Point16((int)rangeRadius);
             float rangeSquared = (float)range.X;
             Point16 searchStart = harujionLocation - range;
             Point16 searchEnd = harujionLocation + range;
@@ -438,6 +462,7 @@ namespace lenen.Common.Systems
             }
             //Main.NewText("Souls collected: " + soulsAbsorbed);
             //Main.NewText("Tiles to check: " + amount);
+            if (softMode) amount /= 2;
 
             for (int i = 0; i < amount; i++)
             {

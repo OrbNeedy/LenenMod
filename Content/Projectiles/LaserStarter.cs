@@ -41,6 +41,8 @@ namespace lenen.Content.Projectiles
 
         public override void OnKill(int timeLeft)
         {
+            if (Main.myPlayer != Projectile.owner) return;
+
             Vector2 velocity = new Vector2(6, 0);
             Vector2 offset = new Vector2(10, 10);
             if (Projectile.ai[0] == 1)
@@ -48,8 +50,8 @@ namespace lenen.Content.Projectiles
                 for (int i = 0; i < 4; i++)
                 {
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(),
-                            Projectile.Center, velocity.RotatedBy(MathHelper.PiOver2 * i),
-                            ModContent.ProjectileType<LaserGrid>(), 75, 2, Projectile.owner);
+                        Projectile.Center, velocity.RotatedBy(MathHelper.PiOver2 * i),
+                        ModContent.ProjectileType<LaserGrid>(), 75, 2, Projectile.owner);
                 }
             } else
             {

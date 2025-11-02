@@ -25,7 +25,7 @@ namespace lenen.Common.Systems
                 NPCID.MartianWalker, NPCID.MothronEgg, NPCID.PlanterasHook, NPCID.PlanterasTentacle,
                 NPCID.SkeletronHand, NPCID.PrimeCannon, NPCID.PrimeLaser, NPCID.PrimeSaw, NPCID.PrimeVice,
                 NPCID.WallofFleshEye, NPCID.DD2LanePortal, NPCID.CultistTablet, NPCID.AncientDoom, 
-                NPCID.AncientLight, NPCID.CultistBossClone
+                NPCID.AncientLight, NPCID.CultistBossClone, NPCID.Probe
             });
 
             undetectableNPCs.AddRange(new int[] {

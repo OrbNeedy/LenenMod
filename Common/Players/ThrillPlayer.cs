@@ -104,7 +104,7 @@ namespace lenen.Common.Players
                     // Don't gain thrill from recently grazed projectiles, projectiles with no more graze available,
                     // friendly projectiles, minions, sentries, or projectiles of 0 damage
                     if (grazeProjectile.grazeCooldown > 0 || grazeProjectile.grazeAvailable <= 0 || 
-                        projectile.friendly || projectile.damage <= 0|| projectile.sentry || 
+                        !projectile.hostile || projectile.damage <= 0|| projectile.sentry || 
                         projectile.minion) continue;
 
                     // If it is a modded projectile, take into account it's special collisions
@@ -116,13 +116,13 @@ namespace lenen.Common.Players
                     // Standard box collision followed by a radius collision
                     if ((Collision.CheckAABBvAABBCollision(Player.Center, new Vector2(120, 120), projectile.Center,
                         projectile.Size * 1.5f) && projectile.Center.Distance(Player.Center) <=
-                        50 + (projectile.Size.X / 2)) || finalModdedCollision)
+                        60 + (projectile.Size.X / 2)) || finalModdedCollision)
                     {
                         // Increase percent, reset permanence timer to 30 seconds, give thrill cooldown to the
                         // projectile, and reduce the graze available
                         percent += fillRate;
                         permanenceTime = 1800;
-                        grazeProjectile.grazeCooldown = 15;
+                        grazeProjectile.grazeCooldown = 10;
                         grazeProjectile.grazeAvailable--;
                         SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/thrill"), Player.Center);
                     }
@@ -209,6 +209,11 @@ namespace lenen.Common.Players
                     direction = Player.Center.DirectionTo(Main.MouseWorld);
                     Player.immune = true;
                     Player.AddImmuneTime(ImmunityCooldownID.General, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.Bosses, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.DD2OgreKnockback, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.TileContactDamage, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.Lava, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.WrongBugNet, 30);
                     Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center + (direction * 60),
                         direction, ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI, ai0: -1);
                     Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center,
@@ -225,6 +230,11 @@ namespace lenen.Common.Players
                     direction = Player.Center.DirectionTo(Main.MouseWorld);
                     Player.immune = true;
                     Player.AddImmuneTime(ImmunityCooldownID.General, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.Bosses, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.DD2OgreKnockback, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.TileContactDamage, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.Lava, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.WrongBugNet, 30);
                     Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center + (direction * 60),
                         direction, ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI, ai0: -1);
                     // Only make a new wormhole if there is no wormhole active.
@@ -259,6 +269,11 @@ namespace lenen.Common.Players
                     direction = Player.Center.DirectionTo(Main.MouseWorld);
                     Player.immune = true;
                     Player.AddImmuneTime(ImmunityCooldownID.General, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.Bosses, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.DD2OgreKnockback, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.TileContactDamage, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.Lava, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.WrongBugNet, 30);
                     Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center + (direction * 60), 
                         direction, ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI, ai0: type);
                     return 30;
@@ -310,7 +325,7 @@ namespace lenen.Common.Players
                         Rectangle sourceRect = PlayerRenderTarget.
                             getPlayerTargetSourceRectangle(drawInfo.drawPlayer.whoAmI);
 
-                        GameShaders.Misc["HeavyNoise"].UseOpacity(1).Apply(); 
+                        GameShaders.Misc["HeavyNoise"].UseOpacity(1).UseColor(1f, 0f, 0f).Apply(); 
                         Main.spriteBatch.Draw(PlayerRenderTarget.Target, position, sourceRect, Color.White);
                         Main.pixelShader.CurrentTechnique.Passes[0].Apply();
                         break;

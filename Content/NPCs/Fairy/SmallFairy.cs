@@ -238,11 +238,11 @@ namespace lenen.Content.NPCs.Fairy
         {
             npcLoot.Add(ItemDropRule.Common(ItemID.Sake, 60, 1, 5));
             npcLoot.Add(ItemDropRule.ByCondition(new FairyTypeCondition(FairyType.Slash), 
-                ModContent.ItemType<FairySword>(), 60));
+                ModContent.ItemType<FairySword>(), 30));
             npcLoot.Add(ItemDropRule.ByCondition(new FairyTypeCondition(FairyType.Shot),
-                ModContent.ItemType<FairyGun>(), 60));
+                ModContent.ItemType<FairyGun>(), 30));
             npcLoot.Add(ItemDropRule.ByCondition(new FairyTypeCondition(FairyType.Magic),
-                ModContent.ItemType<FairyWand>(), 60));
+                ModContent.ItemType<FairyWand>(), 30));
         }
 
         public override bool? CanFallThroughPlatforms()
@@ -276,6 +276,8 @@ namespace lenen.Content.NPCs.Fairy
                 
                 if (attackTimer <= 0)
                 {
+                    if (Main.netMode == NetmodeID.MultiplayerClient) return;
+
                     maxAttackTimer = attackTimer = attackPattern.Shoot(0, powerLevel, NPC, fairyType, 
                         distractionPosition, distracted);
                 }

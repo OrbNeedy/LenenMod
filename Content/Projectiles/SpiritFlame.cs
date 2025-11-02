@@ -111,7 +111,7 @@ namespace lenen.Content.Projectiles
         {
             if (Main.dedServ) return true;
 
-            if (Projectile.owner != Main.myPlayer) return true;
+            if (Projectile.owner != Main.myPlayer) return base.OnTileCollide(oldVelocity);
 
             Vector2 projectileVelocity = new Vector2(-1, 0);
             int[] directionValues = { 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -165,7 +165,7 @@ namespace lenen.Content.Projectiles
             {
                 return false;
             }
-            return null;
+            return base.CanHitNPC(target);
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -179,7 +179,7 @@ namespace lenen.Content.Projectiles
             {
                 return false;
             }
-            return true;
+            return base.CanHitPlayer(target);
         }
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
