@@ -1,32 +1,19 @@
 The Len'en mod is a mod based on the Bullet Hell series "Len'en Project".
-It adds 13 accessories, 16 weapons, two NPCs and a special tile.
+It adds 16 accessories, 22 weapons, two NPCs and a special tile.
 Please report any bugs or suggestions in this mod's workshop page comment section or make a new Discussion.
-I'm looking for a person to help with making a wiki for this mod.
+Wiki: {ModHomepage}
 
-Ver 0.2.10.0
-+ Increased the amount of spirits drained from the player after a hit near the Harujion.
-+ Increased the spirit item collection hitbox.
-+ Spirit items can now be picked up regardless of the player’s inventory space.
-+ Doubled the drop rate of fairy related items, from 1 in 60 to 1 in 30 for all of them except Sake.
-+ Most danmaku bullets now have damage penetration.
-+ Added the Power Rod Bat summoner weapon and Senri Priest Hat accessory.
-	* Bosses now drop Boss Ofuda of their respective type, used in conjunction with the Senri Priest Hat.
-	* Currently, only non-event vanilla bosses have an Ofuda, all other bosses will drop the default ofuda.
-+ Added Big Hat vanity item, with an eyeless variant.
-+ The Lumen Ball now scales with summon damage.
-+ Flashbomb immunity now extends to all forms of damage, including traps and bosses.
-+ Projectile max thrill now increases with every 35 damage instead of every 50.
-+ Projectile thrill cooldown is now 10 frames instead of 15.
-+ Increased the minimum thrill range from 50 to 60.
-- Greatly reduced the Harujion’s life draining effects, reduced its range in half, and reduced the amount of tiles affected on every absorption attempt.
-- Reduced Dimensional Fragment spawn chance from falling stars from 1 in 40 to 1 in 60.
-* Added a config option to block the Harujion from appearing and disable its related effects, turned off by default. It will not destroy or modify any already existing Harujion tiles.
-* Added a config option to return the severity of the Harujion’s effects to how they were before this update, turned off by default.
-* Removed debug text upon creating a Flashbomb projectile.
-* Set the Spirit item’s collection range to 450 pixels, doubled when having the Harujion equipped.
-* Modified danmaku bullets’ collision detection to be more accurate to its sprite.
-* Slightly changed the player targeting system.
-
+Ver {ModVersion}
++ The Power Rod Bat now has the flashbomb "Vertex Emit".
++ Graze range increased to 200 pixels.
++ Added a UI Element to indicate what spellcard is being used.
++ Added Book of Barriers Vol.1, Bullseye Medal and Marksmanship Medal.
+* Gravity Barrier now properly changes icons.
+* Thrill Engine can now be dropped by the Wall of Flesh with a 1/3 chance.
+* Senri priest hat can now drop at any moment as long as the player is wearing the Big Hat.
+* Boss ofudas only drop when the player has the Senri Priest Hat equipped.
+* Updated spanish translation.
+* Fixed typos.
 
 Due to steam workshop's character limit, the full changelog has been moved to Google docs.
 Full Changelog: 

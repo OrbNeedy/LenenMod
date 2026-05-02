@@ -17,7 +17,6 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 
 namespace lenen.Content.NPCs
@@ -293,8 +292,7 @@ namespace lenen.Content.NPCs
                     }
 
                     // Try to spawn the senri priest headpiece
-                    if (Main.LocalPlayer.GetModPlayer<SenriPlayer>().canDropSenri &&
-                        Condition.DownedGolem.IsMet())
+                    if (Main.LocalPlayer.GetModPlayer<SenriPlayer>().canDropSenri)
                     {
                         Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_GiftOrReward(),
                             ModContent.ItemType<SenriPriestHeadpiece>());
@@ -313,79 +311,6 @@ namespace lenen.Content.NPCs
 
                 // If not success, display fail message
                 Main.npcChatText = Language.GetTextValue("Mods.lenen.Dialogue.CurtainOfAwakening.Failed");
-
-                // Although I don't believe the new code will fail, I leave this just in case
-                /*for (int i = 0; i < Main.LocalPlayer.inventory.Length; i++)
-                {
-                    // List<int> results = SpawnItem(Main.LocalPlayer.inventory[i].type);
-                    Item item = Main.LocalPlayer.inventory[i];
-                    
-                    if (item.IsAir) continue;
-
-                    bool success = false;
-                    if (success) break;
-                    if (results != null)
-                    {
-                        bool success = false;
-                        foreach (int item in results)
-                        {
-                            if (item != -1)
-                            {
-                                Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_GiftOrReward(), item);
-                                success = true;
-                            }
-                        }
-                        if (success)
-                        {
-                            Main.LocalPlayer.inventory[i].TurnToAir();
-                            if (Main.rand.NextBool())
-                            {
-                                int stack = Main.rand.Next(1, 4);
-                                Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_GiftOrReward(),
-                                ModContent.ItemType<RiftDye>(), stack);
-                            }
-
-                            NPC.active = false;
-                            // NPC.netSkip = -1;
-                            NPC.life = 0;
-                            for (int k = 0; k < 15; k++)
-                            {
-                                Dust.NewDust(NPC.position, 30, 52, DustID.ShimmerSpark, newColor: new(10, 255, 60));
-                            }
-                            return;
-                        }
-                    }*/
-
-                /*if (items.Keys.Contains(Main.LocalPlayer.inventory[i].type))
-                {
-
-                    int itemType = Main.LocalPlayer.inventory[i].type;
-                    if (CanItemSpawn(itemType))
-                    {
-                        Main.LocalPlayer.inventory[i].TurnToAir();
-                        foreach (int item in items[itemType])
-                        {
-                            Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_GiftOrReward(), item);
-                        }
-                        if (Main.rand.NextBool())
-                        {
-                            int stack = Main.rand.Next(1, 4);
-                            Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_GiftOrReward(),
-                            ModContent.ItemType<RiftDye>(), stack);
-                        }
-
-                        NPC.active = false;
-                        // NPC.netSkip = -1;
-                        NPC.life = 0;
-                        for (int k = 0; k < 15; k++)
-                        {
-                            Dust.NewDust(NPC.position, 30, 52, DustID.ShimmerSpark, newColor: new(10, 255, 60));
-                        }
-                        return;
-                    }
-                }*/
-                /*}
-                Main.npcChatText = Language.GetTextValue("Mods.lenen.Dialogue.CurtainOfAwakening.Failed");*/
             }
         }
 
@@ -430,109 +355,6 @@ namespace lenen.Content.NPCs
             timeSpent++;
         }
 
-#nullable enable
-        private List<int>? SpawnItem(int item)
-        {
-            List<int>? result = null;
-            if (item == ModContent.ItemType<DimensionalFragment>() && NPC.downedGolemBoss)
-            {
-                result = new List<int>() { ModContent.ItemType<DimensionalOrbs>() };
-                return result;
-            }
-
-            if (item == ModContent.ItemType<AssassinKnife>() && NPC.downedBoss3)
-            {
-                result = new List<int>() { ModContent.ItemType<ImprovedKnife>() };
-                if (NPC.downedMechBossAny)
-                {
-                    if (Main.LocalPlayer.HasItem(ModContent.ItemType<UnstableRock>()))
-                    {
-                        int duoPosition = Main.LocalPlayer.FindItem(ModContent.ItemType<UnstableRock>());
-                        if (Main.LocalPlayer.inventory[duoPosition].stack == 1)
-                        {
-                            Main.LocalPlayer.inventory[duoPosition].TurnToAir();
-                        }
-                        else
-                        {
-                            Main.LocalPlayer.inventory[duoPosition].stack -= 1;
-                        }
-                        result.Add(ModContent.ItemType<MemoryKnife>());
-                    }
-                }
-                return result;
-            }
-
-            if (item == ModContent.ItemType<HooWing>() && NPC.downedPlantBoss)
-            {
-                if (Main.LocalPlayer.HasItem(ModContent.ItemType<AkaWing>()))
-                {
-                    int duoPosition = Main.LocalPlayer.FindItem(ModContent.ItemType<AkaWing>());
-                    if (Main.LocalPlayer.inventory[duoPosition].stack == 1)
-                    {
-                        Main.LocalPlayer.inventory[duoPosition].TurnToAir();
-                    }
-                    else
-                    {
-                        Main.LocalPlayer.inventory[duoPosition].stack -= 1;
-                    }
-                    result = new List<int>() { ModContent.ItemType<HooakaWings>() };
-                }
-                return result;
-            }
-
-            if (item == ModContent.ItemType<AkaWing>())
-            {
-                if (Main.LocalPlayer.HasItem(ModContent.ItemType<HooWing>()) && NPC.downedPlantBoss)
-                {
-                    int duoPosition = Main.LocalPlayer.FindItem(ModContent.ItemType<HooWing>());
-                    if (Main.LocalPlayer.inventory[duoPosition].stack == 1)
-                    {
-                        Main.LocalPlayer.inventory[duoPosition].TurnToAir();
-                    }
-                    else
-                    {
-                        Main.LocalPlayer.inventory[duoPosition].stack -= 1;
-                    }
-                    result = new List<int>() { ModContent.ItemType<HooakaWings>() };
-                }
-                return result;
-            }
-
-            if (item == ModContent.ItemType<FunctionalBirdDrone>() && NPC.downedGolemBoss)
-            {
-                result = new List<int>() { ModContent.ItemType<TrueBirdDrone>() };
-                return result;
-            }
-
-            if (item == ModContent.ItemType<GravitationalAnomaly>() && (NPC.downedTowerNebula || 
-                NPC.downedTowerSolar || NPC.downedTowerStardust || NPC.downedTowerStardust))
-            {
-                // Merry christmas
-                result = new List<int>();
-                int duoPosition = -1;
-                duoPosition = Main.LocalPlayer.FindItem([ItemID.Present, ItemID.YellowPresent, ItemID.BluePresent,
-                ItemID.GreenPresent]);
-
-                if (duoPosition == -1)
-                {
-                    result.Add(ModContent.ItemType<GravityGlobe>());
-                } else
-                {
-                    if (Main.LocalPlayer.inventory[duoPosition].stack == 1)
-                    {
-                        Main.LocalPlayer.inventory[duoPosition].TurnToAir();
-                    } else
-                    {
-                        Main.LocalPlayer.inventory[duoPosition].stack -= 1;
-                    }
-                    result.Add(ModContent.ItemType<ChristmasGlobe>());
-                }
-                return result;
-            }
-
-            return result;
-        }
-
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (++AnimationTime > 6)
@@ -554,7 +376,7 @@ namespace lenen.Content.NPCs
             DrawData data = new DrawData(texture,
                     NPC.position - Main.screenPosition - new Vector2(2, 2),
                     bounds,
-                    Color.White,
+                    Color.White * 0f,
                     0f,
                     Vector2.Zero,
                     new Vector2(1f, 1f),
@@ -567,15 +389,25 @@ namespace lenen.Content.NPCs
 
             SpriteBatchExt.Restart(spriteBatch, state, SpriteSortMode.Immediate);
 
+            // Rift Gradient
             MiscShaderData shader = GameShaders.Misc["Rift"].UseColor(0, 1, 0);
-            DrawData data2 = new DrawData(overlay,
-                    NPC.position - Main.screenPosition - new Vector2(2, 2),
-                    bounds,
-                    Color.White,
-                    0f,
-                    Vector2.Zero,
-                    new Vector2(1f, 1f),
-                    flip);
+            /*shader.Shader.Parameters["leftColor"].
+                SetValue(new Vector3(0f, 0f, 0f));
+            shader.Shader.Parameters["middleColor"].
+                SetValue(new Vector3(0f, 0f, 0f));
+            shader.Shader.Parameters["rightColor"].
+                SetValue(new Vector3(0f, 0f, 0f));
+            Texture2D test = ModContent.Request<Texture2D>("lenen/Content/Projectiles/BigBullet").Value;*/
+
+            DrawData data2 = new DrawData(
+                overlay,
+                NPC.position - Main.screenPosition - new Vector2(2, 2),
+                bounds,
+                Color.White * 1f,
+                0f,
+                Vector2.Zero,
+                new Vector2(1f, 1f),
+                flip);
 
             shader.Apply(data2);
 

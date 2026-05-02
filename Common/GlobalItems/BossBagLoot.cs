@@ -16,6 +16,8 @@ namespace lenen.Common.GlobalItems
                 case ItemID.WallOfFleshBossBag:
                     itemLoot.Add(ItemDropRule.ByCondition(new DropInExpert(),
                         ModContent.ItemType<DimensionalFragment>(), 6));
+                    itemLoot.Add(ItemDropRule.ByCondition(new DropInExpert(),
+                        ModContent.ItemType<ThrillEngine>(), 3));
                     break;
                 case ItemID.SkeletronBossBag:
                     itemLoot.Add(ItemDropRule.ByCondition(new DropInExpert(),

@@ -1,12 +1,6 @@
-﻿using lenen.Common;
-using lenen.Common.Players;
+﻿using lenen.Common.Players;
 using lenen.Content.Buffs;
-using lenen.Content.Projectiles;
-using Microsoft.Xna.Framework;
-using Mono.Cecil;
-using Steamworks;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -36,7 +30,7 @@ namespace lenen.Content.Items.Accessories
         {
             CreateRecipe()
                 .AddIngredient<LumenDiscFragment>(6)
-                .AddTile(TileID.DemonAltar)
+                .AddTile(TileID.DemonAltar) 
                 .AddCondition(Condition.TimeDay)
                 .Register();
 

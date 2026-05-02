@@ -1,7 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using System.Collections.Generic;
 using System.Threading;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ModLoader;
 
 namespace lenen.Common.Players.Barriers
 {
@@ -11,7 +15,7 @@ namespace lenen.Common.Players.Barriers
         public virtual Color TopColor { get; set; } = Color.White;
         public virtual Color MidColor { get; set; } = Color.White;
         public virtual Color BottomColor { get; set; } = Color.White;
-        public virtual string IconTexturePath { get; set; } = "BarrierIcon";
+        public virtual string IconTextureIndex { get; set; } = "BarrierIcon";
         // Current State
         public bool Active { get; set; } = false;
         public bool Broken { get; set; } = false;
@@ -24,6 +28,11 @@ namespace lenen.Common.Players.Barriers
         public int Recovery { get; set; } = 0; // Timer until one life is recovered or the entire barrier is recovered
         public virtual int MaxRecovery { get; set; } = 0;
         public virtual int MaxFullRecovery { get; set; } = 0;
+
+        public virtual List<string> InitializeTextures()
+        {
+            return [IconTextureIndex];
+        }
 
         public virtual void Initialize(Player player)
         {

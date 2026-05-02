@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework;
 using lenen.Common.Players;
 using Terraria.GameContent;
 using System.Linq;
-using lenen.Content.NPCs.Fairy;
 using Terraria.Localization;
 
 namespace lenen.Common.UI
@@ -83,7 +82,7 @@ namespace lenen.Common.UI
             int divisionsOfDivisions = (int)(divisions / colors.Length);
             soulsUsed -= (int)(divisions*1000);
             float percent = (float)(soulsUsed) / 1000f;
-            percent = Utils.Clamp(percent, 0f, 1f); // Clamping it to 0-1f so it doesn't go over that.
+            percent = float.Clamp(percent, 0f, 1f); // Clamping it to 0-1f so it doesn't go over that.
             int currentColor = divisions - (divisionsOfDivisions*colors.Length);
 
             // Here we get the screen dimensions of the barFrame element, then tweak the resulting rectangle to arrive at a rectangle within the barFrame texture that we will draw the gradient. These values were measured in a drawing program.

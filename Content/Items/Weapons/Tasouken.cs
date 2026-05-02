@@ -143,6 +143,9 @@ namespace lenen.Content.Items.Weapons
             }*/
 
             SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
+            manager.lastSpellCard = Common.Players.SpellCard.CloudMowing;
+            manager.lastDesperate = manager.desperateBomb;
+
             if (manager.spellCardTimer <= 0)
             {
                 SpellCard(player);

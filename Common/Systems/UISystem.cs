@@ -15,11 +15,15 @@ namespace lenen.Common.Systems
     {
         private UserInterface SpellCardBarUserInterface;
 
+        private UserInterface SpellCardIndicatorInterface;
+
         private UserInterface BarrierBarUserInterface;
 
         private UserInterface SpiritsJarUserInterface;
 
         internal SpellCardBar SpellCardBar;
+
+        internal SpellCardIndicator SpellCardIndicator;
 
         internal BarrierBar BarrierBar;
 
@@ -33,6 +37,10 @@ namespace lenen.Common.Systems
             SpellCardBarUserInterface = new();
             SpellCardBarUserInterface.SetState(SpellCardBar);
 
+            SpellCardIndicator = new();
+            SpellCardIndicatorInterface = new();
+            SpellCardIndicatorInterface.SetState(SpellCardIndicator);
+
             BarrierBar = new();
             BarrierBarUserInterface = new();
             BarrierBarUserInterface.SetState(BarrierBar);
@@ -40,6 +48,12 @@ namespace lenen.Common.Systems
             SpiritsJar = new();
             SpiritsJarUserInterface = new();
             SpiritsJarUserInterface.SetState(SpiritsJar);
+        }
+
+        public override void SetStaticDefaults()
+        {
+            if (Main.netMode == NetmodeID.Server) return;
+            SpellCardIndicator.SetShaders();
         }
 
         public override void UpdateUI(GameTime gameTime)
@@ -56,6 +70,7 @@ namespace lenen.Common.Systems
                 }
             }
             SpellCardBarUserInterface?.Update(gameTime);
+            SpellCardIndicatorInterface?.Update(gameTime);
             BarrierBarUserInterface?.Update(gameTime);
             SpiritsJarUserInterface?.Update(gameTime);
         }
@@ -72,6 +87,15 @@ namespace lenen.Common.Systems
             if (resourceBarIndex != -1)
             {
                 layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
+                    "Lenen Mod: Spell Card Indicator",
+                    delegate {
+                        SpellCardIndicatorInterface.Draw(Main.spriteBatch, new GameTime());
+                        return true;
+                    },
+                    InterfaceScaleType.UI)
+                );
+
+                layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
                     "Lenen Mod: Spirit Jar",
                     delegate {
                         SpiritsJarUserInterface.Draw(Main.spriteBatch, new GameTime());
@@ -79,10 +103,7 @@ namespace lenen.Common.Systems
                     },
                     InterfaceScaleType.UI)
                 );
-            }
 
-            if (resourceBarIndex != -1)
-            {
                 layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
                     "Lenen Mod: Spell Card Bar",
                     delegate {
@@ -91,10 +112,7 @@ namespace lenen.Common.Systems
                     },
                     InterfaceScaleType.UI)
                 );
-            }
 
-            if (resourceBarIndex != -1)
-            {
                 layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
                     "Lenen Mod: Barrier Bar",
                     delegate {

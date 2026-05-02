@@ -1,4 +1,6 @@
 ﻿using lenen.Common.Players.Barriers;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -13,7 +15,8 @@ namespace lenen.Common.Players
         SkullBarrier2,
         DesperateBarrier, 
         ResurrectionBarrier, 
-        GravityBarrier
+        GravityBarrier, 
+        Beginner
     }
 
     public class PlayerBarrier : ModPlayer
@@ -22,17 +25,39 @@ namespace lenen.Common.Players
             [BarrierTypes.SkullBarrier2] = new BetterSkullBarrier(),
             [BarrierTypes.DesperateBarrier] = new DesperateBarrier(),
             [BarrierTypes.ResurrectionBarrier] = new ResurrectionBarrier(),
-            [BarrierTypes.GravityBarrier] = new GravityBarrier()
+            [BarrierTypes.GravityBarrier] = new GravityBarrier(),
+            [BarrierTypes.Beginner] = new BeginerBarrier()
         };
+        public static Dictionary<string, Asset<Texture2D>> barrierIcons = new();
 
         public static Barrier[] BarrierTemplates { get; set; } = { new SkullBarrier(), new BetterSkullBarrier(),
-            new DesperateBarrier(), new ResurrectionBarrier(), new GravityBarrier() };
+            new DesperateBarrier(), new ResurrectionBarrier(), new GravityBarrier(), new BeginerBarrier() };
+
+        public override void Load()
+        {
+            barrierIcons.Add("Default", ModContent.Request<Texture2D>($"lenen/Assets/Icons/BarrierIcon"));
+            foreach (Barrier barrier in barriers.Values)
+            {
+                List<string> keys = barrier.InitializeTextures();
+                foreach (string name in keys)
+                {
+                    if (barrierIcons.ContainsKey(name)) continue;
+
+                    barrierIcons.Add(name, ModContent.Request<Texture2D>($"lenen/Assets/Icons/{name}"));
+                }
+            }
+        }
 
         public override void Initialize()
         {
             foreach (Barrier barrier in barriers.Values)
             {
                 barrier.Initialize(Player);
+                /*List<string> keys = barrier.InitializeTextures();
+                foreach (string name in keys)
+                {
+                    barrierIcons.Add(name, ModContent.Request<Texture2D>($"lenen/Assets/Icons/{name}"));
+                }*/
             }
         }
 

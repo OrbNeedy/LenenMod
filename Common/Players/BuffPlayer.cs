@@ -87,14 +87,12 @@ namespace lenen.Common.Players
             if (virusDebuff)
             {
                 //Language.GetTextValue("Mods.lenen.Death.RNA", Player.name)
-                damageSource = PlayerDeathReason.ByCustomReason(
-                    NetworkText.FromKey("Mods.lenen.Death.RNA", Player.name));
+                damageSource.CustomReason = NetworkText.FromKey("Mods.lenen.Death.RNA", Player.name);
             }
 
             if (harujionDebuff > 0f)
             {
-                damageSource = PlayerDeathReason.ByCustomReason(
-                    NetworkText.FromKey("Mods.lenen.Death.Harujion", Player.name));
+                damageSource.CustomReason = NetworkText.FromKey("Mods.lenen.Death.Harujion", Player.name);
             }
             return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genDust, ref damageSource);
         }

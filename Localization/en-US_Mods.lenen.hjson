@@ -196,8 +196,8 @@ Items: {
 			Press the {$Keybinds.Revival.DisplayName} key to consume 
 			spirits and enter an upgraded state that lasts for {0} seconds.
 			The upgraded state increases base damage by {2}, multiplicative 
-			damage by {1} and armor penetration by {3}, but reduces damage 
-			reduction by {4} and defense by {5}.
+			damage by {1}% and armor penetration by {3}, but reduces damage 
+			reduction by {4}% and defense by {5}.
 			Gives the wearer an improved Skull Barrier, which resists more 
 			hits and grants knockback resistance.
 			'''
@@ -355,7 +355,7 @@ Items: {
 		DisplayName: Thrill Engine
 		Tooltip:
 			'''
-			A strange machine that allows the use of flashbombs.
+			A strange machine that enables the use of flashbombs.
 			Charge a flashbomb by passing near a projectile and obtaining thrill.
 			Lose all thrill once the flashbomb is used.
 			Some items may have a different type of flashbomb.
@@ -485,6 +485,37 @@ Items: {
 			the curtain of awakening.
 			'''
 	}
+
+	BullseyeMedal: {
+		DisplayName: Bullseye Medal
+		Tooltip:
+			'''
+			Awarded to excellent gunman.
+			Increased ranged crit chance by {0}% and crit damage by {1}%.
+			'''
+	}
+
+	MarksmanshipMedal: {
+		DisplayName: Marksmanship Medal
+		Tooltip:
+			'''
+			Proof of skill, only for the best.
+			Increased ranged damage by {0}%, crit chance by {1}% 
+			and crit damage by {2}%.
+			Enemies release projectiles when hit by a critical ranged 
+			attack, dealing 60% of the original damage.
+			'''
+	}
+
+	BeginnerBarrier: {
+		DisplayName: Tome of barriers Vol.1
+		Tooltip:
+			'''
+			A book detailing the basics of a barrier.
+			Gives the player a beginner barrier, which increases defense 
+			while it's active.
+			'''
+	}
 }
 
 NPCs: {
@@ -546,6 +577,7 @@ Projectiles: {
 	CultistLightningCopy.DisplayName: Ink Blob
 	EmpressCopyBullet.DisplayName: Monochrome Ofuda
 	BulletSpawner.DisplayName: Magic Circle
+	CriticalHitBullets.DisplayName: Danmaku
 }
 
 Dialogue: {
@@ -718,7 +750,7 @@ SenriCopy: {
 		OfudaName: Eater of Worlds Ofuda
 		Description:
 			'''
-			Shoot a long string of talismans that ondulates 
+			Shoot a long string of talismans that undulates 
 			towards an enemy.
 			'''
 	}
@@ -793,11 +825,11 @@ SenriCopy: {
 
 	Golem: {
 		OfudaName: Golem Ofuda
-		Description: Shoots bouncing bullets everywhere
+		Description: Shoots bouncing bullets everywhere.
 	}
 
 	DukeFishron: {
-		OfudaName: Fishron Ofuda
+		OfudaName: Duke Fishron Ofuda
 		Description: Summons oscillating bullets under the mouse.
 	}
 
@@ -818,7 +850,7 @@ SenriCopy: {
 
 	MoonlordsCore: {
 		OfudaName: Moonlord Ofuda
-		Description: Shoot a sweeping laser to desintegrate everything.
+		Description: Shoot a sweeping laser to disintegrate everything.
 	}
 }
 

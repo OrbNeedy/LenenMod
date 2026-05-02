@@ -3,6 +3,7 @@ using lenen.Common.Systems;
 using lenen.Content.Items.Weapons;
 using lenen.Content.Projectiles;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -15,6 +16,7 @@ namespace lenen.Common.Players
 {
     public enum Flashbomb
     {
+        None,
         MaidenPit,
         VertexEmit,
         MonochromeFlash,
@@ -37,6 +39,19 @@ namespace lenen.Common.Players
         Suzumi
     }
 
+    public struct ItemFlashbombStats(Flashbomb flashbombType, bool variant = false)
+    {
+        public Flashbomb flashbombType = flashbombType;
+        public bool variant = variant;
+    }
+
+    public record FlashbombInterfaceNames(string name, Color midColor, Color outerColor)
+    {
+        public string name = name;
+        public Color midColor = midColor;
+        public Color outerColor = outerColor;
+    }
+
     public class ThrillPlayer : ModPlayer
     {
         public bool gainThrill = false;
@@ -48,12 +63,67 @@ namespace lenen.Common.Players
         public bool flashbombActive = false;
         public bool flashbombVariation = false;
         public int flashbombDuration = 0;
-        public int lastFlashbombUse = -1;
+        public Flashbomb lastFlashbombUse = Flashbomb.None;
+        public int timeSinceFlashbomb = 120;
+        public Dictionary<int, int> outerItemDict = new();
+        public Dictionary<int, ItemFlashbombStats> innerItemDict = new();
+
+        public static int grazeDistance = 240;
+        public static Dictionary<Flashbomb, FlashbombInterfaceNames> uiData = new()
+        {
+            [Flashbomb.None] = new("Earthern Spotlight", new Color(21, 163, 70), new Color(186, 158, 154)),
+            [Flashbomb.MaidenPit] = new("Maiden Pit", new Color(188, 177, 146), new Color(197, 197, 197)),
+            [Flashbomb.RememberedRemnants] = new("Earthern Spotlight", new Color(21, 163, 70), new Color(186, 158, 154)),
+            [Flashbomb.NegativeAndPositive] = new("Negative and Positive", new Color(108, 86, 132), new Color(72, 72, 72)),
+            [Flashbomb.Wormhole] = new("Earthern Spotlight", new Color(21, 163, 70), new Color(186, 158, 154)),
+            [Flashbomb.LostTorus] = new("Lost Torus", new Color(140, 109, 82), new Color(151, 79, 66)),
+            [Flashbomb.BlackRopes] = new("Black Ropes", new Color(0, 0, 0), new Color(58, 98, 32)),
+            [Flashbomb.VertexEmit] = new("Vertex Emit", new Color(227, 227, 227), new Color(0, 0, 0)),
+            [Flashbomb.MonochromeFlash] = new("Monochrome Ray -Flash-", new Color(227, 227, 227), new Color(0, 0, 0))
+        };
 
         public override void ResetEffects()
         {
             gainThrill = false;
             //percent = 1;
+        }
+
+        public override void Initialize()
+        {
+            innerItemDict = new() {
+                [-1] = new(Flashbomb.None),
+                [0] = new(Flashbomb.MaidenPit),
+                [1] = new(Flashbomb.RememberedRemnants),
+                [2] = new(Flashbomb.NegativeAndPositive),
+                [3] = new(Flashbomb.Wormhole),
+                [4] = new(Flashbomb.Wormhole, true),
+                [5] = new(Flashbomb.LostTorus),
+                [6] = new(Flashbomb.BlackRopes),
+                [7] = new(Flashbomb.Suzumi),
+                [8] = new(Flashbomb.VertexEmit),
+                [9] = new(Flashbomb.MonochromeFlash)
+            };
+
+            outerItemDict = new() {
+                [ModContent.ItemType<DimensionalFragment>()] = 0,
+                [ModContent.ItemType<DimensionalOrbs>()] = 0,
+                [ModContent.ItemType<ImprovedKnife>()] = 1,
+                [ModContent.ItemType<TrueBirdDrone>()] = 2,
+                [ModContent.ItemType<GravitationalAnomaly>()] = 3,
+                [ModContent.ItemType<GravityGlobe>()] = 3,
+                [ModContent.ItemType<ChristmasGlobe>()] = 4,
+                [ModContent.ItemType<HaniwaMaker>()] = 5,
+                [ModContent.ItemType<ExtendedGrab>()] = 5,
+                [ModContent.ItemType<Tasouken>()] = 6,
+                [ModContent.ItemType<MemoryKnife>()] = 7,
+                [ModContent.ItemType<PowerRodFan>()] = 8
+            };
+            
+            // Thank you for the Gensokyo mod, Eidolon
+            if (ModContent.TryFind("Gensokyo", "NanotechInk", out ModItem nanotechInk))
+            {
+                outerItemDict.Add(nanotechInk.Type, 9);
+            }
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet)
@@ -68,10 +138,15 @@ namespace lenen.Common.Players
                 if (percent >= 1 && !flashbombActive)
                 {
                     flashbombActive = true;
-                    lastFlashbombUse = GetPlayerFlashbombItem(Player, out flashbombVariation);
+                    lastFlashbombUse = Flashbomb.None;
+                    if (outerItemDict.ContainsKey(Player.HeldItem.type))
+                    {
+                        lastFlashbombUse = innerItemDict[outerItemDict[Player.HeldItem.ModItem.Type]].flashbombType;
+                    }
                     CheckWormhole(true);
                     flashbombDuration = FlashbombBegin(lastFlashbombUse);
                     percent -= FlashbombPercentUsage(lastFlashbombUse);
+                    timeSinceFlashbomb = 0;
                 }
             }
         }
@@ -91,8 +166,9 @@ namespace lenen.Common.Players
                 {
                     flashbombActive = false;
                 }
-
             }
+
+            if (timeSinceFlashbomb < 120) timeSinceFlashbomb++;
 
             // Gain thrill if possible
             if (gainThrill && !flashbombActive && !Player.immune)
@@ -107,16 +183,18 @@ namespace lenen.Common.Players
                         !projectile.hostile || projectile.damage <= 0|| projectile.sentry || 
                         projectile.minion) continue;
 
+                    //int grazeDistance = 200;
                     // If it is a modded projectile, take into account it's special collisions
                     bool? moddedCollision = projectile.ModProjectile?.Colliding(projectile.Hitbox, 
-                        new Rectangle((int)Player.Center.X-60, (int)Player.Center.Y-60, 120, 120));
+                        new Rectangle((int)Player.Center.X-(grazeDistance / 2), (int)Player.Center.Y-(grazeDistance / 2),
+                        grazeDistance, grazeDistance));
                     bool finalModdedCollision = false;
                     if (moddedCollision != null) finalModdedCollision = (bool)moddedCollision;
 
                     // Standard box collision followed by a radius collision
-                    if ((Collision.CheckAABBvAABBCollision(Player.Center, new Vector2(120, 120), projectile.Center,
-                        projectile.Size * 1.5f) && projectile.Center.Distance(Player.Center) <=
-                        60 + (projectile.Size.X / 2)) || finalModdedCollision)
+                    if ((Collision.CheckAABBvAABBCollision(Player.Center, new Vector2(grazeDistance, grazeDistance), 
+                        projectile.Center, projectile.Size * 1.5f) && projectile.Center.Distance(Player.Center) <=
+                        (grazeDistance / 2) + (projectile.Size.X / 2)) || finalModdedCollision)
                     {
                         // Increase percent, reset permanence timer to 30 seconds, give thrill cooldown to the
                         // projectile, and reduce the graze available
@@ -158,11 +236,11 @@ namespace lenen.Common.Players
             }
         }
 
-        private void FlashbombUpdate(int type, int duration)
+        private void FlashbombUpdate(Flashbomb type, int duration)
         {
             switch (type)
             {
-                case (int)Flashbomb.Suzumi:
+                case Flashbomb.Suzumi:
                     Player.immune = true;
                     Player.AddImmuneTime(ImmunityCooldownID.General, 1);
                     if (KeybindSystem.flashbomb.Current && percent > 0)
@@ -171,16 +249,14 @@ namespace lenen.Common.Players
                         percent -= fillRate / 3;
                     }
                     break;
-                default:
-                    break;
             }
         }
 
-        private void FlashbombModifyStats(int type, int duration)
+        private void FlashbombModifyStats(Flashbomb type, int duration)
         {
             switch (type)
             {
-                case (int)Flashbomb.Suzumi:
+                case Flashbomb.Suzumi:
                     Player.aggro -= 2000;
                     break;
                 default:
@@ -188,23 +264,25 @@ namespace lenen.Common.Players
             }
         }
 
-        private float FlashbombPercentUsage(int type)
+        private float FlashbombPercentUsage(Flashbomb type)
         {
-            if (type == (int)Flashbomb.Suzumi) return fillRate*2;
+            if (type == Flashbomb.Suzumi) return fillRate*2;
             return 1;
         }
 
-        private int FlashbombBegin(int type)
+        private int FlashbombBegin(Flashbomb type)
         {
             Vector2 direction;
+            direction = Player.Center.DirectionTo(Main.MouseWorld);
+            int typeAsInt = (int)type;
             switch (type)
             {
-                case (int)Flashbomb.MaidenPit:
+                case Flashbomb.MaidenPit:
                     Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center,
                         Vector2.Zero, ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI, 
-                        ai0: type);
+                        ai0: typeAsInt);
                     return 45;
-                case (int)Flashbomb.RememberedRemnants:
+                case Flashbomb.RememberedRemnants:
                     // Default flashbomb, but include a scapegoat
                     direction = Player.Center.DirectionTo(Main.MouseWorld);
                     Player.immune = true;
@@ -218,14 +296,14 @@ namespace lenen.Common.Players
                         direction, ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI, ai0: -1);
                     Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center,
                         Vector2.Zero, ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI, 
-                        ai0: type);
+                        ai0: typeAsInt);
                     return 30;
-                case (int)Flashbomb.NegativeAndPositive:
+                case Flashbomb.NegativeAndPositive:
                     Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center,
                         Vector2.Zero, ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI,
-                        ai0: type);
+                        ai0: typeAsInt);
                     return 15;
-                case (int)Flashbomb.Wormhole:
+                case Flashbomb.Wormhole:
                     // Default flashbomb, but include a wormhole
                     direction = Player.Center.DirectionTo(Main.MouseWorld);
                     Player.immune = true;
@@ -244,29 +322,52 @@ namespace lenen.Common.Players
                     {
                         Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center,
                         Vector2.Zero, ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI,
-                        ai0: type);
+                        ai0: typeAsInt);
                     }
                     return 30;
-                case (int)Flashbomb.LostTorus:
+                case Flashbomb.LostTorus:
                     Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center,
                         Vector2.Zero, ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI, 
-                        ai0: type);
+                        ai0: typeAsInt);
                     return 60;
-                case (int)Flashbomb.BlackRopes:
+                case Flashbomb.BlackRopes:
                     Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld,
                         Vector2.Zero, ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI,
-                        ai0: type);
+                        ai0: typeAsInt);
                     return 30;
-                case (int)Flashbomb.DimensionalDeletion:
+                case Flashbomb.DimensionalDeletion:
                     Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center,
                         Player.Center.DirectionTo(Main.MouseWorld) * 8, 
-                        ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI, ai0: type);
+                        ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI, ai0: typeAsInt);
                     return 15;
-                case (int)Flashbomb.Suzumi:
+                case Flashbomb.Suzumi:
                     percent = 1;
                     return 1;
+                case Flashbomb.VertexEmit:
+                    Player.immune = true;
+                    Player.AddImmuneTime(ImmunityCooldownID.General, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.Bosses, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.DD2OgreKnockback, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.TileContactDamage, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.Lava, 30);
+                    Player.AddImmuneTime(ImmunityCooldownID.WrongBugNet, 30);
+                    Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center,
+                        Vector2.Zero, ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI,
+                        ai0: typeAsInt);
+                    return 30;
+                case Flashbomb.MonochromeFlash:
+                    Player.immune = true;
+                    Player.AddImmuneTime(ImmunityCooldownID.General, 40);
+                    Player.AddImmuneTime(ImmunityCooldownID.Bosses, 40);
+                    Player.AddImmuneTime(ImmunityCooldownID.DD2OgreKnockback, 40);
+                    Player.AddImmuneTime(ImmunityCooldownID.TileContactDamage, 40);
+                    Player.AddImmuneTime(ImmunityCooldownID.Lava, 40);
+                    Player.AddImmuneTime(ImmunityCooldownID.WrongBugNet, 40);
+                    Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center,
+                        direction, ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI,
+                        ai0: typeAsInt);
+                    return 40;
                 default:
-                    direction = Player.Center.DirectionTo(Main.MouseWorld);
                     Player.immune = true;
                     Player.AddImmuneTime(ImmunityCooldownID.General, 30);
                     Player.AddImmuneTime(ImmunityCooldownID.Bosses, 30);
@@ -275,7 +376,8 @@ namespace lenen.Common.Players
                     Player.AddImmuneTime(ImmunityCooldownID.Lava, 30);
                     Player.AddImmuneTime(ImmunityCooldownID.WrongBugNet, 30);
                     Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center + (direction * 60), 
-                        direction, ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI, ai0: type);
+                        direction, ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI, ai0: 
+                        typeAsInt);
                     return 30;
             }
         }
@@ -303,7 +405,7 @@ namespace lenen.Common.Players
         public override void HideDrawLayers(PlayerDrawSet drawInfo)
         {
             if (!PlayerRenderTarget.canUseTarget || flashbombDuration <= 0 || 
-                lastFlashbombUse != (int)Flashbomb.Suzumi)
+                lastFlashbombUse != Flashbomb.Suzumi)
             {
                 return;
             }
@@ -320,7 +422,7 @@ namespace lenen.Common.Players
             {
                 switch (lastFlashbombUse)
                 {
-                    case (int)Flashbomb.Suzumi:
+                    case Flashbomb.Suzumi:
                         Vector2 position = PlayerRenderTarget.getPlayerTargetPosition(drawInfo.drawPlayer.whoAmI);
                         Rectangle sourceRect = PlayerRenderTarget.
                             getPlayerTargetSourceRectangle(drawInfo.drawPlayer.whoAmI);
@@ -335,49 +437,6 @@ namespace lenen.Common.Players
 
         public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
         {
-        }
-
-        public static int GetPlayerFlashbombItem(Player player, out bool variation)
-        {
-            variation = false;
-            if (player.HeldItem.ModItem is DimensionalFragment || player.HeldItem.ModItem is DimensionalOrbs)
-            {
-                return (int)Flashbomb.MaidenPit;
-            }
-            if (player.HeldItem.ModItem is ImprovedKnife)
-            {
-                return (int)Flashbomb.RememberedRemnants;
-            }
-            if (player.HeldItem.ModItem is TrueBirdDrone)
-            {
-                return (int)Flashbomb.NegativeAndPositive;
-            }
-            if (player.HeldItem.ModItem is GravitationalAnomaly || player.HeldItem.ModItem is GravityGlobe ||
-                player.HeldItem.ModItem is ChristmasGlobe)
-            {
-                variation = player.HeldItem.ModItem is ChristmasGlobe;
-                return (int)Flashbomb.Wormhole;
-            }
-            if (player.HeldItem.ModItem is HaniwaMaker || player.HeldItem.ModItem is ExtendedGrab)
-            {
-                // Variation soon
-                return (int)Flashbomb.LostTorus;
-            }
-            if (player.HeldItem.ModItem is Tasouken)
-            {
-                return (int)Flashbomb.BlackRopes;
-            }
-            if (player.HeldItem.ModItem is BarrierWeapon)
-            {
-                // Will be implemented some other time
-                return -1;
-            }
-            if (player.HeldItem.ModItem is MemoryKnife)
-            {
-                return (int)Flashbomb.Suzumi;
-            }
-            // etc...
-            return -1;
         }
     }
 }

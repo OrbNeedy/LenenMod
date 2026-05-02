@@ -6,8 +6,8 @@ using lenen.Common.Players;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Graphics.Shaders;
-using Terraria.GameContent.Bestiary;
 using Terraria.Graphics.Effects;
+using lenen.Common.Utils;
 
 namespace lenen
 {
@@ -22,22 +22,31 @@ namespace lenen
                 Asset<Effect> silouetteShader = this.Assets.Request<Effect>("Effects/SilouetteEffect");
                 Asset<Effect> heavyNoiseShader = this.Assets.Request<Effect>("Effects/HeavyNoiseEffect");
                 Asset<Effect> rectangleWaveShader = this.Assets.Request<Effect>("Effects/RectangleWaveEffect");
-                //Asset<Effect> invertedShader = this.Assets.Request<Effect>("Effects/InvertedEffect");
                 Asset<Effect> screenInvertedShader = this.Assets.Request<Effect>("Effects/InvertedEffect");
+                Asset<Effect> gradientShader = this.Assets.Request<Effect>("Effects/SpellcardGradient");
+                Asset<Effect> gradientShader2 = this.Assets.Request<Effect>("Effects/SpellcardGradient");
 
                 GameShaders.Misc["Rift"] = new MiscShaderData(curtainShader, "RiftShader");
                 GameShaders.Misc["Harujion"] = new MiscShaderData(textureShader, "TextureShader").
                     UseImage1(Assets.Request<Texture2D>("Assets/Textures/FlowerPattern"));
-                GameShaders.Misc["Silouette"] = new MiscShaderData(silouetteShader, "SilouetteShader");
+                GameShaders.Misc["Silouette"] = new MiscShaderData(silouetteShader, "SilouetteShader").
+                    UseColor(0.075f, 0.075f, 0.075f).UseSecondaryColor(0.7f, 0.7f, 0.7f);
                 GameShaders.Misc["HeavyNoise"] = new MiscShaderData(heavyNoiseShader, "NoiseShader");
                 GameShaders.Misc["RectangleWave"] = new MiscShaderData(rectangleWaveShader, "SquareWaveShader");
                 GameShaders.Misc["Inverted"] = new MiscShaderData(screenInvertedShader, "DimensionalDeletion");
+                GameShaders.Misc["Gradient"] = new MiscShaderData(gradientShader, "Gradient");
+                GameShaders.Misc["Gradient2"] = new MiscShaderData(gradientShader2, "Gradient");
 
-                Terraria.Graphics.Effects.Filters.Scene["DimensionalDeletion"] = new Filter(
+                Filters.Scene["DimensionalDeletion"] = new Filter(
                     new ScreenShaderData(screenInvertedShader, "DimensionalDeletion"), EffectPriority.Medium);
-                Terraria.Graphics.Effects.Filters.Scene["DimensionalDeletion"].Load();
+                Filters.Scene["DimensionalDeletion"].Load();
                 //Terraria.Graphics.Effects.Filters.Scene["Name"].GetShader().Shader.Parameters[""].SetValue(2);
             }
+        }
+
+        public override void PostSetupContent()
+        {
+            BulletUtils.LoadTexture();
         }
 
         internal enum MessageType : byte

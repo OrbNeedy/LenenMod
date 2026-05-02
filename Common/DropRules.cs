@@ -1,6 +1,7 @@
 ﻿using Terraria.GameContent.ItemDropRules;
 using Terraria;
 using lenen.Content.NPCs.Fairy;
+using lenen.Common.Players;
 
 namespace lenen.Common
 {
@@ -115,6 +116,24 @@ namespace lenen.Common
         public string GetConditionDescription()
         {
             return $"Droped by a {type.ToString()} fairy.";
+        }
+    }
+
+    public class SenriDropCondition : IItemDropRuleCondition, IProvideItemConditionDescription
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            return info.player.GetModPlayer<SenriPlayer>().senriActive && info.npc.boss;
+        }
+
+        public bool CanShowItemDropInUI()
+        {
+            return true;
+        }
+
+        public string GetConditionDescription()
+        {
+            return "Have the senri priest hat on.";
         }
     }
 }

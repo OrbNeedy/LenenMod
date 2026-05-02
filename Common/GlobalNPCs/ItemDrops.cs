@@ -24,7 +24,7 @@ namespace lenen.Common.GlobalNPCs
             }
 
             // General boss
-            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.LegacyHack_IsABoss(), 
+            npcLoot.Add(ItemDropRule.ByCondition(new SenriDropCondition(), 
                 ModContent.ItemType<BossOfuda>())); // Ofuda
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.LegacyHack_IsABoss(), 
                 ModContent.ItemType<SenriPriestHeadpiece>(), 800));
@@ -39,6 +39,8 @@ namespace lenen.Common.GlobalNPCs
                 case NPCID.WallofFlesh:
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), 
                         ModContent.ItemType<DimensionalFragment>(), 6));
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(),
+                        ModContent.ItemType<ThrillEngine>(), 3));
                     break;
                 case NPCID.CultistBoss:
                     //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SenriPriestHeadpiece>(), 12));

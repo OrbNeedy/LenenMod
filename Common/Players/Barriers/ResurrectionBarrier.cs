@@ -1,6 +1,6 @@
 ﻿using Terraria;
 using Microsoft.Xna.Framework;
-using Terraria.ID;
+using System.Collections.Generic;
 
 namespace lenen.Common.Players.Barriers
 {
@@ -13,7 +13,12 @@ namespace lenen.Common.Players.Barriers
         public override Color TopColor { get; set; } = new Color(239, 190, 227);
         public override Color MidColor { get; set; } = new Color(213, 163, 242);
         public override Color BottomColor { get; set; } = new Color(172, 120, 248);
-        public override string IconTexturePath { get; set; } = "HarujionIcon";
+        public override string IconTextureIndex { get; set; } = "HarujionIcon";
+
+        public override List<string> InitializeTextures()
+        {
+            return [IconTextureIndex];
+        }
 
         public override void PassiveEffects(Player player)
         {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 
 namespace lenen.Common.Players.Barriers
@@ -12,7 +13,12 @@ namespace lenen.Common.Players.Barriers
         public override Color TopColor { get; set; } = new Color(86, 1, 76);
         public override Color MidColor { get; set; } = new Color(45, 1, 61);
         public override Color BottomColor { get; set; } = new Color(22, 0, 61);
-        public override string IconTexturePath { get; set; } = "GravityPlusIcon";
+        public override string IconTextureIndex { get; set; } = "GravityPlusIcon";
+
+        public override List<string> InitializeTextures()
+        {
+            return [IconTextureIndex, "CheerIcon"];
+        }
 
         public GravityBarrier() : base()
         {
@@ -31,13 +37,13 @@ namespace lenen.Common.Players.Barriers
                 TopColor = new Color(209, 202, 202);
                 MidColor = new Color(207, 103, 99);
                 BottomColor = new Color(204, 14, 0);
-                IconTexturePath = "CheerIcon";
+                IconTextureIndex = "CheerIcon";
             } else
             {
                 TopColor = new Color(86, 1, 76);
                 MidColor = new Color(45, 1, 61);
                 BottomColor = new Color(22, 0, 61);
-                IconTexturePath = "GravityPlusIcon";
+                IconTextureIndex = "GravityPlusIcon";
             }
         }
 

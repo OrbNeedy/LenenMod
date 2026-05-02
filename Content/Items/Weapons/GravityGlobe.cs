@@ -25,7 +25,7 @@ namespace lenen.Content.Items.Weapons
             Item.width = 30;
             Item.height = 38;
             Item.value = Item.sellPrice(0, 0, 50, 80);
-            Item.rare = ItemRarityID.Yellow;
+            Item.rare = ItemRarityID.Red;
 
             Item.useTime = 50;
             Item.useAnimation = 50;
@@ -72,6 +72,8 @@ namespace lenen.Content.Items.Weapons
             player.CheckMana(spellCardCost, true, true);
             player.manaRegenDelay = player.manaRegenCount;
             manager.spellCardTimer = spellCardTimer;
+            manager.lastSpellCard = Common.Players.SpellCard.SuperNova;
+            manager.lastDesperate = manager.desperateBomb;
 
             // 90
             int desperation = 1;

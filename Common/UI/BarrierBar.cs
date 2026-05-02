@@ -8,7 +8,6 @@ using Terraria.UI;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using lenen.Common.Players.Barriers;
-using System;
 
 namespace lenen.Common.UI
 {
@@ -38,7 +37,7 @@ namespace lenen.Common.UI
                 barFrames[index].Width.Set(26, 0f);
                 barFrames[index].Height.Set(130, 0f);
 
-                barIcons.Add(new UIImage(ModContent.Request<Texture2D>($"lenen/Assets/Icons/{barrier.IconTexturePath}")));
+                barIcons.Add(new UIImage(ModContent.Request<Texture2D>("lenen/Assets/Icons/BarrierIcon")));
                 barIcons[index].Left.Set(4, 0f);
                 barIcons[index].Top.Set(114, 0f);
                 barIcons[index].Width.Set(12, 0f);
@@ -88,7 +87,7 @@ namespace lenen.Common.UI
                 area.Append(bar);
                 area.Append(icon);
 
-                icon.SetImage(ModContent.Request<Texture2D>($"lenen/Assets/Icons/{barrier.IconTexturePath}"));
+                icon.SetImage(PlayerBarrier.barrierIcons[barrier.IconTextureIndex]);
 
                 Rectangle hitbox = bar.GetInnerDimensions().ToRectangle();
                 hitbox.X += 6;
@@ -97,7 +96,7 @@ namespace lenen.Common.UI
                 hitbox.Height = 100;
 
                 float percent = (float)barrier.Life / (float)barrier.MaxLife;
-                percent = Utils.Clamp(percent, 0f, 1f);
+                percent = float.Clamp(percent, 0f, 1f);
 
                 Rectangle hitbox2 = bar.GetInnerDimensions().ToRectangle();
                 hitbox2.X += 20;
@@ -118,7 +117,7 @@ namespace lenen.Common.UI
                     gradiantA = new Color(3, 217, 213);
                     gradiantB = new Color(3, 217, 213);
                 }
-                percent2 = Utils.Clamp(percent2, 0f, 1f);
+                percent2 = float.Clamp(percent2, 0f, 1f);
                 if (barrier.Life >= barrier.MaxLife) percent2 = 0;
 
                 int bottom = hitbox.Bottom;

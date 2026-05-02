@@ -443,57 +443,91 @@ Items: {
 	}
 
 	PowerRodFan: {
-		// DisplayName: Power Rod Bat
-		/* Tooltip:
+		DisplayName: Bate Varilla del Poder
+		Tooltip:
 			'''
-			A strange bat made of paper.
-			Not great for hitting, but has great magical properties.
-			Right click to switch between a minion mode and a sentry mode.
-			''' */
+			Un bate extraño hecho de papel.
+			No es bueno golpeando, pero tiene grandes propiedades mágicas.
+			Click derecho para cambiar entre un modo de subito y un modo de 
+			torreta.
+			'''
 	}
 
 	SenriPriestHeadpiece: {
-		// DisplayName: Senri Priest Hat
-		/* Tooltip:
+		DisplayName: Sombrero de Sacerdote Senri
+		Tooltip:
 			'''
-			A hat used by the Senri priest.
-			The use of it's symbol brings fear upon the hearts of 
-			men, though not so much on monsters.
-			Increased damage by {0}%.
-			Using a weapon will shoot an additional projectile 
-			depending on the used boss ofuda.
-			''' */
+			Un sombrero usado por el sacerdote Senri.
+			El uso de su simbolo trae terror en el corazón de los 
+			hombres, aunque no tanto en monstruos.
+			Aumenta el daño en {0}%.
+			Usar un arma disparará proyectiles adicionales 
+			dependiendo de la Ofuda de jefe usada.
+			'''
 	}
 
 	BossOfuda: {
-		// DisplayName: Boss Ofuda
-		/* Tooltip:
+		DisplayName: Ofuda de jefe
+		Tooltip:
 			'''
-			An ofuda obtained by defeating a boss.
-			Used to change the attack of the user when using the 
-			{$SenriPriestHeadpiece.DisplayName}.
-			''' */
+			Una ofuda obtenida de vencer a un jefe.
+			Usado para cambiar el ataque del usuario mientras se 
+			usa el {$SenriPriestHeadpiece.DisplayName}.
+			'''
 	}
 
 	EyelessTsubaHat: {
-		// DisplayName: Big Hat
-		/* Tooltip:
+		DisplayName: Sombrero grande
+		Tooltip:
 			'''
-			A stylish black hat.
-			It could attract something when nearby an opening to 
-			the curtain of awakening.
-			''' */
+			Un sombrero negro con estilo
+			Podría atraer algo cuando está cerca de una apertura a
+			la cortina del despertar.
+			'''
 	}
 
 	TsubaHat: {
-		// DisplayName: Big Hat
-		/* Tooltip:
+		DisplayName: Sombrero grande
+		Tooltip:
 			'''
-			A stylish black hat.
-			This one has an ominous eye in it.
-			It could attract something when nearby an opening to 
-			the curtain of awakening.
-			''' */
+			Un sombrero negro con estilo
+			Este tiene un ojo inquietante en el.
+			Podría atraer algo cuando está cerca de una apertura a
+			la cortina del despertar.
+			'''
+	}
+
+	BullseyeMedal: {
+		DisplayName: Medalla de tiro al blanco
+		Tooltip:
+			'''
+			Otorgada a tiradores excelentes.
+			Aumenta la posibilidad de critico de rango en {0}% y el daño 
+			critico en {1}%.
+			'''
+	}
+
+	MarksmanshipMedal: {
+		DisplayName: Medalla de precisión
+		Tooltip:
+			'''
+			Prueba de habilidad, solo para los mejores.
+			Aumenta el daño de rango en {0}%, posibilidad de critico 
+			en {1}% y daño critico en {2}%.
+			Los enemigos liberan proyectiles cuando son golpeados por 
+			un ataque critico de rango, causando 60% del daño 
+			original.
+			'''
+	}
+
+	BeginnerBarrier: {
+		DisplayName: Tomo de barreras Vol.1
+		Tooltip:
+			'''
+			Un libro que detalla lo básico de una barrera.
+			Le da al jugador una barrera de principiante, la cual 
+			aumenta las defensas mientras está activa.
+			'''
 	}
 }
 
@@ -541,21 +575,22 @@ Projectiles: {
 	SlowedBullet.DisplayName: Bala lenta
 	SuperNovaBullet.DisplayName: Super Nova
 	TeleportBarrier.DisplayName: Barrera
-	// SentryBullet.DisplayName: Bullet
-	// InkBirdMinion.DisplayName: Ink Bird
-	// InkCore.DisplayName: Ink Core
-	// CthulhuBullet.DisplayName: Bullet
-	// InkBullet.DisplayName: Ink Bullet
-	// SenriSlimeProjectile.DisplayName: Bullet
-	// WriglingProjectile.DisplayName: Ofuda
-	// InkKnife.DisplayName: Ink Knife
-	// DisruptionBullet.DisplayName: Bullet
-	// SkeletronCopyBullet.DisplayName: Bullet
-	// SenriCopyLaser.DisplayName: Monochrome Laser
-	// SenriCopyLaserHoldout.DisplayName: Monochrome Laser
-	// CultistLightningCopy.DisplayName: Ink Blob
-	// EmpressCopyBullet.DisplayName: Monochrome Ofuda
-	// BulletSpawner.DisplayName: Magic Circle
+	SentryBullet.DisplayName: Bala
+	InkBirdMinion.DisplayName: Ave de tinta
+	InkCore.DisplayName: Nucleo de tinta
+	CthulhuBullet.DisplayName: Bala
+	InkBullet.DisplayName: Bala de tinta
+	SenriSlimeProjectile.DisplayName: Bala
+	WriglingProjectile.DisplayName: Ofuda
+	InkKnife.DisplayName: Cuchillo de tinta
+	DisruptionBullet.DisplayName: Bala
+	SkeletronCopyBullet.DisplayName: Bala
+	SenriCopyLaser.DisplayName: Laser monocromado
+	SenriCopyLaserHoldout.DisplayName: Laser monocromado
+	CultistLightningCopy.DisplayName: Cumulo de tinta
+	EmpressCopyBullet.DisplayName: Ofuda monocromada
+	BulletSpawner.DisplayName: Circulo mágico
+	CriticalHitBullets.DisplayName: Danmaku
 }
 
 Dialogue: {
@@ -697,8 +732,8 @@ Conditions: {
 	HasEnoughSouls: Recolectar 1500 espiritus
 	AnyMechBoss: Derrotar a cualquier jefe mecanico
 	DownedPlantera: Derrotar a plantera
-	// AnyTower: Defeated any of the celestial pillars.
-	// IsSenri: Have the {$SenriPriestHeadpiece.DisplayName} equiped.
+	AnyTower: Derrotar a cualquier pilar celestial.
+	IsSenri: Tener equipado el {$SenriPriestHeadpiece.DisplayName}.
 }
 
 DamageClasses: {
@@ -708,79 +743,83 @@ DamageClasses: {
 
 Tiles: {
 	HarujionSapling.MapEntry: Harujion
-	// HarujionTree.MapEntry: Harujion Tree
-	// HarujionMultitile.MapEntry: Harujion Multitile
+	HarujionTree.MapEntry: Harujion
+	HarujionMultitile.MapEntry: Harujion
 }
 
-WorldGen.Harujion: Un youkai planta peligroso ha aparecido en el mundo.
+WorldGen.Harujion: Una planta youkai peligrosa ha aparecido en el mundo.
 
 SenriCopy: {
 	Default: {
-		// OfudaName: Senri Ofuda
-		// Description: Shoot a fast ink bullet that leaves trails of bullets.
+		OfudaName: Ofuda de Senri
+		Description:
+			'''
+			Dispara un proyectil de tinta rápido que deja un rastro de 
+			proyectiles.
+			'''
 	}
 
 	KingSlime: {
-		// OfudaName: King Slime Ofuda
-		// Description: Shoot a bullet that separates when hitting something.
+		OfudaName: Ofuda del Rey Slime
+		Description: Dispara un proyectil que se separa cuando golpea algo.
 	}
 
 	EyeOfCthulhu: {
-		// OfudaName: Eye of Cthulhu Ofuda
-		// Description: Shoot two big bullets that dash towards an enemy.
+		OfudaName: Ofuda del Ojo de Cthulhu
+		Description: Dispara dos proyectiles grandes que embisten al enemigo.
 	}
 
 	EaterOfWorlds: {
-		// OfudaName: Eater of Worlds Ofuda
-		/* Description:
+		OfudaName: Ofuda del Devorador de Mundos
+		Description:
 			'''
-			Shoot a long string of talismans that ondulates 
-			towards an enemy.
-			''' */
+			Dispara una larga cadena de talismanes que ondulan 
+			hacia el enemigo.
+			'''
 	}
 
 	BrainOfCthulhu: {
-		// OfudaName: Brain of Cthulhu Ofuda
-		// Description: Bullets appear around the target when attacking.
+		OfudaName: Ofuda del Cerebro de Cthulhu
+		Description: Proyectiles aparecen alrededor del objetivo cuando se ataca.
 	}
 
 	QueenBee: {
-		// OfudaName: Queen Bee Ofuda
-		// Description: Shoot small but persistent bullets.
+		OfudaName: Ofuda de la Abeja Reina
+		Description: Dispara proyectiles pequeños pero persistentes.
 	}
 
 	Skeletron: {
-		// OfudaName: Skeletron Ofuda
-		// Description: Shoots a fast moving wall of bullets.
+		OfudaName: Ofuda de Skeletron
+		Description: Dispara una pared de proyectiles rápida.
 	}
 
 	Deerclops: {
-		// OfudaName: Deerclops Ofuda
-		// Description: Big Bullets appear to interrupt the enemy's path.
+		OfudaName: Ofuda de Cierviclope
+		Description: Proyectiles grandes aparecen para interrumpir al enemigo.
 	}
 
 	WallOfFlesh: {
-		// OfudaName: Wall of Flesh Ofuda
-		/* Description:
+		OfudaName: Ofuda del Muro de Carne
+		Description:
 			'''
-			Shoots bullets that turn into knives and fly
-			towards the enemy.
-			''' */
+			Dispara proyectiles que se convierten en cuchillos 
+			y vuelan al enemigo.
+			'''
 	}
 
 	QueenSlime: {
-		// OfudaName: Queen Slime Ofuda
-		// Description: A bullet appears on top of the enemy and moves downwards.
+		OfudaName: Ofuda de la Reina Slime
+		Description: Un proyectil aparece encima del enemigo y se mueve abajo.
 	}
 
 	Retinazer: {
-		// OfudaName: Retinazer Ofuda
-		// Description: Rains down bullets on the entire screen.
+		OfudaName: Ofuda de Retinator
+		Description: Llueven proyectiles en la pantalla entera.
 	}
 
 	Spazmatism: {
-		// OfudaName: Spazmatism Ofuda
-		// Description: Shoots bullets with cursed flames.
+		OfudaName: Ofuda de Espasmatizador
+		Description: Dispara proyectiles con llamas malditas.
 	}
 
 	Twins: {
@@ -789,42 +828,42 @@ SenriCopy: {
 	}
 
 	TheDestroyer: {
-		// OfudaName: Destroyer Ofuda
-		/* Description:
+		OfudaName: Ofuda del Destructor
+		Description:
 			'''
-			Shoot a long string of talismans that shoot 
-			bullets at the enemy.
-			''' */
+			Dispara una largaa cadena de talismanes que 
+			disparan proyectiles al enemigo.
+			'''
 	}
 
 	SkeletronPrime: {
-		// OfudaName: Skeletron Prime Ofuda
-		// Description: Shoots four slightly delayed projectiles.
+		OfudaName: Ofuda de Skeletron Prime
+		Description: Dispara proyectiles ligeramente tardados.
 	}
 
 	Plantera: {
-		// OfudaName: Plantera Ofuda
-		// Description: Pollutes the battlefield with static bullets.
+		OfudaName: Ofuda de Plantera
+		Description: Contamina el campo de batalla con proyectiles estaticos.
 	}
 
 	Golem: {
-		// OfudaName: Golem Ofuda
-		// Description: Shoots bouncing bullets everywhere
+		OfudaName: Ofuda de Golem
+		Description: Dispara proyectiles que rebotan por todas partes.
 	}
 
 	DukeFishron: {
-		// OfudaName: Fishron Ofuda
-		// Description: Summons oscillating bullets under the mouse.
+		OfudaName: Ofuda del Duque Fishron
+		Description: Invoca proyectiles oscilantes bajo el mouse.
 	}
 
 	EmpressOfLight: {
-		// OfudaName: Empress of Light Ofuda
-		// Description: Create a whirlpool of bullets that leave trails.
+		OfudaName: Ofuda de la Emperatriz de Luz
+		Description: Crea un espiral de proyectiles que dejan un rastro.
 	}
 
 	LunaticCultist: {
-		// OfudaName: Lunatic Cultist Ofuda
-		// Description: Shoots a lightning fast ink blob.
+		OfudaName: Ofuda del Cultista Lunatico
+		Description: Dispara un cumulo de tinta rápido.
 	}
 
 	LunarEvent: {
@@ -833,40 +872,41 @@ SenriCopy: {
 	}
 
 	MoonlordsCore: {
-		// OfudaName: Moonlord Ofuda
-		// Description: Shoot a sweeping laser to desintegrate everything.
+		OfudaName: Ofuda de Moonlord
+		Description: Dispara un laser que desintegra todo.
 	}
 }
 
 Configs: {
 	GameplayConfig: {
-		// DisplayName: Gameplay Config
+		DisplayName: Configuración de Gameplay
 
 		Headers: {
-			// Harujion: Disable Harujion
-			// HarujionHardMode: Harujion Hard mode
+			Harujion: Deshabilitar al Harujion
+			HarujionHardMode: Modo difícil de Harujion
 		}
 
 		HarujionAllowed: {
-			// Label: Harujion Allowed
-			/* Tooltip:
+			Label: Harujion Permitido
+			Tooltip:
 				'''
-				Turn off to disable all gameplay effects related to the Harujion.
-				This will not destroy any existing Harujion tile or disable the 
-				Harujion accessory from dropping.
-				''' */
+				Desactivar para deshabilitar todos los efectos de Gameplay 
+				relacionados al Harujion.
+				Esto no va a destruir ningún bloque de Harujion existente o 
+				deshabilitar el accesorio de Harujion.
+				'''
 		}
 
 		HarujionHardMode: {
-			// Label: Harujion Hard Mode
-			/* Tooltip:
+			Label: Modo dificil de Harujion
+			Tooltip:
 				'''
-				Turn on to enable the old Harujion absorption.
-				Damage dealt to the player by the Harujion will increase by 400%, 
-				damage dealt to other NPCs will increase by 200%, range and max 
-				range will be doubled, and the amount of tiles it is allowed to 
-				change on every attempt will be doubled.
-				''' */
+				Encender para habilitar la absorción de Harujion antigua.
+				El daño causado al jugador por el Harujion aumenta en 400%, el 
+				daño causado a otros NPCs aumenta en 200%, el rango y rango 
+				maximo se duplicarán, y la cantidad de bloques que puede 
+				reemplazar en cada intento se duplicará.
+				'''
 		}
 	}
 }

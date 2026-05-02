@@ -7,6 +7,9 @@
 	<PropertyGroup>
 		
 	</PropertyGroup>
+	<ItemGroup>
+	  <AdditionalFiles Remove="Effects\SpellcardGradient.fx" />
+	</ItemGroup>
 
 	<!-- References -->
 	<ItemGroup>

@@ -1,6 +1,7 @@
 displayName = Len'en Mod
 author = Reboot
-version = 0.2.10.0
+version = 0.2.10.2
+homepage = https://terrariamods.wiki.gg/wiki/Len%27en_Mod
 hidecode = false
 hideresources = false
 includesource = true

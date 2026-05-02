@@ -93,6 +93,8 @@ namespace lenen.Content.Items.Weapons
             player.CheckMana(spellCardCost, true, true);
             player.manaRegenDelay = player.manaRegenCount;
             manager.spellCardTimer = spellCardTimer;
+            manager.lastSpellCard = Common.Players.SpellCard.LaserRain;
+            manager.lastDesperate = manager.desperateBomb;
 
             // 30
             int dmg = (int)(player.GetWeaponDamage(Item) * 0.42857f);

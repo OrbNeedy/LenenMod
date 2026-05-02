@@ -37,11 +37,6 @@ namespace lenen.Content.Projectiles
         public override void OnSpawn(IEntitySource source)
         {
             Projectile.scale = 0.3f;
-            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/bom_00") with 
-            { 
-                Volume = 0.65f, 
-                PitchVariance = 0.1f 
-            }, Projectile.Center);
         }
 
         public override void AI()

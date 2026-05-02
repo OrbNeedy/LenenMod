@@ -20,7 +20,7 @@ namespace lenen.Content.Items.Accessories
             Item.height = 40;
             Item.accessory = true;
 
-            Item.rare = ItemRarityID.Master;
+            Item.rare = ItemRarityID.Expert;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

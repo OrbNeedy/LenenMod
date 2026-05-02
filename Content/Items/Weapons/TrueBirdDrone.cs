@@ -67,6 +67,8 @@ namespace lenen.Content.Items.Weapons
         {
             SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
             manager.spellCardTimer = spellCardTimer;
+            manager.lastSpellCard = Common.Players.SpellCard.Retrovirus;
+            manager.lastDesperate = manager.desperateBomb;
 
             // 35
             int dmg = (int)(player.GetWeaponDamage(Item) * 0.5f);

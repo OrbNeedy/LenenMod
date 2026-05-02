@@ -106,7 +106,7 @@ namespace lenen.Common.Systems
                 ProjectileID.GelBalloon, ProjectileID.VolatileGelatinBall, ProjectileID.DeerclopsRangedProjectile,
                 ProjectileID.BladeOfGrass, ProjectileID.VenomDartTrap, ProjectileID.SilverBullet, ProjectileID.MiniBoulder,
                 ProjectileID.ShimmerArrow, ProjectileID.GasTrap, ProjectileID.SpelunkerFlare, ProjectileID.CursedFlare,
-                ProjectileID.RainbowFlare, ProjectileID.ShimmerFlare, 
+                ProjectileID.RainbowFlare, ProjectileID.ShimmerFlare
             ]);
             gravityAffectedProjectiles.AddRange([
                 ModContent.ProjectileType<BasicBullet>(), ModContent.ProjectileType<SpiritFlame>(), 
@@ -115,7 +115,7 @@ namespace lenen.Common.Systems
                 ModContent.ProjectileType<OffensiveBarrier>(), ModContent.ProjectileType<RustyKnife>(),
                 ModContent.ProjectileType<BoneKnife>(), ModContent.ProjectileType<DarkKnife>(),
                 ModContent.ProjectileType<SenriSlimeProjectile>(), 
-                ModContent.ProjectileType<WriglingProjectile>()
+                ModContent.ProjectileType<WriglingProjectile>(), ModContent.ProjectileType<CriticalHitBullets>()
             ]);
         }
     }
