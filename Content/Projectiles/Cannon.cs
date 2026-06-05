@@ -13,7 +13,9 @@ namespace lenen.Content.Projectiles
     public class Cannon : ModProjectile
     {
         Asset<Texture2D> body = ModContent.Request<Texture2D>("lenen/Content/Projectiles/Cannon");
-        public float CannonType { get => Projectile.ai[1]; set => Projectile.ai[1] = value; }
+        public int HeadIndex { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
+        public int ParentAnchor { get => (int)Projectile.ai[1]; set => Projectile.ai[1] = value; }
+        public int CannonType { get => (int)Projectile.ai[2]; set => Projectile.ai[2] = value; }
 
         HaniwaMaterial material = HaniwaMaterial.Clay;
 
@@ -21,9 +23,6 @@ namespace lenen.Content.Projectiles
         int barrageTimer = 0;
         int barrageLeft = 6;
 
-        int baseDamage = 0;
-
-        Vector2 targetPosition = Vector2.Zero;
         bool hasTarget = false;
 
         public override void SetStaticDefaults()
@@ -64,55 +63,86 @@ namespace lenen.Content.Projectiles
             }
         }
 
+        public bool CheckParentProjectile(int index)
+        {
+            if (index == -1) return false;
+
+            Projectile head = Main.projectile[index];
+
+            return head.active && head.owner == Projectile.owner && 
+                head.type == ModContent.ProjectileType<HaniwaCannon>();
+        }
+
         public override void AI()
         {
-            Projectile frame = Main.projectile[(int)Projectile.ai[0]];
-            Player owner = Main.player[Projectile.owner];
-
-            if (frame != null)
+            if (!CheckParentProjectile(HeadIndex))
             {
-                if (frame.active && frame.ModProjectile is HaniwaCannon)
+                Projectile.timeLeft = 0;
+                return;
+            }
+
+            Projectile.timeLeft = 2;
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+
+            Projectile head = Main.projectile[HeadIndex];
+
+            Vector2 offset = new Vector2(head.width * 0.4f * ParentAnchor, head.height / 2f);
+            Projectile.Center = head.Center + offset;
+
+            if (Main.myPlayer == Projectile.owner)
+            {
+                Vector2 targetPos = Vector2.Zero;
+                SetTarget(out targetPos, Main.LocalPlayer);
+
+                Projectile.velocity = Projectile.Center.DirectionTo(targetPos);
+
+                if (shootTimer <= 0 && hasTarget)
                 {
-                    Projectile.timeLeft = 2;
-                    Projectile.damage = frame.damage;
-                    Positioning(frame);
-                    CheckTarget(owner);
-                    Shooting();
-                    Projectile.rotation = Projectile.Center.DirectionTo(targetPosition).ToRotation() + 
-                        MathHelper.PiOver2;
+                    string sourceString = "ClayHaniwa";
+                    switch (material)
+                    {
+                        case HaniwaMaterial.Ice:
+                            sourceString = "IceHaniwa";
+                            break;
+                        case HaniwaMaterial.Stone:
+                            sourceString = "StoneHaniwa";
+                            break;
+                    }
+
+                    int addedDamage = (int)(Projectile.minionSlots * 10);
+                    if (head.ai[0] != 0) addedDamage = (int)(Projectile.minionSlots * 45);
+                    int finalDamage = Projectile.damage + addedDamage;
+
+                    switch (CannonType)
+                    {
+                        case 1:
+                            ShootFan(Projectile.velocity, sourceString, finalDamage);
+                            break;
+                        case 2:
+                            ShootBarrage(Projectile.velocity, sourceString, finalDamage);
+                            break;
+                        default:
+                            ShootLaser(Projectile.velocity, sourceString, finalDamage);
+                            break;
+                    }
                 }
+                shootTimer--;
             }
         }
 
-        private void Positioning(Projectile reference)
+        public override bool ShouldUpdatePosition()
         {
-            Vector2 offset = new Vector2(0, reference.height/2);
-            switch (CannonType)
-            {
-                case -2:
-                    offset.X = reference.width / 2;
-                    break;
-                case -1:
-                    offset.X = -reference.width / 2;
-                    break;
-                case 1:
-                    offset.X = reference.width / 2;
-                    break;
-                case 2:
-                    offset.X = -reference.width / 2;
-                    break;
-                default:
-                    offset.X = 0;
-                    break;
-            }
-            offset.X *= 0.9f;
-            Projectile.Center = reference.Center + offset;
+            return false;
         }
 
-        private void CheckTarget(Player owner)
+        private void SetTarget(out Vector2 targetPos, Player owner)
         {
+            targetPos = Main.MouseWorld;
+            hasTarget = false;
             if (Projectile.owner == Main.myPlayer)
             {
+                targetPos = Main.MouseWorld;
+
                 if (owner.HasMinionAttackTargetNPC)
                 {
                     NPC npc = Main.npc[owner.MinionAttackTargetNPC];
@@ -120,13 +150,13 @@ namespace lenen.Content.Projectiles
 
                     if (between < 4000f)
                     {
-                        targetPosition = npc.Center + (npc.velocity * 18);
+                        targetPos = npc.Center + (npc.velocity * 18);
                         hasTarget = true;
                         return;
                     }
                 }
 
-                targetPosition = Main.MouseWorld;
+                targetPos = Main.MouseWorld;
                 hasTarget = false;
                 NPC target = Main.LocalPlayer.GetModPlayer<TargetPlayer>().target;
                 if (target != null)
@@ -134,92 +164,49 @@ namespace lenen.Content.Projectiles
                     if (Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height,
                         target.position, target.width, target.height))
                     {
-                        targetPosition = target.Center + (target.velocity * 18);
+                        targetPos = target.Center + (target.velocity * 18);
                         hasTarget = true;
                     }
                 }
             }
         }
 
-        private void Shooting()
+        private void ShootLaser(Vector2 direction, string sourceString, int damage)
         {
-            if (Main.myPlayer != Projectile.owner) return;
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(sourceString), Projectile.Center,
+                direction * 13, ModContent.ProjectileType<SummonLaser>(), damage,
+                Projectile.knockBack, Projectile.owner);
+            shootTimer = 125;
+        }
 
-            string? sourceString = null;
-            switch (material)
+        private void ShootFan(Vector2 direction, string sourceString, int damage)
+        {
+            for (int i = 0; i < 6; i++)
             {
-                case HaniwaMaterial.Ice:
-                    sourceString = "IceHaniwa";
-                    break;
-                case HaniwaMaterial.Stone:
-                    sourceString = "StoneHaniwa";
-                    break;
-                default:
-                    sourceString = "ClayHaniwa";
-                    break;
+                // All colored
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(sourceString), Projectile.Center,
+                    direction.RotatedBy((i * MathHelper.Pi / 6f) - MathHelper.PiOver2) * 13,
+                    ModContent.ProjectileType<SummonBasicBullet>(), damage,
+                    Projectile.knockBack, Projectile.owner, (int)SheetFrame.White, (int)Sheet.Small);
             }
+            shootTimer = 60;
+        }
 
-            switch (CannonType)
+        private void ShootBarrage(Vector2 direction, string sourceString, int damage)
+        {
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(sourceString), Projectile.Center,
+                direction * 13, ModContent.ProjectileType<SummonBasicBullet>(), damage,
+                Projectile.knockBack, Projectile.owner, (int)SheetFrame.Yellow, (int)Sheet.Small);
+            barrageLeft--;
+
+            if (barrageLeft <= 0)
             {
-                case -2:
-                case 1: // Semicircle
-                    if (hasTarget)
-                    {
-                        if (shootTimer <= 0)
-                        {
-                            Vector2 direction = Projectile.Center.DirectionTo(targetPosition);
-                            for (int i = 0; i < 6; i++)
-                            {
-                                // All colored
-                                Projectile.NewProjectile(Projectile.GetSource_FromThis(sourceString), Projectile.Center,
-                                    direction.RotatedBy((i * MathHelper.Pi / 6) - MathHelper.PiOver2) * 13,
-                                    ModContent.ProjectileType<BasicBullet>(), Projectile.damage, 
-                                    Projectile.knockBack, Projectile.owner, (int)SheetFrame.White, (int)Sheet.Small);
-                            }
-                            shootTimer = 60;
-                        }
-                    }
-                    break;
-                case -1:
-                case 2: // Barrage
-                    if (hasTarget)
-                    {
-                        if (shootTimer <= 0)
-                        {
-                            barrageLeft = 6;
-                            shootTimer = 115;
-                        }
-                        if (barrageLeft > 0 && barrageTimer <= 0)
-                        {
-                            // All colored
-                            Vector2 direction = Projectile.Center.DirectionTo(targetPosition);
-                            Projectile.NewProjectile(Projectile.GetSource_FromThis(sourceString), Projectile.Center,
-                                direction * 13, ModContent.ProjectileType<BasicBullet>(), Projectile.damage,
-                                Projectile.knockBack, Projectile.owner, (int)SheetFrame.Yellow, (int)Sheet.Small);
-                            /*Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center,
-                                direction * 13, ModContent.ProjectileType<Bullet>(), Projectile.damage,
-                                Projectile.knockBack, Projectile.owner, ai1: 1, ai2: 0.65f);*/
-                            barrageLeft--;
-                            barrageTimer = 4;
-                        }
-                    }
-                    barrageTimer--;
-                    break;
-                default: // Laser
-                    if (hasTarget)
-                    {
-                        if (shootTimer <= 0)
-                        {
-                            Vector2 direction = Projectile.Center.DirectionTo(targetPosition);
-                            Projectile.NewProjectile(Projectile.GetSource_FromThis(sourceString), Projectile.Center,
-                                direction * 13, ModContent.ProjectileType<Laser>(), Projectile.damage,
-                                Projectile.knockBack, Projectile.owner);
-                            shootTimer = 125;
-                        }
-                    }
-                    break;
+                barrageLeft = 6;
+                shootTimer = 115;
+            } else
+            {
+                shootTimer = 5;
             }
-            shootTimer--;
         }
 
         public override bool PreDraw(ref Color lightColor)

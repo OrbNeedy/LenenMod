@@ -186,7 +186,10 @@ namespace lenen.Content.Items.Accessories
 
         public override void AddRecipes()
         {
-            Recipe.OnCraftCallback callback = new(TakeAwaySouls);
+            Recipe.OnCraftCallback callback = new((Recipe recipe, Item item, List<Item> list, Item item2) => 
+            { 
+                TakeAwaySouls(LenenConditions.GashadokuroUpgradeSpirits); 
+            });
             
             CreateRecipe()
                 .AddIngredient<GashadokuroSkull>()
@@ -197,9 +200,9 @@ namespace lenen.Content.Items.Accessories
                 .Register();
         }
 
-        private void TakeAwaySouls(Recipe recipe, Item item, List<Item> list, Item item2)
+        public static void TakeAwaySouls(int spirits)
         {
-            Main.LocalPlayer.GetModPlayer<SoulAbsorptionPlayer>().soulsCollected -= 1500;
+            Main.LocalPlayer.GetModPlayer<SoulAbsorptionPlayer>().soulsCollected -= spirits;
         }
     }
 }

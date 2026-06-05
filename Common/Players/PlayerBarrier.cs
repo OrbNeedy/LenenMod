@@ -69,6 +69,7 @@ namespace lenen.Common.Players
             }
         }
 
+        // Move elsewhere
         public override void PostUpdateEquips()
         {
             foreach (Barrier barrier in barriers.Values)

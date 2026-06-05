@@ -8,11 +8,20 @@ using Terraria.ModLoader;
 
 namespace lenen.Content.Items.Weapons
 {
-    public class HaniwaPerson //: ModItem
+    public class HaniwaPerson : ModItem
     {
-        /*public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
-            Item.damage = 68;
+            ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
+            ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
+
+            ProjectileID.Sets.MinionSacrificable[Item.shoot] = true;
+            ItemID.Sets.StaffMinionSlotsRequired[Type] = 1f;
+        }
+
+        public override void SetDefaults()
+        {
+            Item.damage = 48;
             Item.shoot = ModContent.ProjectileType<HaniwaClone>(); 
             Item.buffType = ModContent.BuffType<HaniwaCloneBuff>(); 
             Item.shootSpeed = 10f;
@@ -58,6 +67,6 @@ namespace lenen.Content.Items.Weapons
                 .AddIngredient(ItemID.ChlorophyteBar, 10)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
-        }*/
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using lenen.Common.Players;
+using lenen.Content.NPCs.TasoukenBoss;
 using lenen.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -13,8 +14,10 @@ namespace lenen.Content.Items.Weapons
 {
     public class Tasouken : ModItem
     {
+        public bool CanSpawnTasouken { get => !powerProven && NPC.downedGolemBoss; }
+
         private int spellCardTimer = 720;
-        private bool powerProved = false;
+        private bool powerProven = false;
         private string owner = "";
 
         public override void SetDefaults()
@@ -41,28 +44,46 @@ namespace lenen.Content.Items.Weapons
 
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(spellCardTimer);
 
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (source.Context != null)
+            {
+                string[] splitContext = source.Context.Split(":");
+                if (splitContext.Length == 2)
+                {
+                    owner = splitContext[0];
+                    powerProven = splitContext[1] == "true";
+                }
+            }
+        }
+
         public override void LoadData(TagCompound tag)
         {
             if (tag.ContainsKey("TasoukenOwner"))
             {
                 owner = tag.GetString("TasoukenOwner");
+            } else
+            {
+                owner = "";
             }
+
             if (tag.ContainsKey("PowerProved"))
             {
-                powerProved = tag.GetBool("PowerProved");
+                powerProven = tag.GetBool("PowerProved");
+            } else
+            {
+                powerProven = false;
             }
         }
 
         public override void SaveData(TagCompound tag)
         {
             tag["TasoukenOwner"] = owner;
-            tag["PowerProved"] = powerProved;
+            tag["PowerProved"] = powerProven;
         }
 
         public override void OnCreated(ItemCreationContext context)
         {
-            owner = "";
-            powerProved = false;
             base.OnCreated(context);
         }
 
@@ -78,18 +99,16 @@ namespace lenen.Content.Items.Weapons
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            // Modify only when the Tasouken boss is added fully
-            return;
-            if (!powerProved && NPC.downedGolemBoss)
+            if (!powerProven && NPC.downedGolemBoss)
             {
                 int index = tooltips.FindLastIndex((x) => x.Name.StartsWith("Tooltip") && x.Mod == "Terraria");
                 if (index != -1)
                 {
                     tooltips.Insert(index + 1, new TooltipLine(Mod, "TasoukenState",
-                        "This weapon awaits to be awakened."));
+                        "This weapon awaits a challenger. Invoke it's power to accept it."));
                 }
             }
-            if (powerProved)
+            if (powerProven)
             {
                 int index = tooltips.FindLastIndex((x) => x.Name.StartsWith("Tooltip") && x.Mod == "Terraria");
                 if (index != -1)
@@ -119,28 +138,23 @@ namespace lenen.Content.Items.Weapons
             return base.Shoot(player, source, position, velocity, type, damage, knockback);
         }
 
+        public override bool ConsumeItem(Player player)
+        {
+            return CanSpawnTasouken && owner == player.name;
+        }
+
+        public override void OnConsumeItem(Player player)
+        {
+            NPC.NewNPC(Item.GetSource_ReleaseEntity(), (int)player.Center.X, (int)player.Center.Y, 
+                ModContent.NPCType<TasoukenBoss>(), 0, player.whoAmI);
+        }
+
         public override bool AltFunctionUse(Player player)
         {
-            // This opens the Tasouken fight if available
-            /*if (!powerProved && NPC.downedGolemBoss)
+            if (owner == player.name && CanSpawnTasouken)
             {
-                if (owner == "")
-                {
-                    Main.NewText("Having no previous owner before, the sword thinks you are worthy enough.");
-                    powerProved = true;
-                } else
-                {
-                    if (player.name != owner)
-                    {
-                        Main.NewText("The sword refuses to lend you it's power.");
-                    } else
-                    {
-                        Main.NewText("The sword acknowledges you as worthy of it's power.");
-                        powerProved = true;
-                    }
-                }
-                return true;
-            }*/
+                return false;
+            }
 
             SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
             manager.lastSpellCard = Common.Players.SpellCard.CloudMowing;
@@ -156,25 +170,22 @@ namespace lenen.Content.Items.Weapons
 
         private void SpellCard(Player player)
         {
-            if (Main.myPlayer == player.whoAmI && !Main.dedServ)
+            if (owner == "")
             {
-                if (owner == "")
-                {
-                    owner = player.name;
-                }
+                owner = player.name;
             }
 
             SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
             manager.spellCardTimer = spellCardTimer;
 
             // 20
-            int dmg = (int)(player.GetWeaponDamage(Item)/3);
-            float desperation = MathHelper.TwoPi / 210;
+            int dmg = (int)(player.GetWeaponDamage(Item) / 3f);
+            float desperation = MathHelper.TwoPi / 210f;
             if (manager.desperateBomb)
             {
                 // 35
                 dmg = (int)(player.GetWeaponDamage(Item) * 0.58333f);
-                desperation = MathHelper.TwoPi / 70;
+                desperation = MathHelper.TwoPi / 70f;
                 manager.spellCardTimer = spellCardTimer + 300;
             }
 

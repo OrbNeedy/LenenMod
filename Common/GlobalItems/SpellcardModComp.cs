@@ -21,7 +21,7 @@ namespace lenen.Common.GlobalItems
                         
                         SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/bom_00") with
                         {
-                            Volume = 0.65f,
+                            Volume = 0.45f,
                             PitchVariance = 0.1f
                         }, player.Center);
                     }

@@ -4,9 +4,9 @@ using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace lenen.Content.Items
+namespace lenen.Content.Items.Vanity.Dyes
 {
-    public class NoiseDye : ModItem
+    public class HaniwaDye : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -14,7 +14,8 @@ namespace lenen.Content.Items
             {
                 GameShaders.Armor.BindShader(
                     Item.type,
-                    new ArmorShaderData(Mod.Assets.Request<Effect>("Effects/NoiseEffect"), "NoiseShader").UseColor(0f, 1f, 0f) 
+                    new ArmorShaderData(Mod.Assets.Request<Effect>("Effects/HaniwaTexture"), "Texture").
+                        UseImage(Mod.Assets.Request<Texture2D>("Assets/Textures/HaniwaTexture"))
                 );
             }
 

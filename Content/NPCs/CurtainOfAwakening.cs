@@ -4,6 +4,7 @@ using lenen.Common.Players;
 using lenen.Content.EmoteBubbles;
 using lenen.Content.Items;
 using lenen.Content.Items.Accessories;
+using lenen.Content.Items.Vanity.Dyes;
 using lenen.Content.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

@@ -115,7 +115,8 @@ namespace lenen.Common.Systems
                 ModContent.ProjectileType<OffensiveBarrier>(), ModContent.ProjectileType<RustyKnife>(),
                 ModContent.ProjectileType<BoneKnife>(), ModContent.ProjectileType<DarkKnife>(),
                 ModContent.ProjectileType<SenriSlimeProjectile>(), 
-                ModContent.ProjectileType<WriglingProjectile>(), ModContent.ProjectileType<CriticalHitBullets>()
+                ModContent.ProjectileType<WriglingProjectile>(), ModContent.ProjectileType<CriticalHitBullets>(), 
+                ModContent.ProjectileType<SummonBasicBullet>(), ModContent.ProjectileType<KnifeProjectile>()
             ]);
         }
     }

@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
-using Terraria;
 using Terraria.ModLoader;
+using Terraria;
 
-namespace lenen.Content.Items
+namespace lenen.Content.Items.Vanity.Dyes
 {
-    public class RiftDye : ModItem
+    public class BodyDoubleDye : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -14,7 +14,8 @@ namespace lenen.Content.Items
             {
                 GameShaders.Armor.BindShader(
                     Item.type,
-                    new ArmorShaderData(Mod.Assets.Request<Effect>("Effects/RiftEffect"), "RiftShader").UseColor(0f, 1f, 0f) // Be sure to update the effect path and pass name here.
+                    new ArmorShaderData(Mod.Assets.Request<Effect>("Effects/SolidColor"), "Solid").
+                    UseColor(1f, 0.02f, 0f).UseOpacity(1)
                 );
             }
 

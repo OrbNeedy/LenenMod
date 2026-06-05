@@ -1,5 +1,6 @@
 ﻿using lenen.Common.GlobalProjectiles;
 using lenen.Common.Systems;
+using lenen.Content.Buffs;
 using lenen.Content.Items.Weapons;
 using lenen.Content.Projectiles;
 using Microsoft.Xna.Framework;
@@ -60,6 +61,8 @@ namespace lenen.Common.Players
         public float fillRate = 0.03f;
         public int permanenceTime = 0;
 
+        public int armorModeTimer = 0;
+
         public bool flashbombActive = false;
         public bool flashbombVariation = false;
         public int flashbombDuration = 0;
@@ -79,7 +82,8 @@ namespace lenen.Common.Players
             [Flashbomb.LostTorus] = new("Lost Torus", new Color(140, 109, 82), new Color(151, 79, 66)),
             [Flashbomb.BlackRopes] = new("Black Ropes", new Color(0, 0, 0), new Color(58, 98, 32)),
             [Flashbomb.VertexEmit] = new("Vertex Emit", new Color(227, 227, 227), new Color(0, 0, 0)),
-            [Flashbomb.MonochromeFlash] = new("Monochrome Ray -Flash-", new Color(227, 227, 227), new Color(0, 0, 0))
+            [Flashbomb.MonochromeFlash] = new("Monochrome Ray -Flash-", new Color(227, 227, 227), new Color(0, 0, 0)),
+            [Flashbomb.ArmorMode] = new("Armor Mode", new Color(224, 2, 7), new Color(131, 156, 119))
         };
 
         public override void ResetEffects()
@@ -101,7 +105,8 @@ namespace lenen.Common.Players
                 [6] = new(Flashbomb.BlackRopes),
                 [7] = new(Flashbomb.Suzumi),
                 [8] = new(Flashbomb.VertexEmit),
-                [9] = new(Flashbomb.MonochromeFlash)
+                [9] = new(Flashbomb.MonochromeFlash),
+                [10] = new(Flashbomb.ArmorMode)
             };
 
             outerItemDict = new() {
@@ -116,7 +121,8 @@ namespace lenen.Common.Players
                 [ModContent.ItemType<ExtendedGrab>()] = 5,
                 [ModContent.ItemType<Tasouken>()] = 6,
                 [ModContent.ItemType<MemoryKnife>()] = 7,
-                [ModContent.ItemType<PowerRodFan>()] = 8
+                [ModContent.ItemType<PowerRodFan>()] = 8,
+                [ModContent.ItemType<HomunculusWeapon>()] = 10
             };
             
             // Thank you for the Gensokyo mod, Eidolon
@@ -144,9 +150,10 @@ namespace lenen.Common.Players
                         lastFlashbombUse = innerItemDict[outerItemDict[Player.HeldItem.ModItem.Type]].flashbombType;
                     }
                     CheckWormhole(true);
+                    timeSinceFlashbomb = 0;
+
                     flashbombDuration = FlashbombBegin(lastFlashbombUse);
                     percent -= FlashbombPercentUsage(lastFlashbombUse);
-                    timeSinceFlashbomb = 0;
                 }
             }
         }
@@ -249,6 +256,39 @@ namespace lenen.Common.Players
                         percent -= fillRate / 3;
                     }
                     break;
+                case Flashbomb.ArmorMode:
+                    if (KeybindSystem.flashbomb.Current)
+                    {
+                        float colPer = armorModeTimer / 120f;
+                        Color finalColor = Color.Lerp(Color.Blue, Color.DarkRed, colPer);
+                        for (int i = 0; i < 2 + (colPer * 6); i++)
+                        {
+                            Vector2 dir = new Vector2(3, 0).
+                                RotatedByRandom(MathHelper.TwoPi) + Player.velocity;
+                            int index = Dust.NewDust(Player.Center, 0, 0, DustID.TintableDustLighted, 
+                                dir.X, dir.Y, 0, finalColor);
+                        }
+
+                        if (armorModeTimer < 120)
+                        {
+                            flashbombDuration = 2;
+                            armorModeTimer++;
+                        } else
+                        {
+                            Player.AddBuff(ModContent.BuffType<ArmorMode>(), 300);
+                            percent = 0;
+                            armorModeTimer = 0;
+
+                            for (int i = 0; i < 22; i++)
+                            {
+                                Vector2 dir = new Vector2(8, 0).
+                                    RotatedByRandom(MathHelper.TwoPi) + Player.velocity;
+                                int index = Dust.NewDust(Player.Center, 0, 0, DustID.TintableDustLighted,
+                                    dir.X, dir.Y, 0, Color.LightPink);
+                            }
+                        }
+                    }
+                    break;
             }
         }
 
@@ -257,7 +297,7 @@ namespace lenen.Common.Players
             switch (type)
             {
                 case Flashbomb.Suzumi:
-                    Player.aggro -= 2000;
+                    Player.aggro -= 10000;
                     break;
                 default:
                     break;
@@ -266,7 +306,13 @@ namespace lenen.Common.Players
 
         private float FlashbombPercentUsage(Flashbomb type)
         {
-            if (type == Flashbomb.Suzumi) return fillRate*2;
+            switch (type)
+            {
+                case Flashbomb.Suzumi:
+                    return fillRate * 2;
+                case Flashbomb.ArmorMode:
+                    return 0;
+            }
             return 1;
         }
 
@@ -367,6 +413,10 @@ namespace lenen.Common.Players
                         direction, ModContent.ProjectileType<FlashbombProjectile>(), 0, 0, Player.whoAmI,
                         ai0: typeAsInt);
                     return 40;
+                case Flashbomb.ArmorMode:
+                    percent = 1;
+                    armorModeTimer = 0;
+                    return 1;
                 default:
                     Player.immune = true;
                     Player.AddImmuneTime(ImmunityCooldownID.General, 30);

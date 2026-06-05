@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader;
 
 namespace lenen.Common.Players
@@ -16,6 +17,8 @@ namespace lenen.Common.Players
             if (explosionUpgrade && hit.Crit && hit.DamageType == DamageClass.Ranged && 
                 Player.whoAmI == Main.myPlayer)
             {
+                SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/critical"), target.Center);
+
                 Vector2 baseDir = new Vector2(0, 8);
                 int projectile = ModContent.ProjectileType<CriticalHitBullets>();
                 int damage = (int)(damageDone * 0.6f);

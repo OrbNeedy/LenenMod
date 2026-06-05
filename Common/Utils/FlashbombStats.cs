@@ -19,7 +19,7 @@ namespace lenen.Common.Utils
 
         public static bool Square(Projectile self, Projectile target, Vector2 dimensions)
         {
-            return Collision.CheckAABBvAABBCollision(self.Center - dimensions / 2, dimensions,
+            return Collision.CheckAABBvAABBCollision(self.Center - dimensions / 2f, dimensions,
                 target.position, target.Size);
         }
 

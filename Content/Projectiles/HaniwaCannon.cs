@@ -1,4 +1,5 @@
-﻿using lenen.Content.Buffs;
+﻿using lenen.Common.Players;
+using lenen.Content.Buffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -28,15 +29,14 @@ namespace lenen.Content.Projectiles
 
     public class HaniwaCannon : ModProjectile
     {
+        public bool FromCreationTools { get => Projectile.ai[0] != 0; }
+
         Asset<Texture2D> body = ModContent.Request<Texture2D>("lenen/Assets/Textures/ClayHaniwaFrame");
-        Projectile[] cannons = new Projectile[3];
-        int baseDamage = 0;
         HaniwaMaterial material = HaniwaMaterial.Clay;
 
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
-
             Main.projPet[Projectile.type] = true;
 
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
@@ -66,7 +66,6 @@ namespace lenen.Content.Projectiles
         public override void OnSpawn(IEntitySource source)
         {
             Player player = Main.player[Projectile.owner];
-            baseDamage = Projectile.damage;
             string? sourceString = null;
             SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/haniwa_00") with
             {
@@ -92,25 +91,49 @@ namespace lenen.Content.Projectiles
                 sourceString = "ClayHaniwa";
             }
 
-            int[] cannonAIs = new int[] { 0, -1, -2 };
-            if (Projectile.ai[0] == 1)
+            if (OwnerActive(Projectile.owner))
             {
-                cannonAIs[1] = 1;
-                cannonAIs[2] = 2;
-            }
+                Player owner = Main.player[Projectile.owner];
+                BuffPlayer buff = owner.GetModPlayer<BuffPlayer>();
 
-            int index = 0;
+                if (FromCreationTools)
+                {
+                    Projectile.minionSlots = buff.prevSummonSlots * 0.3f;
+                }
+                else
+                {
+                    Projectile.minionSlots = buff.prevSummonSlots;
+                }
+            }
 
             if (Main.myPlayer != Projectile.owner) return;
-            
-            foreach (int ai in cannonAIs)
+
+            int anchor = 1;
+
+            if (FromCreationTools) anchor = (int)Projectile.ai[0];
+
+            for (int i = -1; i < 2; i++)
             {
-                cannons[index] = Projectile.NewProjectileDirect(player.GetSource_FromThis(sourceString), Projectile.Center, 
-                    Vector2.Zero, ModContent.ProjectileType<Cannon>(), Projectile.damage, 
-                    Projectile.knockBack, Projectile.owner, Projectile.whoAmI, ai);
-                index++;
+                Projectile.NewProjectile(player.GetSource_FromThis(sourceString), Projectile.Center,
+                    Vector2.Zero, ModContent.ProjectileType<Cannon>(), Projectile.damage,
+                    Projectile.knockBack, Projectile.owner, Projectile.whoAmI, i * anchor, i + 1);
             }
         }
+
+        /*The moon above is shining 
+        Bathing everything in white
+        It's there for you, it's there for me
+        It's there for everyone in need
+        
+        When life beats you down
+        Perhaps others left you behind
+        The winter is too cold, or your mind way too loud
+        Whatever you may need, it's already lost 
+        
+        Nothing will matter 
+        Nothing ever has
+        Just look up to the sky
+        What a beautiful moon today*/
 
         public override bool? CanCutTiles()
         {
@@ -122,89 +145,83 @@ namespace lenen.Content.Projectiles
             return true;
         }
 
+        public bool OwnerActive(Player owner)
+        {
+            //Main.NewText("Owner check");
+            bool cannonBuff = owner.HasBuff(ModContent.BuffType<HaniwaCannonBuff>());
+            bool commanderBuff = owner.HasBuff(ModContent.BuffType<HaniwaCommander>());
+            bool buffCheck = (!FromCreationTools && cannonBuff) || (FromCreationTools && commanderBuff);
+
+            return owner.active && owner.statLife > 0 && !owner.DeadOrGhost &&
+                buffCheck;
+        }
+
+        public bool OwnerActive(int who)
+        {
+            //Main.NewText("Who: " + who);
+            if (who == -1) return false;
+
+            Player owner = Main.player[who];
+
+            //Main.NewText("Check: " + (owner.active && owner.statLife > 0 && !owner.DeadOrGhost));
+            return OwnerActive(owner);
+        }
+
         public override void AI()
         {
-            Player player = Main.player[Projectile.owner];
-
-            if (!CheckActive(player))
+            if (!OwnerActive(Projectile.owner))
             {
-                Projectile.velocity = Vector2.Zero;
+                Projectile.timeLeft = 0;
                 return;
             }
 
-            int increase = 10;
-            if (Projectile.ai[0] == 0)
+            Projectile.timeLeft = 2;
+
+            Player owner = Main.player[Projectile.owner];
+            BuffPlayer buff = owner.GetModPlayer<BuffPlayer>();
+            Vector2 offset = new Vector2(288 * Projectile.ai[0], -360);
+
+            Projectile.Center = owner.Center + offset;
+
+            if (FromCreationTools)
             {
-                Projectile.minionSlots = player.maxMinions;
+                Projectile.minionSlots = buff.prevSummonSlots * 0.3f;
             } else
             {
-                increase = 20;
-                Projectile.minionSlots = player.maxMinions/2;
+                Projectile.minionSlots = buff.prevSummonSlots;
             }
-
-            Vector2 wantedPosition = player.Center + new Vector2((0 * Projectile.ai[0]) - Projectile.width/2, -360);
-            float distanceToPosition = Projectile.Center.Distance(wantedPosition);
-            Projectile.position = wantedPosition;
-            Projectile.netUpdate = true;
-
-            Projectile.damage = (int)(Projectile.damage + (increase * Projectile.minionSlots));
         }
 
-        public override void OnKill(int timeLeft)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            foreach (Projectile projectile in cannons)
+            float increase = 10;
+
+            if (FromCreationTools)
             {
-                projectile.Kill();
+                increase = 45;
             }
-            base.OnKill(timeLeft);
+
+            modifiers.SourceDamage.Base += Projectile.minionSlots * increase;
         }
 
-        private bool CheckActive(Player owner)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
-            if (owner.dead || !owner.active)
-            {
-                owner.ClearBuff(ModContent.BuffType<HaniwaCannonBuff>());
+            float increase = 10;
 
-                return false;
+            if (FromCreationTools)
+            {
+                increase = 45;
             }
 
-            if (owner.HasBuff(ModContent.BuffType<HaniwaCannonBuff>()))
-            {
-                Projectile.timeLeft = 2;
-            }
-
-            return true;
+            modifiers.SourceDamage.Base += Projectile.minionSlots * increase;
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-            //Main.PlayerRenderer.DrawPlayer(Main.Camera, Main.player[Projectile.owner], 
-            //    Projectile.Center + new Vector2(0, 200), 0, Vector2.Zero);
-            float alpha = 1;
-            /*SpriteBatchState state = SpriteBatchExt.GetState(Main.spriteBatch);
-            SpriteBatchExt.Restart(Main.spriteBatch, state, SpriteSortMode.Immediate);
-            
-
-            MiscShaderData shader = GameShaders.Misc["Rift"];
-            DrawData data2 = new DrawData(body.Value,
-                Projectile.position - Main.screenPosition,
-                body.Value.Bounds,
-                Color.White * alpha,
-                Projectile.rotation,
-                Vector2.Zero,
-                Projectile.scale,
-                SpriteEffects.None);
-
-            shader.Apply(data2);
-
-            data2.Draw(Main.spriteBatch);
-
-            SpriteBatchExt.Restart(Main.spriteBatch, state);*/
-
             Main.EntitySpriteDraw(body.Value,
                 Projectile.Center - Main.screenPosition,
                 body.Value.Bounds,
-                Color.White * alpha,
+                Color.White,
                 Projectile.rotation,
                 body.Size() * 0.5f,
                 Projectile.scale,

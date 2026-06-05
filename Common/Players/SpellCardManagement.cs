@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria;
 using Terraria.ModLoader;
+using lenen.Content.Projectiles.BulletHellProjectiles;
+using Terraria.DataStructures;
 
 namespace lenen.Common.Players
 {
@@ -16,7 +18,9 @@ namespace lenen.Common.Players
         SuperNova, 
         SuperPresent, 
         Retrovirus, 
-        MonochromeRay
+        MonochromeRay,
+        DharmaPower, 
+        SuperHaniwa
     }
 
     public record SpellCardData(string name, string desperateName, Color leftColor,
@@ -38,6 +42,12 @@ namespace lenen.Common.Players
         public bool lastDesperate = false;
         public int timeSinceSpellcard = 210;
 
+        public int swordDropletsLeft = 0;
+        public Vector2 storedDirection = Vector2.Zero;
+        public int cummulativeDropletTime = 0;
+        public int dropletsDamage = 0;
+        public int swordDropletsCooldown = 0;
+
         public static Dictionary<SpellCard, SpellCardData> spellcardData = new() {
             [SpellCard.LaserRain] = new("Light Card「Laser Rain」", "Light Card「Laser Grid」", 
                 new Color(5, 5, 5), new Color(188, 186, 184), new Color(163, 145, 109)),
@@ -55,7 +65,12 @@ namespace lenen.Common.Players
             [SpellCard.Retrovirus] = new("RNA「Retrovirus」", "Original Style「Black Wings【Shitodo】」",
                 new Color(162, 162, 162), new Color(85, 83, 88), new Color(107, 86, 132)),
             [SpellCard.MonochromeRay] = new("「Monochrome Ray」", "「Monochrome Ray」",
-                new Color(0, 0, 0), new Color(227, 227, 227), new Color(0, 0, 0))
+                new Color(0, 0, 0), new Color(227, 227, 227), new Color(0, 0, 0)),
+            [SpellCard.DharmaPower] = new("Dharma Power「Myōken of Heaven's Blessings」", 
+                "Dharmatic Power「Strange Sword of Myōken's Heavenly Blessing」",
+                new Color(131, 154, 114), new Color(150, 75, 64), new Color(0, 0, 0)),
+            [SpellCard.SuperHaniwa] = new("Giant Dogū「SUPER HANIWA」", "Fusion Dogū「DELUXE HANIWA」",
+                new Color(166, 184, 186), new Color(153, 84, 74), new Color(140, 108, 82))
         };
 
         public override void PreUpdate()
@@ -72,17 +87,34 @@ namespace lenen.Common.Players
 
                 SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/bom_00") with
                 {
-                    Volume = 0.65f,
+                    Volume = 0.45f,
                     PitchVariance = 0.1f
                 }, Player.Center);
             }
 
-            if (timeSinceSpellcard < 600) timeSinceSpellcard++;
+            if (swordDropletsLeft > 0 && swordDropletsCooldown <= 0)
+            {
+                Vector2 dir = storedDirection.RotatedByRandom(MathHelper.PiOver4 / 2f) * Main._rand.NextFloat(20, 40);
+                Projectile.NewProjectile(new EntitySource_ItemUse(Player, Player.HeldItem, "Spellcard"),
+                    Player.Center, dir, ModContent.ProjectileType<SwordDroplet>(), dropletsDamage, 3f,
+                    Player.whoAmI, Main._rand.Next(0, 2), cummulativeDropletTime);
+
+                dir = storedDirection.RotatedByRandom(MathHelper.PiOver4 / 2f) * Main._rand.NextFloat(20, 40);
+                Projectile.NewProjectile(new EntitySource_ItemUse(Player, Player.HeldItem, "Spellcard"),
+                    Player.Center, dir, ModContent.ProjectileType<SwordDroplet>(), dropletsDamage, 3f,
+                    Player.whoAmI, Main._rand.Next(0, 2), cummulativeDropletTime);
+
+                swordDropletsLeft--;
+                swordDropletsCooldown = 2;
+                cummulativeDropletTime += swordDropletsCooldown;
+            }
         }
 
         public override void ResetEffects()
         {
             desperateBomb = false;
+            if (timeSinceSpellcard < 600) timeSinceSpellcard++;
+            if (swordDropletsCooldown > 0) swordDropletsCooldown--;
         }
     }
 }

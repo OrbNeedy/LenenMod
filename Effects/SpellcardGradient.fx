@@ -38,22 +38,6 @@ float4 Gradient(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
     float3 secondMix = lerp(middleColor, rightColor, mix2A);
 	float3 col = lerp(firstMix, secondMix, step(mid, uv.x));
     
-    /*float md = uv.x + (1.0 / 3.0);
-    float md2 = uv.x - (1.0 / 3.0);
-    float3 firstMix = (leftColor * (1.0 - md)) + (middleColor * md);
-    firstMix *= step(uv.x, 0.5);
-    float3 secondMix = (rightColor * md2) + (middleColor * (1.0 - md2));
-    secondMix *= step(0.5, uv.x);
-    float3 col = firstMix + secondMix;*/
-    
-    /*float mix1A = uv.x / mid;
-    float mix2A = (uv.x - mid) / (1.0 - mid);
-    float3 firstMix = lerp(leftColor, middleColor, mix1A) * mid;
-    firstMix *= step(uv.x, mid);
-    float3 secondMix = lerp(middleColor, rightColor, mix2A);
-    secondMix *= step(mid, uv.x);
-    float3 col = firstMix + secondMix;*/
-    
     return float4(col * sampleColor.a, image.a) * image.a * sampleColor.a;
 }
     

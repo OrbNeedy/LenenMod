@@ -19,7 +19,10 @@ namespace lenen.Content.Projectiles.BulletHellProjectiles
         Pellet, 
         Small, 
         Ofuda, 
-        Bullet
+        Bullet, 
+        Knife, 
+        ReverseDefault, 
+        ReverseBig
     }
 
     public enum SheetFrame

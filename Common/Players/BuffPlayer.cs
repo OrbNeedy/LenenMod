@@ -1,6 +1,5 @@
 ﻿using lenen.Common.Systems;
 using lenen.Content.Projectiles;
-using lenen.Content.Tiles.Plants;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -20,17 +19,29 @@ namespace lenen.Common.Players
 
         private bool beingAbsorbed { get; set; }
         private int absorptionTimer = 0;
+        public int prevSummonSlots = 0;
 
         public override void ResetEffects()
         {
+            int sample = Player.maxMinions;
+
             lumenBuff = false;
             virusDebuff = false;
             harujionDebuff = 0;
             barrierBuff = 0;
         }
 
+        public override void PreUpdate()
+        {
+            int sample = Player.maxMinions;
+
+            prevSummonSlots = Player.maxMinions;
+        }
+
         public override void PostUpdate()
         {
+            int sample = Player.maxMinions;
+
             if (lumenBuff && Player.ownedProjectileCounts[ModContent.ProjectileType<LumenBall>()] < 1)
             {
                 EntitySource_Parent source = new EntitySource_Parent(Player);
