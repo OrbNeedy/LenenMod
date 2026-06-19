@@ -178,7 +178,7 @@ namespace lenen.Common.Players.Barriers
                     Recovery--;
 
                     BuffPlayer buffs = player.GetModPlayer<BuffPlayer>();
-                    switch (buffs.barrierBuff)
+                    switch (buffs.BarrierBuff)
                     {
                         case 1:
                             if (player.GetModPlayer<OptionsManagingPlayer>().UpdateCount % 2 == 0)

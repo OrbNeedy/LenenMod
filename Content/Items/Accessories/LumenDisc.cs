@@ -21,7 +21,7 @@ namespace lenen.Content.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<BuffPlayer>().lumenBuff = true;
+            player.GetModPlayer<BuffPlayer>().LumenBuff = true;
             player.AddBuff(ModContent.BuffType<LumenBallBuff>(), 2);
             base.UpdateAccessory(player, hideVisual);
         }

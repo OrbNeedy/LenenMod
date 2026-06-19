@@ -24,7 +24,7 @@ namespace lenen.Content.Buffs
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<BuffPlayer>().barrierBuff = 2;
+            player.GetModPlayer<BuffPlayer>().BarrierBuff = 2;
             if (player.HasBuff(ModContent.BuffType<BarrierBuff>()))
             {
                 player.ClearBuff(ModContent.BuffType<BarrierBuff>());

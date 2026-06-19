@@ -529,11 +529,58 @@ Items: {
 			aumenta las defensas mientras está activa.
 			'''
 	}
+
+	HomunculusWeapon: {
+		// DisplayName: Vessel Blade
+		/* Tooltip:
+			'''
+			A blade that creates body doubles of the user to fight.
+			Right click to use Dharma Power "Myōken of Heaven's Blessings".
+			Adds {0} Spell Card cooldown to the player.
+			''' */
+	}
+
+	BodyDoubleDye: {
+		// DisplayName: Body Double Dye
+		/* Tooltip:
+			'''
+			A dye used to simplify the process of making the 
+			Vessel Blade's projectiles.
+			Was not meant to be found, but can be equipped.
+			''' */
+	}
+
+	HaniwaPerson: {
+		// DisplayName: Haniwa Duplicator
+		/* Tooltip:
+			'''
+			Proof of your artistic mastery.
+			Create a duplicate of yourself to fight for you.
+			Takes up all the summon slots and increases it's damage.
+			''' */
+	}
+
+	HaniwaDye: {
+		// DisplayName: Haniwa Dye
+		// Tooltip: ""
+	}
+
+	HaniwaCreationTools: {
+		// DisplayName: Haniwa Creation Tools
+		/* Tooltip:
+			'''
+			Tools for someone whose art surpassed divinity.
+			Summons a haniwa clone of yourself and two haniwa cannons.
+			Right click to summon the Super Haniwa.
+			Adds {0} Spell Card cooldown to the player.
+			''' */
+	}
 }
 
 NPCs: {
 	CurtainOfAwakening.DisplayName: Cortina del Despertar
 	SmallFairy.DisplayName: Hada pequeña
+	// TasoukenBoss.DisplayName: Tasouken
 }
 
 Projectiles: {
@@ -591,6 +638,25 @@ Projectiles: {
 	EmpressCopyBullet.DisplayName: Ofuda monocromada
 	BulletSpawner.DisplayName: Circulo mágico
 	CriticalHitBullets.DisplayName: Danmaku
+	// BodyDouble.DisplayName: Body Double
+	// MeleeKnife.DisplayName: Knife
+	// SwordDroplet.DisplayName: Sword
+	// SummonBasicBullet.DisplayName: Danmaku
+	// HaniwaClone.DisplayName: Haniwa Clone
+	// SummonLaser.DisplayName: Danmaku
+	// BigLaser.DisplayName: Burst
+	// SuperHaniwa.DisplayName: Super Haniwa
+	// SuperHaniwaFist.DisplayName: Haniwa Fist
+	// SuperHaniwaHead.DisplayName: Super Haniwa
+	// LongCut.DisplayName: Cut
+	// RingCircle.DisplayName: Danmaku
+	// BulletCut.DisplayName: Cut
+	// MovingBullets.DisplayName: Danmaku
+	// PunishmentCut.DisplayName: Cut
+	// GridCut.DisplayName: Cut
+	// ThrillBullet.DisplayName: Danmaku
+	// MeleeBasicBullet.DisplayName: Melee Basic Bullet
+	// JudgementCut.DisplayName: Judgement Cut
 }
 
 Dialogue: {
@@ -685,6 +751,21 @@ Buffs: {
 	InkBirdMinionBuff: {
 		// DisplayName: Ink Bird
 		// Description: A bird made of ink will fight for you.
+	}
+
+	ArmorMode: {
+		// DisplayName: Armor Mode
+		// Description: Defense and damage reduction greatly increased.
+	}
+
+	HaniwaCloneBuff: {
+		// DisplayName: Haniwa Duplication
+		// Description: Your own duplicate will fight for you.
+	}
+
+	HaniwaCommander: {
+		// DisplayName: Haniwa Commander
+		// Description: The Haniwa special forces will fight for you.
 	}
 }
 
@@ -909,4 +990,9 @@ Configs: {
 				'''
 		}
 	}
+}
+
+Announcement: {
+	// TasoukenDefeated: "{0} proved their power."
+	// TasoukenVictory: "{0}'s power was not enough."
 }

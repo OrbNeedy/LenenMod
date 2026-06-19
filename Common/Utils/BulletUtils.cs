@@ -23,7 +23,9 @@ namespace lenen.Common.Utils
             [Sheet.Small] = "lenen/Content/Projectiles/BulletHellProjectiles/SmallBullet", 
             [Sheet.Ofuda] = "lenen/Content/Projectiles/BulletHellProjectiles/OfudaBullet", 
             [Sheet.Bullet] = "lenen/Content/Projectiles/BulletHellProjectiles/BulletBullet",
-            [Sheet.Knife] = "lenen/Content/Projectiles/BulletHellProjectiles/KnifeBullet"
+            [Sheet.Knife] = "lenen/Content/Projectiles/BulletHellProjectiles/KnifeBullet",
+            [Sheet.ReverseDefault] = "lenen/Content/Projectiles/BulletHellProjectiles/ReverseBullet",
+            [Sheet.ReverseBig] = "lenen/Content/Projectiles/BulletHellProjectiles/BigReverse"
         };
         public static string laserTexturePath = "lenen/Content/Projectiles/BulletHellProjectiles/Laser";
 

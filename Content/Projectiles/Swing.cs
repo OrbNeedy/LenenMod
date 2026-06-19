@@ -11,6 +11,8 @@ namespace lenen.Content.Projectiles
 {
     public class Swing : ModProjectile
     {
+        static int damageLimit = 42;
+
         // All of this was copied directly from Example mod
         public override void SetStaticDefaults()
         {
@@ -62,7 +64,7 @@ namespace lenen.Content.Projectiles
             if (Main.rand.NextFloat() * 2f < Projectile.Opacity)
             {
                 Color dustColor = Color.Lerp(Color.Black, Color.White, Main.rand.NextFloat() * 0.3f);
-                if (Projectile.damage >= 30)
+                if (Projectile.damage >= damageLimit)
                 {
                     dustColor = Color.Lerp(Color.DeepPink, Color.LightPink, Main.rand.NextFloat() * 0.3f);
                 }
@@ -76,7 +78,7 @@ namespace lenen.Content.Projectiles
             if (Main.rand.NextFloat() * 1.5f < Projectile.Opacity)
             {
 
-                if (Projectile.damage >= 30)
+                if (Projectile.damage >= damageLimit)
                 {
                     Dust.NewDustPerfect(dustPosition, DustID.TintableDustLighted, dustVelocity, 100,
                         Color.DeepPink * Projectile.Opacity, 1.2f * Projectile.Opacity);
@@ -177,7 +179,7 @@ namespace lenen.Content.Projectiles
             Color middleMediumColor = new Color(100, 100, 100);
             Color frontLightColor = new Color(190, 190, 190);
 
-            if (Projectile.damage >= 30)
+            if (Projectile.damage >= damageLimit)
             {
                 backDarkColor = new Color(160, 60, 180);
                 middleMediumColor = new Color(255, 80, 255);
@@ -233,7 +235,7 @@ namespace lenen.Content.Projectiles
 
         private static void DrawPrettyStarSparkle(float opacity, SpriteEffects dir, Vector2 drawPos, Color drawColor, Color shineColor, float flareCounter, float fadeInStart, float fadeInEnd, float fadeOutStart, float fadeOutEnd, float rotation, Vector2 scale, Vector2 fatness)
         {
-            Texture2D sparkleTexture = TextureAssets.Extra[98].Value;
+            Texture2D sparkleTexture = TextureAssets.Extra[ExtrasID.SharpTears].Value;
             Color bigColor = shineColor * opacity * 0.5f;
             bigColor.A = 0;
             Vector2 origin = sparkleTexture.Size() / 2f;

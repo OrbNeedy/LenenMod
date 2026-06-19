@@ -19,7 +19,9 @@ namespace lenen
             {
                 Asset<Effect> curtainShader = this.Assets.Request<Effect>("Effects/RiftEffect");
                 Asset<Effect> textureShader = this.Assets.Request<Effect>("Effects/TextureEffect");
+                Asset<Effect> haniwaShader = this.Assets.Request<Effect>("Effects/HaniwaTexture");
                 Asset<Effect> silouetteShader = this.Assets.Request<Effect>("Effects/SilouetteEffect");
+                Asset<Effect> solidShader = this.Assets.Request<Effect>("Effects/SolidColor");
                 Asset<Effect> heavyNoiseShader = this.Assets.Request<Effect>("Effects/HeavyNoiseEffect");
                 Asset<Effect> rectangleWaveShader = this.Assets.Request<Effect>("Effects/RectangleWaveEffect");
                 Asset<Effect> screenInvertedShader = this.Assets.Request<Effect>("Effects/InvertedEffect");
@@ -29,8 +31,12 @@ namespace lenen
                 GameShaders.Misc["Rift"] = new MiscShaderData(curtainShader, "RiftShader");
                 GameShaders.Misc["Harujion"] = new MiscShaderData(textureShader, "TextureShader").
                     UseImage1(Assets.Request<Texture2D>("Assets/Textures/FlowerPattern"));
+                GameShaders.Misc["Haniwa"] = new MiscShaderData(haniwaShader, "Texture").
+                    UseImage1(Assets.Request<Texture2D>("Assets/Textures/HaniwaTexture"));
                 GameShaders.Misc["Silouette"] = new MiscShaderData(silouetteShader, "SilouetteShader").
                     UseColor(0.075f, 0.075f, 0.075f).UseSecondaryColor(0.7f, 0.7f, 0.7f);
+                GameShaders.Misc["SolidColor"] = new MiscShaderData(solidShader, "Solid").
+                    UseColor(1f, 0.02f, 0f);
                 GameShaders.Misc["HeavyNoise"] = new MiscShaderData(heavyNoiseShader, "NoiseShader");
                 GameShaders.Misc["RectangleWave"] = new MiscShaderData(rectangleWaveShader, "SquareWaveShader");
                 GameShaders.Misc["Inverted"] = new MiscShaderData(screenInvertedShader, "DimensionalDeletion");

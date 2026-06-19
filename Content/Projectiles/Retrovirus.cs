@@ -58,12 +58,12 @@ namespace lenen.Content.Projectiles
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.AddBuff(ModContent.BuffType<Buffs.Kurovirus>(), 300);
+            target.AddBuff(ModContent.BuffType<Kurovirus>(), 720);
         }
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            target.AddBuff(ModContent.BuffType<Buffs.Kurovirus>(), 300);
+            target.AddBuff(ModContent.BuffType<Kurovirus>(), 420);
         }
 
         public override bool PreDrawExtras()

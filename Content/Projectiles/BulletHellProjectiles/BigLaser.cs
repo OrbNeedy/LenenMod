@@ -7,13 +7,13 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
+using Terraria.Graphics.CameraModifiers;
 
 namespace lenen.Content.Projectiles.BulletHellProjectiles
 {
     public class BigLaser : ModProjectile
     {
-        static Asset<Texture2D> brightness;
+        public static Asset<Texture2D> LightBrightness;
         public int BulletColor { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
         public float Direction { get => Projectile.ai[1]; set => Projectile.ai[1] = value; }
         public int BurstType { get => (int)Projectile.ai[2]; set => Projectile.ai[2] = value; }
@@ -31,12 +31,12 @@ namespace lenen.Content.Projectiles.BulletHellProjectiles
         {
             if (Main.dedServ) return;
 
-            brightness = ModContent.Request<Texture2D>("lenen/Content/Projectiles/BulletHellProjectiles/LaserGlow");
+            LightBrightness = ModContent.Request<Texture2D>("lenen/Content/Projectiles/BulletHellProjectiles/LaserGlow");
         }
 
         public override void Unload()
         {
-            brightness = null;
+            LightBrightness = null;
         }
 
         public override void SetDefaults()
@@ -124,6 +124,11 @@ namespace lenen.Content.Projectiles.BulletHellProjectiles
                         {
                             Volume = 0.5f
                         }, Projectile.Center);
+
+                        PunchCameraModifier modifier = new PunchCameraModifier(
+                            Projectile.Center, new Vector2(0, 1).RotatedByRandom(MathHelper.TwoPi), 
+                            30f, 20f, 45, 1000f);
+                        Main.instance.CameraModifiers.Add(modifier);
                     }
 
                     Projectile.scale += 0.08f;
@@ -157,12 +162,6 @@ namespace lenen.Content.Projectiles.BulletHellProjectiles
             return BulletUtils.LineCollision(targetHitbox, Projectile, Vector2.Zero, end, w, out _);
         }
 
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
-            
-            base.DrawBehind(index, behindNPCsAndTiles, behindNPCs, behindProjectiles, overPlayers, overWiresUI);
-        }
-
         public override bool PreDraw(ref Color lightColor)
         {
             Main.EntitySpriteDraw(
@@ -175,12 +174,12 @@ namespace lenen.Content.Projectiles.BulletHellProjectiles
                 );
 
             Main.EntitySpriteDraw(
-                brightness.Value, 
+                LightBrightness.Value, 
                 Projectile.Center - Main.screenPosition,
-                brightness.Frame(), 
+                LightBrightness.Frame(), 
                 Color.White * float.Clamp(Projectile.scale - 0.5f, 0, 1) * Projectile.Opacity, 
                 Projectile.rotation, 
-                new(brightness.Width() / 2f, 140),
+                new(LightBrightness.Width() / 2f, 140),
                 new Vector2(Projectile.scale, 2), 
                 SpriteEffects.None
                 );

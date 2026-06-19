@@ -41,7 +41,7 @@ namespace lenen.Content.Buffs
 
             if (!ModContent.GetInstance<GameplayConfig>().HarujionHardMode) potency *= 0.25f;
 
-            player.GetModPlayer<BuffPlayer>().harujionDebuff = potency;
+            player.GetModPlayer<BuffPlayer>().HarujionDebuff = potency;
         }
     }
 }

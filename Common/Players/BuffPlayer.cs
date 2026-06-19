@@ -1,6 +1,9 @@
 ﻿using lenen.Common.Systems;
+using lenen.Common.Utils;
 using lenen.Content.Projectiles;
+using lenen.Content.Projectiles.BulletHellProjectiles;
 using Microsoft.Xna.Framework;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -12,23 +15,32 @@ namespace lenen.Common.Players
     public class BuffPlayer : ModPlayer
     {
         public bool virusDebuff { get; set; }
-        public float harujionDebuff { get; set; }
+        public float HarujionDebuff { get; set; }
         private int harujionTimer = 0;
-        public int barrierBuff { get; set; }
-        public bool lumenBuff { get; set; }
+        public int BarrierBuff { get; set; }
+        public bool LumenBuff { get; set; }
 
-        private bool beingAbsorbed { get; set; }
+        private bool BeingAbsorbed { get; set; }
         private int absorptionTimer = 0;
         public int prevSummonSlots = 0;
+
+        public bool CanCut { get; set; }
+        private int[] CutCooldown { get; set; } = { 0, 0, 0 };
 
         public override void ResetEffects()
         {
             int sample = Player.maxMinions;
 
-            lumenBuff = false;
+            LumenBuff = false;
             virusDebuff = false;
-            harujionDebuff = 0;
-            barrierBuff = 0;
+            HarujionDebuff = 0;
+            BarrierBuff = 0;
+
+            CanCut = false;
+            for (int i = 0; i < CutCooldown.Length; i++)
+            {
+                if (CutCooldown[i] > 0) CutCooldown[i]--;
+            }
         }
 
         public override void PreUpdate()
@@ -40,13 +52,41 @@ namespace lenen.Common.Players
 
         public override void PostUpdate()
         {
-            int sample = Player.maxMinions;
+            if (CutCooldown.Any((num) => { return num <= 0; }))
+            {
+                // Cut aura
+                foreach (NPC npc in Main.ActiveNPCs)
+                {
+                    if (npc.friendly || npc.immortal || 
+                        npc.immune[Player.whoAmI] > 0) continue;
 
-            if (lumenBuff && Player.ownedProjectileCounts[ModContent.ProjectileType<LumenBall>()] < 1)
+                    if (npc.Center.Distance(Player.Center) - (npc.width / 2f) <= 64)
+                    {
+                        for (int i = 0; i < CutCooldown.Length; i++)
+                        {
+                            if (CutCooldown[i] > 0) continue;
+
+                            int type = ModContent.ProjectileType<Cut>();
+                            int damage = Player.GetWeaponDamage(Player.HeldItem);
+                            Vector2 vel = new Vector2(0, 1).RotatedByRandom(MathHelper.TwoPi);
+
+                            int color = BulletUtils.GetRandomColor([SheetFrame.White, SheetFrame.Pink, SheetFrame.Yellow]);
+                            Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem),
+                                npc.Center, vel, type, damage, 6f, Player.whoAmI, 0.6f, color);
+
+                            CutCooldown[i] = 10;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            int ballType = ModContent.ProjectileType<LumenBall>();
+            if (LumenBuff && Player.ownedProjectileCounts[ballType] < 1)
             {
                 EntitySource_Parent source = new EntitySource_Parent(Player);
                 var projectile = Projectile.NewProjectileDirect(source, Player.Center, Vector2.Zero,
-                    ModContent.ProjectileType<LumenBall>(), (int)Player.GetTotalDamage(DamageClass.Summon).ApplyTo(35),
+                    ballType, (int)Player.GetTotalDamage(DamageClass.Summon).ApplyTo(35),
                     0, Main.myPlayer, 0);
                 projectile.damage = (int)Player.GetTotalDamage(DamageClass.Summon).ApplyTo(35);
             }
@@ -56,19 +96,19 @@ namespace lenen.Common.Players
                 harujionTimer--;
             }
 
-            if (beingAbsorbed)
+            if (BeingAbsorbed)
             {
                 //Main.NewText("Collecting SOULS " + absorptionTimer);
                 //Main.NewText("Collecting SOULS " + beingAbsorbed);
                 if (absorptionTimer <= 0)
                 {
-                    beingAbsorbed = false;
+                    BeingAbsorbed = false;
                     return;
                 }
                 SoulAbsorptionPlayer soulManager = Player.GetModPlayer<SoulAbsorptionPlayer>();
                 if (soulManager.soulsCollected <= 0)
                 {
-                    beingAbsorbed = false;
+                    BeingAbsorbed = false;
                     absorptionTimer = 0;
                     return;
                 }
@@ -85,10 +125,10 @@ namespace lenen.Common.Players
             if (Main.dedServ) return;
             //Main.NewText("Absorbed: " + beingAbsorbed);
             //Main.NewText("Timer: " + absorptionTimer);
-            if (harujionDebuff > 0 && !beingAbsorbed)
+            if (HarujionDebuff > 0 && !BeingAbsorbed)
             {
                 SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/rei_drain_00"), Player.Center);
-                beingAbsorbed = true;
+                BeingAbsorbed = true;
                 absorptionTimer = 120;
             }
         }
@@ -101,7 +141,7 @@ namespace lenen.Common.Players
                 damageSource.CustomReason = NetworkText.FromKey("Mods.lenen.Death.RNA", Player.name);
             }
 
-            if (harujionDebuff > 0f)
+            if (HarujionDebuff > 0f)
             {
                 damageSource.CustomReason = NetworkText.FromKey("Mods.lenen.Death.Harujion", Player.name);
             }
@@ -110,22 +150,22 @@ namespace lenen.Common.Players
 
         public override void UpdateBadLifeRegen()
         {
-            if (harujionDebuff > 0)
+            if (HarujionDebuff > 0)
             {
                 //Main.NewText("Potency: " + harujionDebuff);
                 SoulAbsorptionPlayer soulManager = Player.GetModPlayer<SoulAbsorptionPlayer>();
                 if (soulManager.soulsCollected <= 0)
                 {
-                    Player.lifeRegen -= (int)(12 * harujionDebuff) - 6;
+                    Player.lifeRegen -= (int)(12 * HarujionDebuff) - 6;
                 } else
                 {
                     if (harujionTimer <= 0)
                     {
                         soulManager.soulsCollected -= 1;
-                        ModContent.GetInstance<HarujionLocations>().soulsAbsorbed += (int)harujionDebuff;
+                        ModContent.GetInstance<HarujionLocations>().soulsAbsorbed += (int)HarujionDebuff;
                         harujionTimer = 15;
                     }
-                    Player.lifeRegen -= (int)(harujionDebuff) - 2;
+                    Player.lifeRegen -= (int)(HarujionDebuff) - 2;
                     //Main.NewText("Souls: " + harujionLocations.soulsAbsorbed);
                     //Main.NewText("Player souls: " + soulManager.soulsCollected);
                 }

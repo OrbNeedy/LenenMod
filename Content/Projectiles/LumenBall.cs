@@ -100,7 +100,7 @@ namespace lenen.Content.Projectiles
 
         private bool CheckActive(Player owner)
         {
-            if (owner.dead || !owner.active || !owner.GetModPlayer<BuffPlayer>().lumenBuff)
+            if (owner.dead || !owner.active || !owner.GetModPlayer<BuffPlayer>().LumenBuff)
             {
                 owner.ClearBuff(ModContent.BuffType<LumenBallBuff>());
                 Projectile.Kill();

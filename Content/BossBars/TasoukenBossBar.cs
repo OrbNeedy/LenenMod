@@ -1,5 +1,4 @@
-﻿using lenen.Content.NPCs.TasoukenBoss;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;

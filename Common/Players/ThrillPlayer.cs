@@ -190,18 +190,29 @@ namespace lenen.Common.Players
                         !projectile.hostile || projectile.damage <= 0|| projectile.sentry || 
                         projectile.minion) continue;
 
+                    bool finalGraze = false;
+
                     //int grazeDistance = 200;
                     // If it is a modded projectile, take into account it's special collisions
+                    Vector2 pos = Player.Center - new Vector2(grazeDistance / 2f);
                     bool? moddedCollision = projectile.ModProjectile?.Colliding(projectile.Hitbox, 
-                        new Rectangle((int)Player.Center.X-(grazeDistance / 2), (int)Player.Center.Y-(grazeDistance / 2),
-                        grazeDistance, grazeDistance));
-                    bool finalModdedCollision = false;
-                    if (moddedCollision != null) finalModdedCollision = (bool)moddedCollision;
+                        new Rectangle((int)pos.X, (int)pos.Y, grazeDistance / 2, grazeDistance / 2));
 
-                    // Standard box collision followed by a radius collision
-                    if ((Collision.CheckAABBvAABBCollision(Player.Center, new Vector2(grazeDistance, grazeDistance), 
-                        projectile.Center, projectile.Size * 1.5f) && projectile.Center.Distance(Player.Center) <=
-                        (grazeDistance / 2) + (projectile.Size.X / 2)) || finalModdedCollision)
+                    if (moddedCollision != null)
+                    {
+                        finalGraze = (bool)moddedCollision;
+                    } else
+                    {
+                        // Standard box collision followed by a radius collision
+                        if (Collision.CheckAABBvAABBCollision(pos, new Vector2(grazeDistance, grazeDistance),
+                        projectile.position, projectile.Size))
+                        {
+                            finalGraze = projectile.Center.Distance(Player.Center) <=
+                                (grazeDistance / 2f) + (projectile.Size.X / 2f);
+                        }
+                    }
+
+                    if (finalGraze)
                     {
                         // Increase percent, reset permanence timer to 30 seconds, give thrill cooldown to the
                         // projectile, and reduce the graze available

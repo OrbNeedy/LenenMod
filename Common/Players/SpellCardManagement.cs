@@ -5,6 +5,8 @@ using Terraria;
 using Terraria.ModLoader;
 using lenen.Content.Projectiles.BulletHellProjectiles;
 using Terraria.DataStructures;
+using lenen.Content.Projectiles;
+using lenen.Common.Utils;
 
 namespace lenen.Common.Players
 {
@@ -20,7 +22,8 @@ namespace lenen.Common.Players
         Retrovirus, 
         MonochromeRay,
         DharmaPower, 
-        SuperHaniwa
+        SuperHaniwa, 
+        TwoGlimmers
     }
 
     public record SpellCardData(string name, string desperateName, Color leftColor,
@@ -48,6 +51,10 @@ namespace lenen.Common.Players
         public int dropletsDamage = 0;
         public int swordDropletsCooldown = 0;
 
+        public int twoGlimmersTimer = 0;
+        public int twoGlimmersLastMax = 0;
+        public int twoGlimmersDamage = 0;
+
         public static Dictionary<SpellCard, SpellCardData> spellcardData = new() {
             [SpellCard.LaserRain] = new("Light Card「Laser Rain」", "Light Card「Laser Grid」", 
                 new Color(5, 5, 5), new Color(188, 186, 184), new Color(163, 145, 109)),
@@ -70,7 +77,9 @@ namespace lenen.Common.Players
                 "Dharmatic Power「Strange Sword of Myōken's Heavenly Blessing」",
                 new Color(131, 154, 114), new Color(150, 75, 64), new Color(0, 0, 0)),
             [SpellCard.SuperHaniwa] = new("Giant Dogū「SUPER HANIWA」", "Fusion Dogū「DELUXE HANIWA」",
-                new Color(166, 184, 186), new Color(153, 84, 74), new Color(140, 108, 82))
+                new Color(166, 184, 186), new Color(153, 84, 74), new Color(140, 108, 82)),
+            [SpellCard.TwoGlimmers] = new("「Two Glimmers」", "「Two Glimmers」",
+                new Color(125, 109, 139), new Color(28, 28, 28), new Color(53, 101, 68))
         };
 
         public override void PreUpdate()
@@ -107,6 +116,46 @@ namespace lenen.Common.Players
                 swordDropletsLeft--;
                 swordDropletsCooldown = 2;
                 cummulativeDropletTime += swordDropletsCooldown;
+            }
+
+            if (twoGlimmersTimer > 0)
+            {
+                if (twoGlimmersTimer % 6 == 0)
+                {
+                    // Bullets
+                    Vector2 dir = new Vector2(0, -6).RotatedBy(0.0255f * -(twoGlimmersLastMax - twoGlimmersTimer));
+                    int bulletType = ModContent.ProjectileType<MeleeBasicBullet>();
+
+                    int color = BulletUtils.GetRandomColor(lastDesperate ? 3 : 1);
+                    Projectile.NewProjectile(new EntitySource_ItemUse(Player, Player.HeldItem, "Spellcard"),
+                        Player.Center, dir, bulletType, twoGlimmersDamage, 3f,
+                        Player.whoAmI, color, (int)Sheet.Default);
+
+                    dir = new Vector2(0, -6).RotatedBy(0.0255f * (twoGlimmersLastMax - twoGlimmersTimer));
+
+                    color = BulletUtils.GetRandomColor(lastDesperate ? 3 : 1);
+                    Projectile.NewProjectile(new EntitySource_ItemUse(Player, Player.HeldItem, "Spellcard"),
+                        Player.Center, dir, bulletType, twoGlimmersDamage, 3f,
+                        Player.whoAmI, color, (int)Sheet.Default);
+                }
+
+                int timer = lastDesperate ? 4 : 6;
+                if (twoGlimmersTimer <= 40 && twoGlimmersTimer % timer == 0)
+                {
+                    int slashType = ModContent.ProjectileType<JudgementCut>();
+
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Vector2 offset = new Vector2(Main._rand.NextFloat(-750, 750), Main._rand.NextFloat(-750, 750));
+
+                        Projectile.NewProjectile(new EntitySource_ItemUse(Player, Player.HeldItem, "Spellcard"),
+                            Player.Center + offset, new Vector2(0, 1).RotatedByRandom(MathHelper.TwoPi), slashType,
+                            (int)(twoGlimmersDamage * 1.65f), 5f, Player.whoAmI, (int)SheetFrame.White,
+                            30 - twoGlimmersTimer);
+                    }
+                }
+
+                twoGlimmersTimer--;
             }
         }
 
