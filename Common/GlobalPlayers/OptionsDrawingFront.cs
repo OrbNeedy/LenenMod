@@ -1,5 +1,5 @@
 ﻿using lenen.Common.Players;
-using lenen.Content.Items.Weapons;
+using lenen.Content.Items.Weapons.Yabusame;
 using lenen.Content.NPCs.TasoukenBoss;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

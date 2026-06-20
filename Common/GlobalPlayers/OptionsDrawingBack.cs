@@ -1,4 +1,4 @@
-﻿using lenen.Content.Items.Weapons;
+﻿using lenen.Content.Items.Weapons.Yabusame;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;

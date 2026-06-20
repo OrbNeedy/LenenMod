@@ -1,5 +1,5 @@
 ﻿using lenen.Content.Items;
-using lenen.Content.Items.Weapons;
+using lenen.Content.Items.Weapons.Yabusame;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

@@ -655,8 +655,9 @@ Projectiles: {
 	// PunishmentCut.DisplayName: Cut
 	// GridCut.DisplayName: Cut
 	// ThrillBullet.DisplayName: Danmaku
-	// MeleeBasicBullet.DisplayName: Melee Basic Bullet
-	// JudgementCut.DisplayName: Judgement Cut
+	// MeleeBasicBullet.DisplayName: Danmaku
+	// JudgementCut.DisplayName: Cut
+	// WarpingBullet.DisplayName: Warping Bullet
 }
 
 Dialogue: {
@@ -991,6 +992,17 @@ Configs: {
 		}
 	}
 }
+
+/* SpellCardDescription:
+	'''
+	Right click to use A spell card.
+	Adds {0} Spell Card cooldown to the player.
+	''' */
+/* SpellCardManaDescription:
+	'''
+	Right click to use A spell card for {0} mana.
+	Adds {1} Spell Card cooldown to the player.
+	''' */
 
 Announcement: {
 	// TasoukenDefeated: "{0} proved their power."

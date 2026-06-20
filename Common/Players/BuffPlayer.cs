@@ -52,7 +52,7 @@ namespace lenen.Common.Players
 
         public override void PostUpdate()
         {
-            if (CutCooldown.Any((num) => { return num <= 0; }))
+            if (CutCooldown.Any((num) => { return num <= 0; }) && CanCut)
             {
                 // Cut aura
                 foreach (NPC npc in Main.ActiveNPCs)

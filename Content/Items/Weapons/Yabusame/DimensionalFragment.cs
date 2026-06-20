@@ -6,7 +6,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace lenen.Content.Items.Weapons
+namespace lenen.Content.Items.Weapons.Yabusame
 {
     public class DimensionalFragment : ModItem
     {

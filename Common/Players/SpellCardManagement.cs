@@ -13,7 +13,7 @@ namespace lenen.Common.Players
     public enum SpellCard
     {
         None, 
-        LaserRain, 
+        WarpKingdom, 
         CloudMowing, 
         PrimeMinister, 
         SlitSnake, 
@@ -38,6 +38,8 @@ namespace lenen.Common.Players
 
     public class SpellCardManagement : ModPlayer
     {
+        public bool cheat = false;
+
         public int spellCardTimer = 0;
         public int maxSinceZero = 0;
         public bool desperateBomb = false;
@@ -56,7 +58,7 @@ namespace lenen.Common.Players
         public int twoGlimmersDamage = 0;
 
         public static Dictionary<SpellCard, SpellCardData> spellcardData = new() {
-            [SpellCard.LaserRain] = new("Light Card「Laser Rain」", "Light Card「Laser Grid」", 
+            [SpellCard.WarpKingdom] = new("Teleport「Warp Kingdom」", "Recurrence「Loop Kingdom」", 
                 new Color(5, 5, 5), new Color(188, 186, 184), new Color(163, 145, 109)),
             [SpellCard.CloudMowing] = new("「Cloud Mowing Sword」", "「Heaven Mowing Sword」",
                 new Color(125, 109, 139), new Color(28, 28, 28), new Color(53, 101, 68)),
@@ -123,7 +125,7 @@ namespace lenen.Common.Players
                 if (twoGlimmersTimer % 6 == 0)
                 {
                     // Bullets
-                    Vector2 dir = new Vector2(0, -6).RotatedBy(0.0255f * -(twoGlimmersLastMax - twoGlimmersTimer));
+                    Vector2 dir = new Vector2(0, -6).RotatedBy(0.051f * -(twoGlimmersLastMax - twoGlimmersTimer));
                     int bulletType = ModContent.ProjectileType<MeleeBasicBullet>();
 
                     int color = BulletUtils.GetRandomColor(lastDesperate ? 3 : 1);
@@ -131,7 +133,7 @@ namespace lenen.Common.Players
                         Player.Center, dir, bulletType, twoGlimmersDamage, 3f,
                         Player.whoAmI, color, (int)Sheet.Default);
 
-                    dir = new Vector2(0, -6).RotatedBy(0.0255f * (twoGlimmersLastMax - twoGlimmersTimer));
+                    dir = new Vector2(0, -6).RotatedBy(0.051f * (twoGlimmersLastMax - twoGlimmersTimer));
 
                     color = BulletUtils.GetRandomColor(lastDesperate ? 3 : 1);
                     Projectile.NewProjectile(new EntitySource_ItemUse(Player, Player.HeldItem, "Spellcard"),
@@ -154,8 +156,6 @@ namespace lenen.Common.Players
                             30 - twoGlimmersTimer);
                     }
                 }
-
-                twoGlimmersTimer--;
             }
         }
 
@@ -164,6 +164,7 @@ namespace lenen.Common.Players
             desperateBomb = false;
             if (timeSinceSpellcard < 600) timeSinceSpellcard++;
             if (swordDropletsCooldown > 0) swordDropletsCooldown--;
+            if (twoGlimmersTimer > 0) twoGlimmersTimer--;
         }
     }
 }

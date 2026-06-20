@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using lenen.Content.Items.Weapons;
 using lenen.Content.Items.Accessories;
+using lenen.Content.Items.Weapons.Yabusame;
 
 namespace lenen.Common.GlobalItems
 {

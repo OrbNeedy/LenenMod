@@ -6,6 +6,7 @@ using lenen.Content.Items;
 using lenen.Content.Items.Accessories;
 using lenen.Content.Items.Vanity.Dyes;
 using lenen.Content.Items.Weapons;
+using lenen.Content.Items.Weapons.Yabusame;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;

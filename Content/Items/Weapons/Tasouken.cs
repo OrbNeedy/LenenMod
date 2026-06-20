@@ -5,7 +5,6 @@ using lenen.Content.Projectiles;
 using lenen.Content.Projectiles.BulletHellProjectiles;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -15,11 +14,19 @@ using Terraria.ModLoader.IO;
 
 namespace lenen.Content.Items.Weapons
 {
-    public class Tasouken : ModItem
+    public class Tasouken : SpellCardItem
     {
+        public const string InstantPowerName = "Vii_";
+
         public bool CanSpawnTasouken { get => !powerProven && NPC.downedGolemBoss; }
 
-        private int spellCardTimer = 720;
+        protected override SpellCard SpellCardID => powerProven ?
+            Common.Players.SpellCard.TwoGlimmers : Common.Players.SpellCard.CloudMowing;
+        protected override int SpellCardCooldown => 900;
+        protected override int DesperateCooldown => 1500;
+        protected override int ManaUse => 0;
+        protected override int DesperateManaUse => 0;
+
         private bool powerProven = false;
         private string owner = "";
         int[] cutsCooldown = { 0, 0, 0 };
@@ -46,7 +53,7 @@ namespace lenen.Content.Items.Weapons
             Item.useTurn = true;
         }
 
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(spellCardTimer);
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs();
 
         public override void OnSpawn(IEntitySource source)
         {
@@ -93,7 +100,7 @@ namespace lenen.Content.Items.Weapons
 
         public override bool CanPickup(Player player)
         {
-            if (powerProven) return player.name == owner;
+            if (powerProven) return player.name == owner || player.name == InstantPowerName;
 
             return base.CanPickup(player);
         }
@@ -110,6 +117,8 @@ namespace lenen.Content.Items.Weapons
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
+            base.ModifyTooltips(tooltips);
+
             if (!powerProven && NPC.downedGolemBoss)
             {
                 int index = tooltips.FindLastIndex((x) => x.Name.StartsWith("Tooltip") && x.Mod == "Terraria");
@@ -142,7 +151,7 @@ namespace lenen.Content.Items.Weapons
 
         public override void HoldItem(Player player)
         {
-            if (powerProven && player.name == owner)
+            if ((powerProven && player.name == owner) || player.name == InstantPowerName)
             {
                 player.GetModPlayer<BuffPlayer>().CanCut = true;
             }
@@ -150,7 +159,7 @@ namespace lenen.Content.Items.Weapons
 
         public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
         {
-            if (powerProven && player.name == owner)
+            if ((powerProven && player.name == owner) || player.name == InstantPowerName)
             {
                 damage.Base += 52;
             }
@@ -158,8 +167,14 @@ namespace lenen.Content.Items.Weapons
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (player.altFunctionUse == 2 || CanSpawnTasouken)
+            if (CanSpawnTasouken && player.name != InstantPowerName) return false;
+
+            if (player.altFunctionUse == 2)
             {
+                SpellCardManagement scManager = player.GetModPlayer<SpellCardManagement>();
+
+                SetCooldown(player);
+                SpellCard(player, scManager.desperateBomb);
                 return false;
             }
 
@@ -171,12 +186,12 @@ namespace lenen.Content.Items.Weapons
 
             int cutType = ModContent.ProjectileType<Cut>();
             Vector2 vel = new Vector2(0, 1).RotatedByRandom(MathHelper.TwoPi);
-            float length = powerProven && player.name == owner ? 1f : 1f;
+            float length = 1f;
             Projectile.NewProjectile(source, Main.MouseWorld, vel, cutType, damage, 
                 knockback, player.whoAmI, length, 
                 BulletUtils.GetRandomColor([SheetFrame.White, SheetFrame.Pink, SheetFrame.Yellow]));
 
-            if (powerProven && player.name == owner)
+            if ((powerProven && player.name == owner) || player.name == InstantPowerName)
             {
                 for (int i = 0; i < 2; i++)
                 {
@@ -203,15 +218,10 @@ namespace lenen.Content.Items.Weapons
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                // If the player is not in multiplayer, spawn directly
-                /*NPC.NewNPC(NPC.GetBossSpawnSource(player.whoAmI), (int)player.Center.X, (int)player.Center.Y - 192,
-                    ModContent.NPCType<TasoukenBoss>(), 0, player.whoAmI);*/
                 NPC.SpawnOnPlayer(player.whoAmI, type);
             }
             else
             {
-                // If the player is in multiplayer, request a spawn
-                // This will only work if NPCID.Sets.MPAllowedEnemies[type] is true, which we set in MinionBossBody
                 NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
             }
         }
@@ -220,64 +230,41 @@ namespace lenen.Content.Items.Weapons
         {
             if (owner == player.name && CanSpawnTasouken)
             {
-                //Main.NewText("Spawn tasouken");
-                /*int type = ModContent.NPCType<TasoukenBoss>();
-
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    // If the player is not in multiplayer, spawn directly
-                    NPC.SpawnOnPlayer(player.whoAmI, type);
-                }
-                else
-                {
-                    // If the player is in multiplayer, request a spawn
-                    // This will only work if NPCID.Sets.MPAllowedEnemies[type] is true, which we set in MinionBossBody
-                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
-                }*/
-
                 return false;
             }
 
-            SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
-
-            if (manager.spellCardTimer <= 0)
-            {
-                if (powerProven && player.name == owner)
-                {
-                    UpgradedSpellCard(player);
-                    return true;
-                }
-
-                SpellCard(player);
-                return true;
-            }
-            return false;
+            return CanUseSpellCard(player);
         }
 
-        private void SpellCard(Player player)
+        protected override void SpellCard(Player player, bool desperate)
         {
             if (owner == "")
             {
                 owner = player.name;
             }
 
-            SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
-            manager.lastSpellCard = Common.Players.SpellCard.CloudMowing;
-            manager.lastDesperate = manager.desperateBomb;
-            manager.spellCardTimer = spellCardTimer;
+            if ((powerProven && player.name == owner) || player.name == InstantPowerName)
+            {
+                UpgradedSpellCard(player, desperate);
+            } else
+            {
+                NormalSpellCard(player, desperate);
+            }
+        }
 
+        public void NormalSpellCard(Player player, bool desperate)
+        {
             int dmg = (int)(player.GetWeaponDamage(Item) * 1.6f);
             int difficulty = 1;
             float rotation = 2f * MathHelper.TwoPi / 110f / 3f;
             int amount = 6;
-            if (manager.desperateBomb)
+
+            if (desperate)
             {
-                difficulty = 3;
                 dmg = (int)(player.GetWeaponDamage(Item) * 2.8f);
+                difficulty = 3;
                 rotation = MathHelper.TwoPi / 110f;
                 amount = 10;
-
-                manager.spellCardTimer = spellCardTimer + 600;
             }
 
             int direction = player.Center.X <= Main.MouseWorld.X ? 1 : -1;
@@ -287,32 +274,27 @@ namespace lenen.Content.Items.Weapons
             for (int i = amount; i > 0; i--)
             {
                 int color = BulletUtils.GetRandomColor(difficulty);
-                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item, "Spellcard"), 
-                    player.Center, vel, type, dmg, Item.knockBack, player.whoAmI, i * 4,
-                    rotation * direction, color);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item,
+                    "Spellcard"), player.Center, vel, type, dmg, Item.knockBack,
+                    player.whoAmI, i * 4, rotation * direction, color);
             }
         }
 
-        private void UpgradedSpellCard(Player player)
+        public void UpgradedSpellCard(Player player, bool desperate)
         {
-            SpellCardManagement manager = player.GetModPlayer<SpellCardManagement>();
-            manager.lastSpellCard = Common.Players.SpellCard.TwoGlimmers;
-            manager.lastDesperate = manager.desperateBomb;
-            manager.spellCardTimer = spellCardTimer;
+            SpellCardManagement scManager = player.GetModPlayer<SpellCardManagement>();
 
-            int dmg = (int)(player.GetWeaponDamage(Item) * 1.4f);
+            int damage = (int)(player.GetWeaponDamage(Item) * 1.4f);
             int time = 150;
 
-            if (manager.desperateBomb)
+            if (desperate)
             {
-                dmg = (int)(player.GetWeaponDamage(Item) * 1.7f);
+                damage = (int)(player.GetWeaponDamage(Item) * 1.7f);
                 time += 60;
-
-                manager.spellCardTimer = spellCardTimer + 600;
             }
 
-            manager.twoGlimmersDamage = dmg;
-            manager.twoGlimmersTimer = manager.twoGlimmersLastMax = time;
+            scManager.twoGlimmersDamage = damage;
+            scManager.twoGlimmersTimer = scManager.twoGlimmersLastMax = time;
         }
 
         public override void AddRecipes()

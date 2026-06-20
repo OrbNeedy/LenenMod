@@ -15,12 +15,16 @@ Ver {ModVersion}
 + Tasouken's Spell Card projectile now follows the player and can also damage enemies behind tiles.
 + Tasouken's Spell Card damage penetration increased from 50 to 60.
 + Retrovirus debuff duration increased from 5 seconds to 12 seconds for NPCs, and 5 seconds to 7 seconds for players.
++ Increased Dimensional Orbs'damage from 75 to 82.
 - Tasouken's damage reduced from 60 to 52.
 - Tasouken's knockback reduced from 10 to 8.
-- Tasouken's projectile damage register increased from 10 14.
+- Tasouken's projectile damage register increased from 10 to 14.
+- Tasouken's Spell Card cooldown increased from 12 seconds to 15 seconds.
+- Tasouken's desperate Spell Card cooldown increased from 17 seconds to 25 seconds.
 - Tasouken's Spell Card damage register increased from 5 for each projectile to 2 for all projectiles.
-- Tasouken's desperate Spell Card cooldown increased by 300.
+- Decreased Dimensional Orbs' projectiles shot by use from 24 to 12.
 * Visual changes to Tasouken's projectiles.
+* Fully reworked Dimensional Orbs' Spell Card.
 * Haniwa Caller projectile damage class changed from universal hybrid to summoner.
 * Fixed graze collisions failing to recognize the left side of the player.
 * Small behavioral changes to Haniwa Caller's minion.

@@ -2,6 +2,7 @@
 using lenen.Common.Systems;
 using lenen.Content.Buffs;
 using lenen.Content.Items.Weapons;
+using lenen.Content.Items.Weapons.Yabusame;
 using lenen.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;

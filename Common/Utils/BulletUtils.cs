@@ -113,6 +113,31 @@ namespace lenen.Common.Utils
             }
         }
 
+        public static bool OwnerCheck(int ownerWhoamI)
+        {
+            if (ownerWhoamI == -1) return false;
+
+            Player owner = Main.player[ownerWhoamI];
+
+            return owner.active && !owner.DeadOrGhost;
+        }
+
+        public static Vector2 WarpAroundVector2(Vector2 point, Vector2 min, Vector2 max)
+        {
+            // IOU a warp around function
+            return point;
+        }
+
+        public static Rectangle GetHitboxFromLine(Vector2 point1, Vector2 point2, int fluff = 8)
+        {
+            int upperBound = (int)float.Min(point1.Y, point2.Y) - fluff;
+            int leftmostBound = (int)float.Min(point1.X, point2.X) - fluff;
+            int lowerBound = (int)float.Max(point1.Y, point2.Y) + fluff;
+            int rightmostBound = (int)float.Max(point1.X, point2.X) + fluff;
+
+            return new Rectangle(leftmostBound, upperBound, rightmostBound, lowerBound);
+        }
+
         /// <summary>
         /// 
         /// </summary>
