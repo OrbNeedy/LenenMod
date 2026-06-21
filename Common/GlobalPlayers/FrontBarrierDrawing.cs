@@ -14,12 +14,14 @@ namespace lenen.Common.GlobalPlayers
         private int animationFrame = 0;
         private int animationTimer = 0;
 
+        public override void Load()
+        {
+            SkullBarrier = ModContent.Request<Texture2D>("lenen/Assets/Textures/SkullBarrier");
+        }
+
         public override void Unload()
         {
-            if (SkullBarrier.IsLoaded)
-            {
-                SkullBarrier = null;
-            }
+            SkullBarrier = null;
         }
 
         public override Position GetDefaultPosition()
@@ -34,16 +36,13 @@ namespace lenen.Common.GlobalPlayers
             if (player.DeadOrGhost) return;
             if (drawInfo.shadow == 0f)
             {
-                if ((playerBarrier.barriers[BarrierTypes.SkullBarrier].Active && 
-                    playerBarrier.barriers[BarrierTypes.SkullBarrier].Life > 0) ||
-                    (playerBarrier.barriers[BarrierTypes.SkullBarrier2].Active && 
-                    playerBarrier.barriers[BarrierTypes.SkullBarrier2].Life > 0))
-                {
-                    if (!SkullBarrier.IsLoaded)
-                    {
-                        SkullBarrier = ModContent.Request<Texture2D>("lenen/Assets/Textures/SkullBarrier");
-                    }
+                bool skullBarrier1 = (playerBarrier.barriers[BarrierTypes.SkullBarrier].Active &&
+                    playerBarrier.barriers[BarrierTypes.SkullBarrier].Life > 0);
+                bool skullBarrier2 = (playerBarrier.barriers[BarrierTypes.SkullBarrier2].Active &&
+                    playerBarrier.barriers[BarrierTypes.SkullBarrier2].Life > 0);
 
+                if (skullBarrier1 || skullBarrier2)
+                {
                     if (animationFrame <= -1)
                     {
                         animationFrame = 2;

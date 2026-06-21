@@ -12,12 +12,14 @@ namespace lenen.Common.GlobalPlayers
     {
         public static Asset<Texture2D> BackRibs;
 
+        public override void Load()
+        {
+            BackRibs = ModContent.Request<Texture2D>("lenen/Assets/Textures/GashadokuroRibs");
+        }
+
         public override void Unload()
         {
-            if (BackRibs.IsLoaded)
-            {
-                BackRibs = null;
-            }
+            BackRibs = null;
         }
 
         public override Position GetDefaultPosition()
@@ -32,11 +34,6 @@ namespace lenen.Common.GlobalPlayers
             if (drawInfo.shadow == 0f)
             {
                 if (!player.GetModPlayer<SoulAbsorptionPlayer>().revivedState) return;
-
-                if (!BackRibs.IsLoaded)
-                {
-                    BackRibs = ModContent.Request<Texture2D>("lenen/Assets/Textures/GashadokuroRibs");
-                }
 
                 Texture2D texture = BackRibs.Value;
 
