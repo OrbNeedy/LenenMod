@@ -33,8 +33,7 @@ Items: {
 			Orbes que siguen su usuario y disparan fragmentos de otras dimensiones
 			cuando se les ordena.
 			Usa {0} mana por cada dos fragmentos disparados.
-			Click derecho para usar Carta de Luz "Red Laser", gastando {1} mana.
-			Añade {2} de enfriamiento de Spell Card al jugador.
+			[SCCooldownMana]
 			'''
 	}
 
@@ -58,12 +57,11 @@ Items: {
 		Tooltip:
 			'''
 			La legendaria espada segadora de nubes, Tasouken, una de las regalias imperiales.
-			Hace un corte en la posición del mouse.
-			Click derecho para usar "Espada Segadora de Nubes".
-			Añade {0} enfriamiento de Spell Card al jugador.
+			Corta remotamente en la posición del mouse.
+			[SCCooldown]
 			'''
-		// Challenging: The weapon is waiting for a challenger. Use it to summon the Tasouken.
-		// Unlocked: This weapon's full power has been unlocked.
+		Challenging: El arma está esperando a un retador. Usar para invocar a Tasouken.
+		Unlocked: El poder completo de esta arma ha sido desbloqueado.
 	}
 
 	AssassinKnife: {
@@ -514,10 +512,12 @@ Items: {
 		Tooltip:
 			'''
 			Prueba de habilidad, solo para los mejores.
-			Aumenta el daño de rango en {0}%, posibilidad de critico 
-			en {1}% y daño critico en {2}%.
+			Aumenta la posibilidad de critico de rango en {0}% y el 
+			daño critico en {1}%.
+			Aumenta el daño de rango por la mitad de la posibilidad 
+			de critico actual.
 			Los enemigos liberan proyectiles cuando son golpeados por 
-			un ataque critico de rango, causando 60% del daño 
+			un ataque critico de rango, causando 80% del daño 
 			original.
 			'''
 	}
@@ -533,61 +533,62 @@ Items: {
 	}
 
 	HomunculusWeapon: {
-		// DisplayName: Vessel Blade
-		/* Tooltip:
+		DisplayName: Hoja del Contenedor
+		Tooltip:
 			'''
-			A blade that creates body doubles of the user to fight.
-			Right click to use Dharma Power "Myōken of Heaven's Blessings".
-			Adds {0} Spell Card cooldown to the player.
-			''' */
+			Una espada que crea dobles de cuerpo del usuario para luchar.
+			(Spell Card Template)
+			'''
 	}
 
 	BodyDoubleDye: {
-		// DisplayName: Body Double Dye
-		/* Tooltip:
+		DisplayName: Tinte de doble de cuerpo
+		Tooltip:
 			'''
-			A dye used to simplify the process of making the 
-			Vessel Blade's projectiles.
-			Was not meant to be found, but can be equipped.
-			''' */
+			Un tinte usado para simplificar el proceso de 
+			hacer los projectiles de la Hoja del Contenedor.
+			No debería haber sido encontrada, pero puede 
+			ser equipada.
+			'''
 	}
 
 	HaniwaPerson: {
-		// DisplayName: Haniwa Duplicator
-		/* Tooltip:
+		DisplayName: Duplicador Haniwa 
+		Tooltip:
 			'''
-			Proof of your artistic mastery.
-			Create a duplicate of yourself to fight for you.
-			Takes up all the summon slots and increases it's damage.
-			''' */
+			Prueba de tu maestría artistica.
+			Crea un doble de ti mismo para luchar por ti.
+			Toma todos los espacios de invocación y aumenta su 
+			daño.
+			'''
 	}
 
 	HaniwaDye: {
-		// DisplayName: Haniwa Dye
-		// Tooltip: ""
+		DisplayName: Tinte de Haniwa
+		Tooltip: ""
 	}
 
 	HaniwaCreationTools: {
-		// DisplayName: Haniwa Creation Tools
-		/* Tooltip:
+		DisplayName: Herramientas de Creación Haniwa
+		Tooltip:
 			'''
-			Tools for someone whose art surpassed divinity.
-			Summons a haniwa clone of yourself and two haniwa cannons.
-			Right click to summon the Super Haniwa.
-			Adds {0} Spell Card cooldown to the player.
-			''' */
+			Herramientas para alguien cuyo arte sobrepasó la 
+			divinidad.
+			Invoca un clon haniwa de ti mismo y dos cañones haniwa.
+			Click derecho para invocar al Super Haniwa.
+			''' 
 	}
 
 	CheatingEye: {
-		// DisplayName: Cheating Eye
-		// Tooltip: ""
+		DisplayName: Ojo de Trampas
+		Tooltip: "El ojo observa a todos los que usan trampas."
 	}
 }
 
 NPCs: {
 	CurtainOfAwakening.DisplayName: Cortina del Despertar
 	SmallFairy.DisplayName: Hada pequeña
-	// TasoukenBoss.DisplayName: Tasouken
+	TasoukenBoss.DisplayName: Tasouken
 }
 
 Projectiles: {
@@ -645,26 +646,26 @@ Projectiles: {
 	EmpressCopyBullet.DisplayName: Ofuda monocromada
 	BulletSpawner.DisplayName: Circulo mágico
 	CriticalHitBullets.DisplayName: Danmaku
-	// BodyDouble.DisplayName: Body Double
-	// MeleeKnife.DisplayName: Knife
-	// SwordDroplet.DisplayName: Sword
-	// SummonBasicBullet.DisplayName: Danmaku
-	// HaniwaClone.DisplayName: Haniwa Clone
-	// SummonLaser.DisplayName: Danmaku
-	// BigLaser.DisplayName: Burst
-	// SuperHaniwa.DisplayName: Super Haniwa
-	// SuperHaniwaFist.DisplayName: Haniwa Fist
-	// SuperHaniwaHead.DisplayName: Super Haniwa
-	// LongCut.DisplayName: Cut
-	// RingCircle.DisplayName: Danmaku
-	// BulletCut.DisplayName: Cut
-	// MovingBullets.DisplayName: Danmaku
-	// PunishmentCut.DisplayName: Cut
-	// GridCut.DisplayName: Cut
-	// ThrillBullet.DisplayName: Danmaku
-	// MeleeBasicBullet.DisplayName: Danmaku
-	// JudgementCut.DisplayName: Cut
-	// WarpingBullet.DisplayName: Warping Bullet
+	BodyDouble.DisplayName: Doble de cuerpo
+	MeleeKnife.DisplayName: Cuchillo
+	SwordDroplet.DisplayName: Espada
+	SummonBasicBullet.DisplayName: Danmaku
+	HaniwaClone.DisplayName: Clon Haniwa
+	SummonLaser.DisplayName: Danmaku
+	BigLaser.DisplayName: Explosion
+	SuperHaniwa.DisplayName: Super Haniwa
+	SuperHaniwaFist.DisplayName: Puño Haniwa
+	SuperHaniwaHead.DisplayName: Super Haniwa
+	LongCut.DisplayName: Corte
+	RingCircle.DisplayName: Danmaku
+	BulletCut.DisplayName: Corte
+	MovingBullets.DisplayName: Danmaku
+	PunishmentCut.DisplayName: Corte
+	GridCut.DisplayName: Corte
+	ThrillBullet.DisplayName: Danmaku
+	MeleeBasicBullet.DisplayName: Danmaku
+	JudgementCut.DisplayName: Corte
+	WarpingBullet.DisplayName: Danmaku
 }
 
 Dialogue: {
@@ -757,23 +758,23 @@ Buffs: {
 	}
 
 	InkBirdMinionBuff: {
-		// DisplayName: Ink Bird
-		// Description: A bird made of ink will fight for you.
+		DisplayName: Ave de Tinta
+		Description: Un ave hecha de tinta peleará por ti.
 	}
 
 	ArmorMode: {
-		// DisplayName: Armor Mode
-		// Description: Defense and damage reduction greatly increased.
+		DisplayName: Modo de Armadura
+		Description: Defensa y reducción de daño aumentadas.
 	}
 
 	HaniwaCloneBuff: {
-		// DisplayName: Haniwa Duplication
-		// Description: Your own duplicate will fight for you.
+		DisplayName: Duplicación Haniwa
+		Description: Tu propio duplicado luchará por ti.
 	}
 
 	HaniwaCommander: {
-		// DisplayName: Haniwa Commander
-		// Description: The Haniwa special forces will fight for you.
+		DisplayName: Comandante Haniwa
+		Description: Las fuerzas especiales Haniwa pelearán por ti.
 	}
 }
 
@@ -1000,18 +1001,18 @@ Configs: {
 	}
 }
 
-/* SpellCardDescription:
+SpellCardDescription:
 	'''
-	Right click to use "{1}".
-	Adds {0} seconds of Spell Card cooldown.
-	''' */
-/* SpellCardManaDescription:
+	Click derecho para usar "{1}".
+	Añade {0} segundos de enfriamiento a las Spell Cards.
 	'''
-	Right click to use "{2}" for {0} mana.
-	Adds {1} Spell Card cooldown to the player.
-	''' */
+SpellCardManaDescription:
+	'''
+	Click derecho para usar "{2}" por {0} de mana.
+	Añade {0} segundos de enfriamiento a las Spell Cards.
+	'''
 
 Announcement: {
-	// TasoukenDefeated: "{0} proved their power."
-	// TasoukenVictory: "{0}'s power was not enough."
+	TasoukenDefeated: "{0} demostró su poder."
+	TasoukenVictory: "El poder de {0} no fue suficiente."
 }

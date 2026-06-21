@@ -564,7 +564,7 @@ Items: {
 
 	CheatingEye: {
 		DisplayName: Cheating Eye
-		Tooltip: ""
+		Tooltip: "The eye watches for anyone who cheats."
 	}
 }
 
