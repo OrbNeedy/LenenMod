@@ -13,7 +13,6 @@ namespace lenen.Common.GlobalPlayers
 {
     public class OptionsDrawingFront : PlayerDrawLayer
     {
-        private bool reverse = false;
         private int spriteIndex = 0;
         private int spriteTimer = 0;
 
@@ -72,11 +71,9 @@ namespace lenen.Common.GlobalPlayers
                         spriteIndex = 0;
                     }
                 }
-                Asset<Texture2D> sprite = ModContent.Request<Texture2D>("lenen/Content/Items/Weapons/DimensionalOption");
 
-                Texture2D texture = sprite.Value;
-                int height = texture.Bounds.Height / spriteCount;
-                Rectangle bounds = new Rectangle(0, spriteIndex * height, texture.Bounds.Width, height);
+                Texture2D texture = OptionsDrawingBack.DimensionalOrbsOptions.Value;
+                Rectangle bounds = texture.Frame(1, 3, 0, spriteIndex);
 
                 drawInfo.DrawDataCache.Add(new DrawData(
                     texture,
@@ -84,7 +81,7 @@ namespace lenen.Common.GlobalPlayers
                     bounds,
                     new Color(darkening, darkening, darkening),
                     Main.GameUpdateCount * 0.5f,
-                    bounds.Size() * 0.5f,
+                    bounds.Size() / 2f,
                     1f,
                     SpriteEffects.None
                 ));

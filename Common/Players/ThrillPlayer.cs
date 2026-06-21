@@ -1,8 +1,15 @@
 ﻿using lenen.Common.GlobalProjectiles;
 using lenen.Common.Systems;
 using lenen.Content.Buffs;
-using lenen.Content.Items.Weapons;
+using lenen.Content.Items.Weapons.Clause;
+using lenen.Content.Items.Weapons.Fumikado;
+using lenen.Content.Items.Weapons.Kurohebi;
+using lenen.Content.Items.Weapons.Kuroji;
+using lenen.Content.Items.Weapons.Sukune;
+using lenen.Content.Items.Weapons.Suzumi;
+using lenen.Content.Items.Weapons.Tsurubami;
 using lenen.Content.Items.Weapons.Yabusame;
+using lenen.Content.Items.Weapons.Yaorochi;
 using lenen.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;

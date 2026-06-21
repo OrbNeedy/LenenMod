@@ -1,13 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.ModLoader;
 using Terraria;
-using lenen.Content.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using lenen.Common.Players;
@@ -16,6 +10,16 @@ namespace lenen.Common.GlobalPlayers
 {
     public class FrontRibsDraw : PlayerDrawLayer
     {
+        public static Asset<Texture2D> FrontRibs;
+
+        public override void Unload()
+        {
+            if (FrontRibs.IsLoaded)
+            {
+                FrontRibs = null;
+            }
+        }
+
         public override Position GetDefaultPosition()
         {
             return new Between(PlayerDrawLayers.IceBarrier, PlayerDrawLayers.CaptureTheGem);
@@ -28,21 +32,24 @@ namespace lenen.Common.GlobalPlayers
             if (drawInfo.shadow == 0f)
             {
                 if (!player.GetModPlayer<SoulAbsorptionPlayer>().revivedState) return;
-                Asset<Texture2D> sprite = ModContent.Request<Texture2D>("lenen/Assets/Textures/GashadokuroRibsFront");
 
-                Texture2D texture = sprite.Value;
-                Vector2 offset = new Vector2(-30, -34);
+                if (!FrontRibs.IsLoaded)
+                {
+                    FrontRibs = ModContent.Request<Texture2D>("lenen/Assets/Textures/GashadokuroRibsFront");
+                }
+
+                Texture2D texture = FrontRibs.Value;
 
                 SpriteEffects effects = SpriteEffects.None;
                 if (drawInfo.drawPlayer.direction == -1) effects = SpriteEffects.FlipHorizontally;
 
                 drawInfo.DrawDataCache.Add(new DrawData(
                     texture,
-                    drawInfo.drawPlayer.MountedCenter + offset - Main.screenPosition,
+                    drawInfo.drawPlayer.MountedCenter - Main.screenPosition,
                     texture.Bounds,
                     Color.White,
                     0f,
-                    Vector2.Zero,
+                    texture.Size() / 2f,
                     1f,
                     effects
                 ));

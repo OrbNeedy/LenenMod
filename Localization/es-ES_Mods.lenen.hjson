@@ -62,6 +62,8 @@ Items: {
 			Click derecho para usar "Espada Segadora de Nubes".
 			Añade {0} enfriamiento de Spell Card al jugador.
 			'''
+		// Challenging: The weapon is waiting for a challenger. Use it to summon the Tasouken.
+		// Unlocked: This weapon's full power has been unlocked.
 	}
 
 	AssassinKnife: {
@@ -575,6 +577,11 @@ Items: {
 			Adds {0} Spell Card cooldown to the player.
 			''' */
 	}
+
+	CheatingEye: {
+		// DisplayName: Cheating Eye
+		// Tooltip: ""
+	}
 }
 
 NPCs: {
@@ -995,12 +1002,12 @@ Configs: {
 
 /* SpellCardDescription:
 	'''
-	Right click to use A spell card.
-	Adds {0} Spell Card cooldown to the player.
+	Right click to use "{1}".
+	Adds {0} seconds of Spell Card cooldown.
 	''' */
 /* SpellCardManaDescription:
 	'''
-	Right click to use A spell card for {0} mana.
+	Right click to use "{2}" for {0} mana.
 	Adds {1} Spell Card cooldown to the player.
 	''' */
 

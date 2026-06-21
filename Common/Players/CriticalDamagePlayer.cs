@@ -1,6 +1,5 @@
 ﻿using lenen.Content.Projectiles.BulletHellProjectiles;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
@@ -21,15 +20,14 @@ namespace lenen.Common.Players
 
                 Vector2 baseDir = new Vector2(0, 8);
                 int projectile = ModContent.ProjectileType<CriticalHitBullets>();
-                int damage = (int)(damageDone * 0.6f);
+                int damage = (int)(damageDone * 0.8f);
 
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < 2; i++)
                 {
-                    int sprite = Main._rand.Next([0, 1, 2, 3, 6]);
                     int color = Main._rand.Next([1, 5, 6]);
                     baseDir = baseDir.RotatedByRandom(MathHelper.TwoPi);
                     Projectile.NewProjectile(Player.GetSource_OnHit(target), target.Center, 
-                        baseDir, projectile, damage, 2f, Player.whoAmI, color, sprite, 
+                        baseDir, projectile, damage, 2f, Player.whoAmI, color, (int)Sheet.Bullet, 
                         target.whoAmI);
                 }
             }

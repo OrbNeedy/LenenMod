@@ -14,7 +14,8 @@ namespace lenen.Common.Players
 {
     public class BuffPlayer : ModPlayer
     {
-        public bool virusDebuff { get; set; }
+        public bool Cheating = false;
+        public bool VirusDebuff { get; set; }
         public float HarujionDebuff { get; set; }
         private int harujionTimer = 0;
         public int BarrierBuff { get; set; }
@@ -31,8 +32,9 @@ namespace lenen.Common.Players
         {
             int sample = Player.maxMinions;
 
+            Cheating = false;
             LumenBuff = false;
-            virusDebuff = false;
+            VirusDebuff = false;
             HarujionDebuff = 0;
             BarrierBuff = 0;
 
@@ -135,7 +137,7 @@ namespace lenen.Common.Players
 
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource)
         {
-            if (virusDebuff)
+            if (VirusDebuff)
             {
                 //Language.GetTextValue("Mods.lenen.Death.RNA", Player.name)
                 damageSource.CustomReason = NetworkText.FromKey("Mods.lenen.Death.RNA", Player.name);
@@ -171,7 +173,7 @@ namespace lenen.Common.Players
                 }
             }
 
-            if (virusDebuff)
+            if (VirusDebuff)
             {
                 if (Player.lifeRegen > 0) Player.lifeRegen = 0;
 

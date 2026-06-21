@@ -11,9 +11,19 @@ namespace lenen.Common.GlobalPlayers
 {
     public class OptionsDrawingBack : PlayerDrawLayer
     {
-        private Vector2 orbitReference = Vector2.Zero;
         private int spriteIndex = 0;
         private int spriteTimer = 0;
+        public static Asset<Texture2D> DimensionalOrbsOptions;
+
+        public override void Load()
+        {
+            DimensionalOrbsOptions = ModContent.Request<Texture2D>("lenen/Assets/Textures/DimensionalOption");
+        }
+
+        public override void Unload()
+        {
+            DimensionalOrbsOptions = null;
+        }
 
         public override Position GetDefaultPosition()
         {
@@ -54,11 +64,9 @@ namespace lenen.Common.GlobalPlayers
                             spriteIndex = 0;
                         }
                     }
-                    Asset<Texture2D> sprite = ModContent.Request<Texture2D>("lenen/Content/Items/Weapons/DimensionalOption");
 
-                    Texture2D texture = sprite.Value;
-                    int height = texture.Bounds.Height / spriteCount;
-                    Rectangle bounds = new Rectangle(0, spriteIndex * height, texture.Bounds.Width, height);
+                    Texture2D texture = DimensionalOrbsOptions.Value;
+                    Rectangle bounds = texture.Frame(1, 3, 0, spriteIndex);
 
                     drawInfo.DrawDataCache.Add(new DrawData(
                             texture,
@@ -66,7 +74,7 @@ namespace lenen.Common.GlobalPlayers
                             bounds,
                             new Color(darkening, darkening, darkening),
                             0f,//Main.GameUpdateCount * 0.5f,
-                            Vector2.Zero,
+                            bounds.Size() / 2f,
                             1f,
                             SpriteEffects.None
                         ));

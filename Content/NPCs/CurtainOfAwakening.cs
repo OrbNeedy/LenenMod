@@ -2,10 +2,15 @@
 using lenen.Common.Graphics;
 using lenen.Common.Players;
 using lenen.Content.EmoteBubbles;
-using lenen.Content.Items;
 using lenen.Content.Items.Accessories;
+using lenen.Content.Items.Accessories.Hooaka;
+using lenen.Content.Items.Accessories.Tsurubami;
+using lenen.Content.Items.Misc;
 using lenen.Content.Items.Vanity.Dyes;
-using lenen.Content.Items.Weapons;
+using lenen.Content.Items.Weapons.Clause;
+using lenen.Content.Items.Weapons.Kurohebi;
+using lenen.Content.Items.Weapons.Kuroji;
+using lenen.Content.Items.Weapons.Suzumi;
 using lenen.Content.Items.Weapons.Yabusame;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

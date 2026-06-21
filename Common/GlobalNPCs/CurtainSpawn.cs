@@ -1,4 +1,4 @@
-﻿using lenen.Content.Items;
+﻿using lenen.Content.Items.Misc;
 using Terraria;
 using Terraria.ModLoader;
 

@@ -2,9 +2,10 @@
 using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
-using lenen.Content.Items.Weapons;
-using lenen.Content.Items.Accessories;
 using lenen.Content.Items.Weapons.Yabusame;
+using lenen.Content.Items.Weapons.Kurohebi;
+using lenen.Content.Items.Accessories.Clause;
+using lenen.Content.Items.Accessories.Misc;
 
 namespace lenen.Common.GlobalItems
 {

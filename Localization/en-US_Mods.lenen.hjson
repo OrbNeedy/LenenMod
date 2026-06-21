@@ -56,6 +56,8 @@ Items: {
 			Cuts remotely at the mouse position.
 			[SCCooldown]
 			'''
+		Challenging: The weapon is waiting for a challenger. Use it to summon the Tasouken.
+		Unlocked: This weapon's full power has been unlocked.
 	}
 
 	AssassinKnife: {
@@ -334,8 +336,7 @@ Items: {
 		Tooltip:
 			'''
 			An anomaly in a globe that gives full control of it.
-			Right click to use New Star "Super Nova", spending {0} mana.
-			Adds {1} Spell Card cooldown to the player.
+			[SCCooldown]
 			'''
 	}
 
@@ -343,9 +344,8 @@ Items: {
 		DisplayName: Christmas Globe
 		Tooltip:
 			'''
-			A globe filled with so much cheer and joy that allows control of gravity.
-			Right click to use Package "Super Present", spending {0} mana.
-			Adds {1} Spell Card cooldown to the player.
+			A globe filled with so much cheer and joy that it bends gravity.
+			[SCCooldown]
 			'''
 	}
 
@@ -498,10 +498,11 @@ Items: {
 		Tooltip:
 			'''
 			Proof of skill, only for the best.
-			Increased ranged damage by {0}%, crit chance by {1}% 
-			and crit damage by {2}%.
+			Increased ranged crit chance by {0}% and crit damage by {1}%.
+			Increased ranged damage by half of the current ranged 
+			crit chance.
 			Enemies release projectiles when hit by a critical ranged 
-			attack, dealing 60% of the original damage.
+			attack, dealing 80% of the original attack's damage.
 			'''
 	}
 
@@ -559,6 +560,11 @@ Items: {
 			Right click to summon the Super Haniwa.
 			Adds {0} Spell Card cooldown to the player.
 			'''
+	}
+
+	CheatingEye: {
+		DisplayName: Cheating Eye
+		Tooltip: ""
 	}
 }
 
@@ -969,12 +975,12 @@ Configs: {
 
 SpellCardDescription:
 	'''
-	Right click to use A spell card.
-	Adds {0} Spell Card cooldown to the player.
+	Right click to use "{1}".
+	Adds {0} seconds of Spell Card cooldown.
 	'''
 SpellCardManaDescription:
 	'''
-	Right click to use A spell card for {0} mana.
+	Right click to use "{2}" for {0} mana.
 	Adds {1} Spell Card cooldown to the player.
 	'''
 

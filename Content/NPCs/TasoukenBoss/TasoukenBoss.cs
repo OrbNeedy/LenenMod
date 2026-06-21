@@ -1,9 +1,6 @@
-﻿using Ionic.Zlib;
-using lenen.Common.Systems;
-using lenen.Content.BossBars;
-using lenen.Content.Items.Weapons;
+﻿using lenen.Content.BossBars;
+using lenen.Content.Items.Weapons.Yaorochi;
 using lenen.Content.Projectiles.TasoukenProjectiles;
-using Microsoft.Build.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -71,7 +68,7 @@ namespace lenen.Content.NPCs.TasoukenBoss
             // Influences how the NPC looks in the Bestiary
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
-                CustomTexturePath = "lenen/Content/Items/Weapons/Tasouken",
+                CustomTexturePath = "lenen/Content/Items/Weapons/Yaorochi/Tasouken",
                 PortraitScale = 1f, // Portrait refers to the full picture when clicking on the icon in the bestiary
                 PortraitPositionYOverride = 0f,
                 Rotation = MathHelper.Pi

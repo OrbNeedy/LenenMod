@@ -1,4 +1,6 @@
-﻿using lenen.Content.Items.Weapons;
+﻿using lenen.Content.Items.Weapons.Clause;
+using lenen.Content.Items.Weapons.Kuroji;
+using lenen.Content.Items.Weapons.Sukune;
 using lenen.Content.Projectiles;
 using lenen.Content.Projectiles.BulletHellProjectiles;
 using Microsoft.Xna.Framework;

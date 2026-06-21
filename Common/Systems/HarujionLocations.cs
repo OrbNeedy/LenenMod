@@ -2,7 +2,7 @@
 using lenen.Common.Graphics;
 using lenen.Common.Players;
 using lenen.Content.Buffs;
-using lenen.Content.Items;
+using lenen.Content.Items.Misc;
 using lenen.Content.Tiles.Plants;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

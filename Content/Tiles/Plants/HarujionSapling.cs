@@ -1,5 +1,5 @@
 ﻿using lenen.Common.Systems;
-using lenen.Content.Items.Accessories;
+using lenen.Content.Items.Accessories.Shion;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;

@@ -1,5 +1,5 @@
-﻿using lenen.Content.Items;
-using lenen.Content.Items.Consumables;
+﻿using lenen.Content.Items.Consumables;
+using lenen.Content.Items.Materials;
 using Terraria.ID;
 using Terraria.ModLoader;
 

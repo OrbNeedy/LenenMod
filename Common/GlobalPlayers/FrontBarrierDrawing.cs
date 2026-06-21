@@ -10,8 +10,18 @@ namespace lenen.Common.GlobalPlayers
 {
     public class FrontBarrierDrawing : PlayerDrawLayer
     {
+        public static Asset<Texture2D> SkullBarrier;
         private int animationFrame = 0;
         private int animationTimer = 0;
+
+        public override void Unload()
+        {
+            if (SkullBarrier.IsLoaded)
+            {
+                SkullBarrier = null;
+            }
+        }
+
         public override Position GetDefaultPosition()
         {
             return new Between(PlayerDrawLayers.BeetleBuff, PlayerDrawLayers.EyebrellaCloud);
@@ -29,8 +39,10 @@ namespace lenen.Common.GlobalPlayers
                     (playerBarrier.barriers[BarrierTypes.SkullBarrier2].Active && 
                     playerBarrier.barriers[BarrierTypes.SkullBarrier2].Life > 0))
                 {
-                    Asset<Texture2D> skullTexture = ModContent.
-                        Request<Texture2D>("lenen/Content/Items/Accessories/SkullBarrier");
+                    if (!SkullBarrier.IsLoaded)
+                    {
+                        SkullBarrier = ModContent.Request<Texture2D>("lenen/Assets/Textures/SkullBarrier");
+                    }
 
                     if (animationFrame <= -1)
                     {
@@ -41,9 +53,6 @@ namespace lenen.Common.GlobalPlayers
                         animationFrame -= 1;
                         animationTimer = 0;
                     }
-
-                    Rectangle bounds = skullTexture.Value.Bounds;
-                    bounds.Height /= 3;
 
                     for (int i = 0; i < 5; i++)
                     {
@@ -57,19 +66,21 @@ namespace lenen.Common.GlobalPlayers
                             animationOffset += 3;
                         }
 
-                        bounds.Y = bounds.Height * animationOffset;
+                        Rectangle bounds = SkullBarrier.Frame(1, 3, 0, animationOffset);
+
                         Vector2 offset = new Vector2(70 - (animationOffset * 8), 0).
                             RotatedBy((Main.GameUpdateCount * 0.08) + (i * MathHelper.TwoPi / 5));
                         Vector2 additionalOffset = new Vector2(0, 25);
                         SpriteEffects effects = SpriteEffects.None;
                         if (player.direction == -1) effects = SpriteEffects.FlipHorizontally;
 
-                        Main.EntitySpriteDraw(skullTexture.Value,
+                        Main.EntitySpriteDraw(
+                            SkullBarrier.Value,
                             player.MountedCenter - Main.screenPosition + offset + additionalOffset,
                             bounds,
                             Color.White,
                             0f,
-                            skullTexture.Size()/2,
+                            bounds.Size() / 2f,
                             1f,
                             effects
                         );

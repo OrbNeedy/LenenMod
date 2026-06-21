@@ -38,8 +38,6 @@ namespace lenen.Common.Players
 
     public class SpellCardManagement : ModPlayer
     {
-        public bool cheat = false;
-
         public int spellCardTimer = 0;
         public int maxSinceZero = 0;
         public bool desperateBomb = false;
@@ -58,6 +56,8 @@ namespace lenen.Common.Players
         public int twoGlimmersDamage = 0;
 
         public static Dictionary<SpellCard, SpellCardData> spellcardData = new() {
+            [SpellCard.None] = new("Blank Card「Placeholder」", "Blank Card「Sample Placeholder」", 
+                Color.White, Color.White, Color.White),
             [SpellCard.WarpKingdom] = new("Teleport「Warp Kingdom」", "Recurrence「Loop Kingdom」", 
                 new Color(5, 5, 5), new Color(188, 186, 184), new Color(163, 145, 109)),
             [SpellCard.CloudMowing] = new("「Cloud Mowing Sword」", "「Heaven Mowing Sword」",
@@ -152,7 +152,7 @@ namespace lenen.Common.Players
 
                         Projectile.NewProjectile(new EntitySource_ItemUse(Player, Player.HeldItem, "Spellcard"),
                             Player.Center + offset, new Vector2(0, 1).RotatedByRandom(MathHelper.TwoPi), slashType,
-                            (int)(twoGlimmersDamage * 1.65f), 5f, Player.whoAmI, (int)SheetFrame.White,
+                            (int)(twoGlimmersDamage * 5f), 5f, Player.whoAmI, (int)SheetFrame.White,
                             30 - twoGlimmersTimer);
                     }
                 }

@@ -1,6 +1,9 @@
-﻿using lenen.Content.Items.Accessories;
+﻿using lenen.Content.Items.Accessories.Clause;
+using lenen.Content.Items.Accessories.Misc;
+using lenen.Content.Items.Accessories.Tsurubami;
 using lenen.Content.Items.SenriModes;
-using lenen.Content.Items.Weapons;
+using lenen.Content.Items.Weapons.Clause;
+using lenen.Content.Items.Weapons.Kurohebi;
 using lenen.Content.Items.Weapons.Yabusame;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;

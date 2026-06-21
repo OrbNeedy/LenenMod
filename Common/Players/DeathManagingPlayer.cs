@@ -1,5 +1,5 @@
 ﻿using lenen.Content.Buffs;
-using lenen.Content.Items;
+using lenen.Content.Items.Misc;
 using lenen.Content.Items.Vanity.Dyes;
 using Microsoft.Xna.Framework;
 using Terraria;

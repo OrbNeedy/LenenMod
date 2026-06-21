@@ -16,6 +16,10 @@ Ver {ModVersion}
 + Tasouken's Spell Card damage penetration increased from 50 to 60.
 + Retrovirus debuff duration increased from 5 seconds to 12 seconds for NPCs, and 5 seconds to 7 seconds for players.
 + Increased Dimensional Orbs'damage from 75 to 82.
++ Increased Controlled Anomaly and Christmas Globe's Spell Card damage from 150% to 180% of the weapon.
++ Increased Controlled Anomaly and Christmas Globe's desperate Spell Card damage from 225% to 260% of the weapon.
++ Increased Controlled Anomaly and Christmas Globe's Spell Card Super Nova projectile speed while moving towards the mouse.
++ Increased damage from Marksmanship Medal's bullet explosion from 60% to 80% the original damage.
 - Tasouken's damage reduced from 60 to 52.
 - Tasouken's knockback reduced from 10 to 8.
 - Tasouken's projectile damage register increased from 10 to 14.
@@ -23,11 +27,16 @@ Ver {ModVersion}
 - Tasouken's desperate Spell Card cooldown increased from 17 seconds to 25 seconds.
 - Tasouken's Spell Card damage register increased from 5 for each projectile to 2 for all projectiles.
 - Decreased Dimensional Orbs' projectiles shot by use from 24 to 12.
+- Decreased Controlled Anomaly and Christmas Globe's Spell Card number of projectiles shot from 40 to 22.
+- Decreased Marksmanship Medal's bullet explosion amount from 6 to 2.
 * Visual changes to Tasouken's projectiles.
 * Fully reworked Dimensional Orbs' Spell Card.
+* Minor changes to Controlled Anomaly's projectile visuals.
 * Haniwa Caller projectile damage class changed from universal hybrid to summoner.
+* Marksmanship Medal increases ranged damage based on critical chance rather than a set 8%.
 * Fixed graze collisions failing to recognize the left side of the player.
 * Small behavioral changes to Haniwa Caller's minion.
+* Spell Card cost text changed, it now updates its cost accordingly to the desperate barrier effects and displays cooldown in seconds. 
 
 Due to steam workshop's character limit, the full changelog has been moved to Google docs.
 Full Changelog: 

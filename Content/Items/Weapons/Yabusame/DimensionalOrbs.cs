@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using System;
 using lenen.Common.Players;
 using lenen.Content.Projectiles.BulletHellProjectiles;
+using lenen.Content.Items.Misc;
 
 namespace lenen.Content.Items.Weapons.Yabusame
 {
@@ -53,12 +54,10 @@ namespace lenen.Content.Items.Weapons.Yabusame
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            // Debug more if mana regen delay causes issues
             if (player.altFunctionUse == 2)
             {
                 if (player.itemAnimation == Item.useAnimation)
                 {
-
                     SpellCardManagement scManager = player.GetModPlayer<SpellCardManagement>();
 
                     SetCooldown(player);
@@ -91,10 +90,10 @@ namespace lenen.Content.Items.Weapons.Yabusame
             return false;
         }
 
-        public override bool AltFunctionUse(Player player)
+        /*public override bool AltFunctionUse(Player player)
         {
             return CanUseSpellCard(player);
-        }
+        }*/
 
         protected override void SpellCard(Player player, bool desperate)
         {

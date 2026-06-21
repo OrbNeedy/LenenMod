@@ -12,7 +12,7 @@ using System;
 using Terraria.Localization;
 using Terraria.GameContent.Bestiary;
 using lenen.Common;
-using lenen.Content.Items.Weapons;
+using lenen.Content.Items.Weapons.SmallFairy;
 
 namespace lenen.Content.NPCs.Fairy
 {

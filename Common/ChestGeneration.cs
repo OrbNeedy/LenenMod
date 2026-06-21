@@ -1,8 +1,8 @@
 ﻿using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
-using lenen.Content.Items;
-using lenen.Content.Items.Weapons;
+using lenen.Content.Items.Weapons.Kurohebi;
+using lenen.Content.Items.Materials;
 
 namespace lenen.Common
 {

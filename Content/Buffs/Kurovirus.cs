@@ -21,7 +21,7 @@ namespace lenen.Content.Buffs
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<BuffPlayer>().virusDebuff = true;
+            player.GetModPlayer<BuffPlayer>().VirusDebuff = true;
         }
     }
 }

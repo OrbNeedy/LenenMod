@@ -6,7 +6,8 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using lenen.Common.Systems;
-using System;
+using lenen.Common.Utils;
+using Terraria.Graphics.CameraModifiers;
 
 namespace lenen.Content.Projectiles.BulletHellProjectiles
 {
@@ -36,6 +37,14 @@ namespace lenen.Content.Projectiles.BulletHellProjectiles
             Projectile.timeLeft = 185;
         }
 
+        public override void OnSpawn(IEntitySource source)
+        {
+            SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/burst_01") with
+            {
+                Volume = 0.75f
+            }, Projectile.Center);
+        }
+
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -56,14 +65,75 @@ namespace lenen.Content.Projectiles.BulletHellProjectiles
                     Projectile.scale -= 0.375f;
                 }
 
-                Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * 0.5f;
+                Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * 0.75f;
                 Projectile.netUpdate = true;
 
                 SuckInProjectiles(Projectile.Center, 1200, 14, true);
                 SuckInNPCs(Projectile.Center, 1200, 14);
                 if (Projectile.timeLeft <= 5)
                 {
-                    player.GetModPlayer<GravityPlayer>().SpawnExplosion(ChristmasEdition, player.GetSource_FromThis("Spellcard"));
+                    SoundEngine.PlaySound(new SoundStyle("lenen/Assets/Sounds/burst_01") with
+                    {
+                        Volume = 0.75f
+                    }, Projectile.Center);
+
+                    PunchCameraModifier modifier = new PunchCameraModifier(
+                        Projectile.Center, new Vector2(0, 1).RotatedByRandom(MathHelper.TwoPi),
+                        25f, 20f, 30, 1000f);
+                    Main.instance.CameraModifiers.Add(modifier);
+
+                    int damage = (int)(player.GetWeaponDamage(player.HeldItem) * 1.8f);
+                    if (player.GetModPlayer<SpellCardManagement>().lastDesperate)
+                    {
+                        damage = (int)(player.GetWeaponDamage(player.HeldItem) * 2.6f);
+                    }
+
+                    if (ChristmasEdition)
+                    {
+                        int bulletType = ModContent.ProjectileType<SlowedBullet>();
+                        for (int i = 0; i < 22; i++)
+                        {
+                            // Set the sprite type and color
+                            int spriteType = BulletUtils.GetRandomShape([
+                                Sheet.Default, Sheet.Big, Sheet.Double, Sheet.Pellet, Sheet.Small]);
+                            int color = BulletUtils.GetRandomColor([SheetFrame.Red, SheetFrame.White]);
+
+                            Vector2 direction = new Vector2(Main.rand.NextFloat(4, 22), 0).
+                                RotatedByRandom(MathHelper.TwoPi);
+                            Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem, "SpellCard"), 
+                                player.Center, direction, bulletType, damage, 4f, player.whoAmI, color, spriteType);
+                        }
+                    } else
+                    {
+                        int bulletType = ModContent.ProjectileType<SlowedBullet>();
+                        for (int i = 0; i < 22; i++)
+                        {
+                            // Set the sprite type and color
+                            int spriteType = BulletUtils.GetRandomShape([
+                                Sheet.Default, Sheet.Big, Sheet.Small, Sheet.ReverseBig, Sheet.Pellet]);
+
+                            int color = (int)SheetFrame.Pink;
+                            switch (spriteType)
+                            {
+                                case (int)Sheet.ReverseBig:
+                                case (int)Sheet.Small:
+                                    color = (int)SheetFrame.White;
+                                    break;
+                                case (int)Sheet.Big:
+                                    color = (int)SheetFrame.Red;
+                                    break;
+                                case (int)Sheet.Pellet:
+                                    color = (int)SheetFrame.Blue;
+                                    break;
+                            }
+
+                            Vector2 direction = new Vector2(Main.rand.NextFloat(4, 22), 0).
+                                RotatedByRandom(MathHelper.TwoPi);
+                            Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem, "SpellCard"), player.Center,
+                                direction, bulletType, damage, 4f, player.whoAmI, color, spriteType);
+                        }
+                    }
+
                     SuckInProjectiles(Projectile.Center, 2400, -76);
                     SuckInNPCs(Projectile.Center, 2400, -76);
                     if (NumberOfExplosions > 0)
@@ -96,6 +166,11 @@ namespace lenen.Content.Projectiles.BulletHellProjectiles
                     {
                         Volume = 0.5f
                     }, Projectile.Center);
+
+                    PunchCameraModifier modifier = new PunchCameraModifier(
+                        Projectile.Center, new Vector2(0, 1).RotatedByRandom(MathHelper.TwoPi),
+                        20f, 14f, 290, 1000f);
+                    Main.instance.CameraModifiers.Add(modifier);
                 }
             }
         }

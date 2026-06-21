@@ -1,7 +1,7 @@
 ﻿using lenen.Common.Players;
 using lenen.Common.Systems;
 using lenen.Content.Buffs;
-using lenen.Content.Items;
+using lenen.Content.Items.Misc;
 using lenen.Content.NPCs.Fairy;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

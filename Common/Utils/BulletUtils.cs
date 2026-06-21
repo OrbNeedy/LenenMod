@@ -92,6 +92,11 @@ namespace lenen.Common.Utils
             return data;
         }
 
+        public static int GetRandomShape(Sheet[] shapes)
+        {
+            return (int)Main._rand.NextFromList(shapes);
+        }
+
         public static int GetRandomColor(SheetFrame[] colors)
         {
             return (int)Main._rand.NextFromList(colors);
